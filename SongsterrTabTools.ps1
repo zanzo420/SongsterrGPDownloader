@@ -17,7 +17,7 @@ $savedir = "D:\.GuitarPro"
 function Get-SongsterrTabs($startIndex = 0)
 {
     $prefix = "http://www.songsterr.com/a/wsa/"
-    $apiURL = "https://www.songsterr.com/api/songs?size=250&from="
+    $apiURL = "https://www.songsterr.com/api/songs?pattern=&size=250&from="
     $songLinks = @()
     
     #[int]$pageCount = [int]$(gc -Path "H:\.midi\PageCount.txt")
@@ -39,13 +39,13 @@ function Get-SongsterrTabs($startIndex = 0)
         }##END## SongJSON Loop ###############################################
 
         #add links from current API page to file...
-        $songLinks | out-file ".\SongLinks\SongLinks-pg$($i).txt" -Force -Append
+        $songLinks | out-file ".\SongLinks\SongLinks-pg$($i+1).txt" -Force -Append
         $songIndex = $startIndex+$i*250
         write-host "[PAGE: $($i) | SONGS: $($indx)]" -ForegroundColor Green -NoNewline
         write-host " SongIndex = $($songIndex)" -ForegroundColor Red
     }##END## API PAGE LOOP ################################################
 
-    $songLinks | out-file ".\SongLinks\SongLinks-FULL.txt" -Force -Append
+    return $songLinks | out-file ".\SongLinks\SongLinks-FULL.txt" -Force -Append
     #$pageCount += $songIndex | out-file H:\.midi\PageCount.txt -Force
 }
 #function that gets json data from songsterr api and saves it to a file...
@@ -202,6 +202,9 @@ function Get-TabAndDownload {
     $artist = $revisionMetadata[0].artist
     $title = $revisionMetadata[0].title
 
+    # Extract the revision ID
+    $revId = $revisionMetadata[0].revisionId
+
     # Define the destination file path
     $destinationPath = ".\Downloads\$($oldFilename)"
 
@@ -215,7 +218,8 @@ function Get-TabAndDownload {
     # Rename the file
     Rename-Item -Path $destinationPath -NewName "$($newFileName)"
 
-    Write-Host "Guitar Pro tab downloaded and renamed to " -NoNewLine
+    write-host "$($artist) - $($title)" -ForegroundColor cyan -NoNewline
+    Write-Host " Guitar Pro tab downloaded and renamed to " -NoNewLine
     write-Host $newFileName -ForegroundColor Green
 }
 
@@ -239,22 +243,21 @@ function GetSongsterrDownloadData($songid)
     $R = Invoke-RestMethod -uri "https://songsterr.com/api/meta/$($songid)/revisions" #-OutFile H:\.midi\json.json
     
     $RevisionId = $R[0].revisionId | out-host
-    $Tracks = $R[0].tracks | out-host
     $Title = $R[0].title | out-host
     $Artist = $R[0].artist | out-host
 
     $DownloadURL = $R[0].source | out-host
-    $fileExt = "$($R[0].source.SubString($R[0].source.Length - 2))"
-    $nFilename = "$($Artist) - $($Title).$($fileExt)" | out-host
+    $fileExt = "gp" #"$($R[0].source.SubString($R[0].source.Length - 2))"
+    $nFilename = "$($R[0].artist) - $($R[0].title).$($fileExt)" | out-host
 
+    $data += "$($songid)`n"
     $data += "$($R[0].source)`n"
     $data += "$($R[0].revisionId)`n"
     $data += "$($R[0].title)`n"
     $data += "$($R[0].artist)`n"
-    $data += "$($R[0].tracks)`n"
-    $data | out-file .\songsterrData.txt -Append -Force
+    $data += "$($nFilename)`n"
 
-    return $data
+    return $data | out-file .\songsterrData.txt -Append -Force
 }
 
 # Get a Download URL from a Songsterr SongID...
@@ -334,7 +337,8 @@ function CleanText([string]$rawText)
     $cleaText = $cleText.replace(".","")
     $cleanText = $cleaText.replace(",","")
     $betterText = $cleanText.replace("'","")
-    [string]$goodText = $betterText
+    $bestText = $betterText.replace("/","")
+    [string]$goodText = $bestText
 
     return $goodText
 }
