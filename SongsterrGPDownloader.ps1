@@ -182,7 +182,7 @@ function GetCombinedSearchResultsTabData()
 
 function Get-TabAndDownload {
     param (
-        [string]$TabID
+        [int]$TabID
     )
 
     # Define the base URL for Songsterr API
@@ -195,6 +195,7 @@ function Get-TabAndDownload {
 
     # Extract the Guitar Pro download URL
     $downloadUrl = $revisionMetadata[0].source
+
     # Extract the filename from the URL
     $oldFilename = $downloadUrl.Replace("$($baseDLUrl)/", "")
 
@@ -206,14 +207,13 @@ function Get-TabAndDownload {
     $revId = $revisionMetadata[0].revisionId
 
     # Define the destination file path
-    $destinationPath = ".\Downloads\$($oldFilename)"
+    $destinationPath = ".\Files\$($oldFilename)"
 
     # Download the file
     Invoke-WebRequest -Uri $downloadUrl -OutFile $destinationPath
 
     # Define the new file name
     $newFileName = "$($artist) - $($title)$($oldFilename.ToString().Replace("export",''))"
-    $newFilePath = ".\Downloads"
 
     # Rename the file
     Rename-Item -Path $destinationPath -NewName "$($newFileName)"
@@ -224,11 +224,9 @@ function Get-TabAndDownload {
 }
 
 # Example usage
-Get-TabAndDownload -TabID "534532"
+#Get-TabAndDownload -TabID "534532"
 
-#############################################
-## GET SONGSTERR DOWNLOAD URLS FROM SONGID ##
-#############################################
+
 $cookie = 'OrigRef=d3d3Lmdvb2dsZS5jb20=; _ga=GA1.2.563324618.1641686257; G_ENABLED_IDPS=google; __gads=ID=b5de266b76d30fa8:T=1641686257:S=ALNI_MZxgEGqVWRkMMew-r_CunkutRPrQg; SongsterrL=b0b18683873fd827048dff32450b36910f6bba9e8ef30a9f; cto_bundle=uLgR3V94aUdUbzhmQVpDeW1nR3NlbHlReThHJTJCNlBGSUNnZklXeVpQREluamU3RmZTR21vZEtTVXdmJTJCOEtIZnVIbU5iZiUyRndCeFFvbTEyS3NES21EOUJ5N2ZHJTJGJTJGSmI0MUdUTGNGbEpsTm94RDE0TnF4V2lBRXRjbUx2NHZTQ2N1R0pzclNZb1VrMFpHUmglMkZTd0s4cXN3U2dNSkElM0QlM0Q; ScrShwn-svws=true; LastRef=d3d3Lmdvb2dsZS5jb20=; EE_STORAGE=["video_walkthrough","comments_removal"]; lastSeenTrack=/a/wsa/falling-in-reverse-wait-and-see-half-solo-tab-s398766; experiments={"aa":"on","sound_v4":"off","comments_removal":"on","new_plus_banner":"off"}; _gid=GA1.2.1968037562.1656242890; amp_9121af=XrOZ72J_mkX5E6aGJkftn4.MjMyMDYzMA==..1g6gt3qtj.1g6gt93ho.2p.2p.5i; SongsterrT=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIyMzIwNjMwIiwiZW1haWwiOiJ6Q2xvbmVIZXJvQGdtYWlsLmNvbSIsIm5hbWUiOiJ6Q2xvbmVIZXJvIiwicGxhbiI6InBsdXMiLCJzdWJzY3JpcHRpb24iOnsic3RhdHVzIjoiYWN0aXZlIiwidHlwZSI6ImJyYWludHJlZSIsInN0YXJ0RGF0ZSI6IjIwMjItMDUtMDhUMDQ6NTE6MzQuMDAwWiIsImVuZERhdGUiOm51bGwsImNhbmNlbGxhdGlvbkRhdGUiOm51bGx9LCJzcmFfbGljZW5zZSI6Im5vbmUiLCJnb29nbGUiOiIxMDExNDgyNDE3ODYwODgwNDQxMzQiLCJpYXQiOjE2NTYyNzc2NjQsImlkIjoiMjMyMDYzMCJ9.e-cSj5xaosVcet1kNciKL2cxmiOu0lGlREz3HFNLhao'
 #$dlPrefix = 'https://d12drcwhcokzqv.cloudfront.net/'
 $dlPrefix = 'https://gp.songsterr.com/'
@@ -236,18 +234,21 @@ $SongIDs = gc -Path D:\SongIDs.txt
 $data = @()
 $fileData = @()
 
-## 
-# Get all song data from a songsterr SongID...
+
+###################################################
+#region Get all song data from a songsterr SongID #
+###################################################
 function GetSongsterrDownloadData($songid)
 {
     $R = Invoke-RestMethod -uri "https://songsterr.com/api/meta/$($songid)/revisions" #-OutFile H:\.midi\json.json
     
     $RevisionId = $R[0].revisionId | out-host
-    $Title = $R[0].title | out-host
-    $Artist = $R[0].artist | out-host
+    $Title = $R[0].title #| out-host
+    $Artist = $R[0].artist #| out-host
 
     $DownloadURL = $R[0].source | out-host
-    $fileExt = "gp" #"$($R[0].source.SubString($R[0].source.Length - 2))"
+    $fExt = $R[0].source.Split(".")
+    $fileExt = $fExt[$fExt.Length-1] #| out-host
     $nFilename = "$($R[0].artist) - $($R[0].title).$($fileExt)" | out-host
 
     $data += "$($songid)`n"
@@ -259,7 +260,12 @@ function GetSongsterrDownloadData($songid)
 
     return $data | out-file .\songsterrData.txt -Append -Force
 }
+#endregion
 
+
+#################################################
+#region GET SONGSTERR DOWNLOAD DATA FROM SONGID #
+#################################################
 # Get a Download URL from a Songsterr SongID...
 function GetSongsterrDownloadURL($songid)
 {
@@ -299,13 +305,13 @@ function GetSongsterrTracks($songid)
 # Get the Artist and SongTitle from a Songsterr SongID...
 function GetSongsterrArtistAndTitle($songid)
 {
-    $dlUrlPrefix = 'https://d12drcwhcokzqv.cloudfront.net/'
+    $dlUrlPrefix = 'https://gp.songsterr.com/'
     $R = Invoke-RestMethod -uri "https://songsterr.com/api/meta/$($songid)/revisions" #-OutFile H:\.midi\json.json
     $songArtist = $R[0].artist #| out-host
     $songSongTitle = $R[0].title
-    $tmpExt = $($($R[0].source).ToString()).Replace($dlUrlPrefix, "")
+    $tmpExt = $($($R[0].source).ToString().Split(".")) #Replace($dlUrlPrefix, "")
     
-    $output = "$($songArtist) - $($songSongTitle).$($tmpExt)"
+    $output = "$($songArtist) - $($songSongTitle).$($tmpExt[$tmpExt.Length-1])"
 
     return $output.ToString()
 }
@@ -324,9 +330,11 @@ function GetSongsterrDownloadURLs($SongIDs_List)
         write-host "$(GetSongsterrDownloadURL $sID)" -ForegroundColor Green
     }
 }
+#endregion
+
 
 ################################
-#### MISC UTILITY FUNCTIONS ####
+#region MISC UTILITY FUNCTIONS #
 ################################
 # Convert artist/titles to their url equivalent
 function CleanText([string]$rawText)
@@ -337,95 +345,17 @@ function CleanText([string]$rawText)
     $cleaText = $cleText.replace(".","")
     $cleanText = $cleaText.replace(",","")
     $betterText = $cleanText.replace("'","")
-    $bestText = $betterText.replace("/","")
+    $bestText = $betterText.replace("/","").replace(">","").replace("<","").replace(":","").replace(";","").replace("?","").replace("!","").replace("&","").replace("#","").replace("%","").replace("*","").replace("{","").replace("}","").replace("[","").replace("]","").replace("|","").replace("=","").replace("+","").replace("~","").replace('`',"").replace("@","").replace("$","").replace("^","").replace('"',"")
     [string]$goodText = $bestText
 
     return $goodText
 }
+#endregion
 
-#############################
-## Download Songsterr Tabs ##
-#############################
-function DownloadSongsterrTabs($path2urls = 'DownloadURLs.txt',$path2songids = 'SongIdsFromUrls.txt',$path2oldnames = 'OldFilenames.txt',$path2newnames = 'NewFilenames.txt', $boolRenameFiles = $true, $path2artists = 'Artists.txt',$path2songtitles = 'SongTitles.txt')
-{
-	$dlUrlPrefix = "https://d12drcwhcokzqv.cloudfront.net/"
-    if($path2oldnames -eq "" -or $path2newnames -eq "")
-    {
-        #Generate the old/new filenames data lists...
-        write-host "Generating OldFilenames.txt file..."
-        GenerateOldFilenames $path2urls
-        write-host "Generating NewFilenames.txt file..."
-        GenerateNewFilenames $path2songids
-    }else{
-        $oldFilenames = gc -Path $path2oldnames # **NOTE: see GenerateOldFilenames function.**
-	    $newFilenames = gc -Path $path2newnames # **NOTE: see GenerateNewFilenames function.**
-    }
 
-    if($path2artists -eq "" -or $path2songtitles -eq "")
-    {
-        #Generate Artists/SongTitles data lists...
-        write-host "Generating Artists.txt file..."
-        GenerateArtistsFile
-        write-host "Generating SongTitles.txt file..."
-        GenerateSongTitlesFile
-    }else{
-        $Artists = gc -Path $path2artists
-	    $SongTitles = gc -Path $path2songtitles
-    }
-    $dlURLs = gc -Path $path2urls
-	
-    $idx = 0
-	foreach($s in $dlURLs)
-	{
-		$oldFilename = $oldFilenames[$idx].ToString(); $newFilename = $newFilenames[$idx].ToString()
-        write-host "Downloading " -NoNewline; write-host $oldFilename -ForegroundColor Green -NoNewline; write-host " (" -NoNewline; write-host $newFilename -ForegroundColor Green -NoNewline; write-host ")..."
-		Invoke-WebRequest -Uri $s -OutFile ".\Files\$($oldFilename)"
-		$idx++
-	}
-    $savedFiles = gci ".\Files\*"
-    if($boolRenameFiles -eq $true)
-    {
-        RenameDownloadedFiles "$($pwd)\Files\" $oldFilenames $newFilenames
-    }else{
-        write-host "Skipping Renaming...`n **NOTE: Run the 'RenameDownloadedFiles' command to rename downloaded files.**"
-    }
-}
-function DownloadSongsterrTabsFromURLs($path2urls = 'DownloadURLs.txt',$path2songids = 'SongIdsFromUrls.txt',$path2oldnames = 'OldFilenames.txt',$path2newnames = 'NewFilenames.txt', $path2artists = 'Artists.txt',$path2songtitles = 'SongTitles.txt')
-{
-	$dlUrlPrefix = "https://d12drcwhcokzqv.cloudfront.net/"
-	$Artists = gc -Path $path2artists
-	$SongTitles = gc -Path $path2songtitles
-	$dlURLs = gc -Path $path2urls
-    GenerateOldFilenames $path2urls
-    GenerateNewFilenames $path2songids
-	$oldFilenames = gc -Path $path2oldnames # **NOTE: see GenerateOldFilenames function.**
-	$newFilenames = gc -Path $path2newnames # **NOTE: see GenerateNewFilenames function.**
-
-	$idx = 0
-	foreach($s in $dlURLs)
-	{
-		$oldFilename = $oldFilenames[$idx].ToString(); $newFilename = $newFilenames[$idx].ToString()
-        write-host "Downloading " -NoNewline; write-host $oldFilename -ForegroundColor Green -NoNewline; write-host " (" -NoNewline; write-host $newFilename -ForegroundColor Green -NoNewline; write-host ")..."
-		Invoke-WebRequest -Uri $s -OutFile ".\Files\$($oldFilename)"
-		$idx++
-	}
-    $savedFiles = gci ".\Files\*"
-    RenameDownloadedFiles "$($pwd)\Files\" $oldFilenames $newFilenames
-}
-function GenerateOldFilenames($download_urls_list = "DownloadURLs.txt")
-{
-    $dlUrlPrefix = "https://d12drcwhcokzqv.cloudfront.net/"
-    $arrOldFilenames = @()
-
-    $list = gc $download_urls_list
-    foreach($n in $list)
-    {
-        $tmpString = $n; $outString = $tmpString.Replace($dlUrlPrefix, "")
-        #write-host $outString
-        $arrOldFilenames += $outString
-    }
-    $arrOldFilenames | out-file .\OldFilenames.txt -Force
-}
+#########################################################
+#region Retrieve Song data from songID's list Functions #
+#########################################################
 function GenerateNewFilenames($songids_list = 'SongIdsFromUrls.txt')
 {
     $arrNewFilenames = @()
@@ -465,27 +395,12 @@ function GenerateSongTitlesFile($songids_list = 'SongIdsFromUrls.txt')
     }
     $arrSongTitles | out-file .\SongTitles.txt -Force
 }
+#endregion
 
-# Rename Downloaded Songsterr Tabs...
-function RenameDownloadedFiles($path2files = ".\Files\",$oldnames = "OldFilenames.txt",$newnames = "NewFilenames.txt")
-{
-    $oldFilenames = gc $oldnames
-    $newFilenames = gc $newnames
-    cd .\Files
-    $ndx = 0
-    foreach($n in $oldFilenames)
-    {
-        Move-Item -Path ".\$($n.ToString())" -Destination ".\$($newFilenames[$ndx].ToString())" -Force -Verbose
-        $ndx++
-    }
-    write-host "`nFinished Renaming " -NoNewline; write-host $ndx.ToString() -ForegroundColor DarkGreen -NoNewline; write-host " Files!`n"; pause
-    cd ..
-    
-}
 
-###################################################
-## Get Songsterr SongID(s) from Songsterr URL(s) ##
-###################################################
+########################################################
+#region Get Songsterr SongID(s) from Songsterr URL(s) #
+########################################################
 # Get SongId From URL...
 function GetSongIdFromURL($url)
 {
@@ -502,6 +417,7 @@ function GetSongIdFromURL($url)
 
     return [string]$rawSongId.Replace("tab-s", "")
 }
+
 # Get multiple SongId's from a list of URL's...
 function GetSongIdsFromURLs($URLsList)
 {
@@ -512,55 +428,12 @@ function GetSongIdsFromURLs($URLsList)
         $sngID.Replace("True", "").Replace("False", "").Remove(0,2) | out-file ".\Files\SongIdsFromUrls.txt" -Append -Force
     }
 }
-
-####################
-#### DO NOT USE ####
-#######################################################
-## Generate Songsterr Download URL(s) from SongID(s) ##
-#######################################################
-# Generate download links from a SongIds...
-function GetDownloadURLsFromSongIds($SongIdsList)
-{
-    $prefix = 'https://d12drcwhcokzqv.cloudfront.net/'
-    $list = gc $SongIdsList
-    foreach($i in $list)
-    {
-        $downloadURL = "$($prefix)$($i).gp5"
-    }
-}
+#endregion
 
 
-
-######################################
-# Import Song Data From Spreadsheets #
-######################################
-# Songsterr Data > Artist/Title/SongId
-function ImportSongsterrData($xlFile)
-{
-    Import-Excel -Path $xlFile -ImportColumns @(3,4,6) -StartRow 1
-    #Import-Excel -Path $xlFile -ImportColumns @(1,2,4) -StartRow 1
-}
-# Songsterr URLs > Artist/Title/DownloadURL
-function ImportSongsterrURLs($xlFile)
-{
-    Import-Excel -Path $xlFile -ImportColumns @(3,4,6) -StartRow 1
-    #Import-Excel -Path $xlFile -ImportColumns @(1,2,4) -StartRow 1
-}
-
-# SheetMusic-Free Data > DownloadURL/SongPageURL/SongTitle/Artist
-function ImportSheetMusicFreeData($xlfile)
-{
-    #import DownloadURL(8), SongPageURL(11), SongTitle(12), Artist(13) from spreadsheet...
-    $SheetMusicFree_Data = Import-Excel -Path $xlfile -ImportColumns @(8,11,12,13) -StartRow 1
-    #return the Imported columns from the spreadsheet...
-    return $SheetMusicFree_Data
-}
-
-
-
-###############################################
-# Rename downloaded Songsterr GuitarPro files #
-###############################################
+#####################################################
+#region Rename downloaded Songsterr GuitarPro files #
+#####################################################
 function RenameSongsterrDownloads($path2files, $path2titles)
 {
     #ImportSongsterrURLs("H:\.Midi\Seether.xlsx")
@@ -597,102 +470,51 @@ function RenameSongsterrDownloads($path2files, $artist)
         $indx++
     }
 }
+#endregion
 
 
-
-
-######################################
-## Download Songsterr GPT Tab By ID ##
-######################################
-function DownloadByID($id)
+###########################
+#region Custom Tab Object #
+###########################
+function Create-TabObject($songid="", $artist="", $title="", $tabid="", $url="", $revisionID="", $downloadURL="", $filename="", $fileExt="", $exportID="")
 {
-    $fileurl = "https://d12drcwhcokzqv.cloudfront.net/$($id).gp5"
-    $outpath = "$($savedir)\$($id).gp5"
-    write-host "Saving... $($fileurl) ...To... $($outpath)" -ForegroundColor Red
-    Invoke-WebRequest $fileurl -OutFile $outpath -Verbose
+    $Tab = New-Object PSObject
+    $Tab | Add-Member -MemberType NoteProperty -Name "TabID" -Value $tabid
+    $Tab | Add-Member -MemberType NoteProperty -Name "URL" -Value $url  
+    $Tab | Add-Member -MemberType NoteProperty -Name "SongID" -Value $songid
+    $Tab | Add-Member -MemberType NoteProperty -Name "Artist" -Value $artist
+    $Tab | Add-Member -MemberType NoteProperty -Name "Title" -Value $title
+    $Tab | Add-Member -MemberType NoteProperty -Name "RevisionID" -Value $revisionID
+    $Tab | Add-Member -MemberType NoteProperty -Name "DownloadURL" -Value $downloadURL
+    $Tab | Add-Member -MemberType NoteProperty -Name "Filename" -Value $filename
+    $Tab | Add-Member -MemberType NoteProperty -Name "FileExt" -Value $fileExt
+    $Tab | Add-Member -MemberType NoteProperty -Name "ExportID" -Value $exportID
+    return $Tab
 }
-function DownloadByIDExt($id, $gpext = "gp5")
-{
-    $fileurl = "https://d12drcwhcokzqv.cloudfront.net/$($id).$($gpext)"
-    $outpath = "$($savedir)/$($id).$($gpext)"
-    write-host "Saving $($fileurl)... Saving to $($outpath)" -ForegroundColor Green -BackgroundColor Black
-    Invoke-WebRequest $fileurl -OutFile $outpath -Verbose
-}
-function DownloadByFilename($fName)
-{
-    $fileurl = "https://d12drcwhcokzqv.cloudfront.net/$($fName)"
-    $outpath = "$($savedir)\$($fName)"
-    write-host "Saving $($fileurl)... Saving to $($outpath)" -ForegroundColor Green -BackgroundColor Black
-    Invoke-WebRequest $fileurl -OutFile $outpath -Verbose
-}
+#endregion
 
 
-############################################
-## Songsterr GPT Download Link Generation ##
-############################################
-function GenerateDownloadLink($fileID)
-{
-    $urlGPTPrefix = "https://d12drcwhcokzqv.cloudfront.net"
-    $urlGPTExt = "gp5"
-    [string]$dlLink = "$($urlGPTPrefix)/$($fileID).$($urlGPTExt)"
-
-    return [string]$dlLink
-}
-function GenerateDownloadLinks($path2IDList)
-{
-    $urlGPTPrefix = "https://d12drcwhcokzqv.cloudfront.net"
-    $urlGPTExt = "gp5"
-    $dlList = @()
-    $listIDs = get-content $path2IDList
-
-    foreach($id in $listIDs)
-    {
-        [string]$dlLink = "$($urlGPTPrefix)/$($id).$($urlGPTExt)"
-        $dlList += $dlLink
-    }
-
-    return $dlList
-}
-
-
-##################################################################
-## Search Songsterr for Artist and/or Song Title using JSON API ##
-##################################################################
-
-
-
-
-
-########################################################################################################
-#### UI/DISPLAY RELATED FUNCTIONS #####
-#######################################
+######################
+#region UI Functions #
+######################
 function TextBar($txt)
 {
-    write-host "[ " -ForegroundColor Red -NoNewline
-    write-host $txt -ForegroundColor DarkRed -NoNewline
-    write-host " ]" -ForegroundColor Red -NoNewline
-}
-function TextBarW($txt)
-{
-    write-host "[ " -ForegroundColor Red -BackgroundColor Black -NoNewline
-    write-host $txt -ForegroundColor DarkRed -BackgroundColor Black -NoNewline
-    write-host " ]" -ForegroundColor Red -BackgroundColor Black -NoNewline
-}
-function TextBarL($title, $txt)
-{
-    TextBarW($title); write-host " $($txt)"
+    
 }
 
 function TextLog($txt)
 {
-    TextBar("zRS"); write-host " $($txt)"
+    write-host "[ " -ForegroundColor Red -NoNewline
+    write-host "zH4x™" -ForegroundColor DarkRed -NoNewline
+    write-host " ]" -ForegroundColor Red -NoNewline
+    write-host " $($txt)"
 }
 
 function uiBanner()
 {
     write-host ""
     write-host '||[ ' -ForegroundColor Red -NoNewline -BackgroundColor Black
-    write-host 'zRocksmith Utilities' -ForegroundColor DarkRed -NoNewline -BackgroundColor Black
+    write-host 'Songsterr GP Downloader' -ForegroundColor DarkRed -NoNewline -BackgroundColor Black
     write-host ' ]||' -ForegroundColor Red -BackgroundColor Black
     write-host "       " -NoNewLine
     write-host '|[ ' -ForegroundColor Red -NoNewline -BackgroundColor Black
@@ -700,33 +522,13 @@ function uiBanner()
     write-host ' ]|' -ForegroundColor Red -BackgroundColor Black
     write-host
 }
+
 function uiText($txt)
 {
     write-host ""
     write-host '[' -ForegroundColor Red -NoNewline -BackgroundColor Black
-    write-host 'zRS' -ForegroundColor DarkRed -NoNewline -BackgroundColor Black
+    write-host 'zH4x™' -ForegroundColor DarkRed -NoNewline -BackgroundColor Black
     write-host ']' -ForegroundColor Red -BackgroundColor Black -NoNewline
     write-host " $($txt)"
 }
-function uiBannerText($txt)
-{
-    write-host ""
-    write-host '||[ ' -ForegroundColor Red -NoNewline -BackgroundColor Black
-    write-host 'zRS' -ForegroundColor DarkRed -NoNewline -BackgroundColor Black
-    write-host ' ]||[ ' -ForegroundColor Red -BackgroundColor Black -NoNewline
-    write-host 'Rocksmith Utilities' -ForegroundColor darkgray -BackgroundColor Black -NoNewline
-    write-host ' ]||' -ForegroundColor Red -BackgroundColor Black
-    write-host $txt
-}
-function uiBannerText($txt, [System.ConsoleColor]$color = "White")
-{
-    write-host ""
-    write-host '||[ ' -ForegroundColor Red -NoNewline -BackgroundColor Black
-    write-host 'zRS' -ForegroundColor DarkRed -NoNewline -BackgroundColor Black
-    write-host ' ]||[ ' -ForegroundColor Red -BackgroundColor Black -NoNewline
-    write-host $txt -ForegroundColor $color -BackgroundColor Black -NoNewline
-    write-host ' ]||' -ForegroundColor Red -BackgroundColor Black
-}
-                                                   ######################################################
-                        ################################################ UI/DISPLAY RELATED FUNCTIONS ###
-#########################################################################################################
+#endregion
