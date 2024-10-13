@@ -7,14 +7,28 @@
 Import-Module -Name ImportExcel
 ###### GLOBAL VARIABLES #######
 $savedir = "D:\.Tabs\GuitarPro\.songsterr"
-$tempPath = ".\temp"
+$temp_path = "$($env:TEMP)\SongsterrGPDownloader"
 #$SpotifyAPIUrl = "https://api.spotify.com/"
 
 
-#region Songsterr Search Functions
-#########################################################
-# Get Songsterr GuitarPro Tabs using Songsterr JSON API #
-#########################################################
+#region Songsterr Tab Search Functions
+<#
+.SYNOPSIS
+Get Songsterr tabs using the Songsterr API.
+
+.DESCRIPTION
+This function retrieves a list of Songsterr tabs using the Songsterr API and saves the URLs to a text file.
+
+.PARAMETER startIndex
+The index in the search results to start from... Leave blank to start from the beginning.
+
+.EXAMPLE
+Get-SongsterrTabs
+
+.NOTES
+Author: Zanzo
+Date: 2022-03-01
+#>
 function Get-SongsterrTabs($startIndex = 0)
 {
     $prefix = "http://www.songsterr.com/a/wsa/"
@@ -37,14 +51,14 @@ function Get-SongsterrTabs($startIndex = 0)
         }##END## SongJSON Loop ###############################################
 
         #add links from current API page to file...
-        $songLinks | out-file ".\SongLinks\SongLinks-pg$($i).txt" -Force -Append
+        $songLinks | out-file "$($temp_path)\SongLinks\SongLinks-pg$($i).txt" -Force -Append
         $songIndex = $startIndex+$i*250
         write-host "[PAGE: $($i) | SONGS: $($indx)]" -ForegroundColor Green -NoNewline
         write-host " SongIndex = $($songIndex)" -ForegroundColor Red
         if($indx -lt 250){break}
     }##END## API PAGE LOOP ################################################
 
-    $songLinks | out-file ".\SongLinks\SongLinks-FULL.txt" -Force -Append
+    $songLinks | out-file "$($temp_path)\SongLinks\SongLinks-FULL.txt" -Force -Append
     #$pageCount += $songIndex | out-file H:\.midi\PageCount.txt -Force
 }
 
@@ -74,7 +88,7 @@ Search-Songsterr "Metallica - Enter Sandman"
 Author: Zanzo
 Date: 2022-03-01
 #>
-function Search-Songsterr($pattern, $startIndex = 0)
+function Search-Songsterr([string]$pattern, [int]$startIndex = 0)
 {
     $escString = [URI]::EscapeUriString($pattern)
     $data = ConvertTo-Json -InputObject (Invoke-RestMethod -Uri "https://www.songsterr.com/api/songs?size=250&pattern=$($escString)&from=$($startIndex)") -depth 10 
@@ -83,6 +97,26 @@ function Search-Songsterr($pattern, $startIndex = 0)
     return ConvertFrom-Json -InputObject $data -Depth 10
 }
 
+<#
+.SYNOPSIS
+Search for Songsterr tabs by artist name or song title.
+
+.DESCRIPTION
+This function searches the Songsterr API for tabs by artist name or song title, and returns a list of URLs to the tabs.
+
+.PARAMETER pattern
+The search query to use... aka the artist and/or song title to search for...
+
+.PARAMETER startIndex
+(Optional) The index in the search results to start from... Leave blank to start from the beginning.
+
+.EXAMPLE
+Search-SongsterrTabs "Metallica - Enter Sandman"
+
+.NOTES
+Author: Zanzo
+Date: 2022-03-01
+#>
 function Search-SongsterrTabs([string]$pattern, [int]$startIndex = 0)
 {
     $prefix = "http://www.songsterr.com/a/wsa/"
@@ -97,20 +131,20 @@ function Search-SongsterrTabs([string]$pattern, [int]$startIndex = 0)
     for($i=0; $i -lt $pageMax; $i++)
     {
         $webAPIDataPage = Invoke-RestMethod -Uri "$($apiURL)$($songIndex)" -UseBasicParsing
-        $results = ConvertFrom-Json -InputObject (ConvertTo-Json($webAPIDataPage) -Depth 10) | out-file ".\SearchResults_$($pattern)-pg$($i).json" -Force
+        $results = ConvertFrom-Json -InputObject (ConvertTo-Json($webAPIDataPage) -Depth 10) | out-file "$($temp_path)\SearchResults_$($pattern)-pg$($i).json" -Force
         write-host $results
         #loop through all songs in the JSON data...
         $indx = 0
         foreach($songJSON in $webAPIDataPage)
         {
             $songLinks += "$($prefix)$(CleanText($songJSON.artist))-$(CleanText($songJSON.title))-tab-s$($songJSON.songId)"
-            write-host "$($prefix)$(CleanText($songJSON.artist))-$(CleanText($songJSON.title))-tab-s$($songJSON.songId)" | out-file ".\songsterr_LINKS.txt" -Append -Force
+            write-host "$($prefix)$(CleanText($songJSON.artist))-$(CleanText($songJSON.title))-tab-s$($songJSON.songId)" | out-file "$($temp_path)\songsterr_LINKS.txt" -Append -Force
             $saveLinks = $songLinks
-            $saveLinks | out-file ".\SearchResults-pg$($i).txt" -Force -Append
+            $saveLinks | out-file "$($temp_path)\SearchResults-pg$($i).txt" -Force -Append
             $indx++
         }##END## SongJSON Loop ###############################################
         #add links from current API page to file...
-        $songLinks | out-file ".\SearchResults_$($pattern)-pg$($i).txt" -Force
+        $songLinks | out-file "$($temp_path)\SearchResults_$($pattern)-pg$($i).txt" -Force
         $songIndex = $startIndex+($i*250)+$indx
         write-host "[PAGE: $($i+1) | SONGS: $($indx)] " -ForegroundColor Green
         #write-host "$($songIndex) Tabs" -ForegroundColor Red
@@ -118,25 +152,36 @@ function Search-SongsterrTabs([string]$pattern, [int]$startIndex = 0)
         if($indx -lt 250){break}
     }##END## API PAGE LOOP ################################################
     write-host "Searched " -nonewline; write-host $sIndx -ForegroundColor Cyan -NoNewline; write-host " pages, with " -NoNewline; write-host $songIndex -ForegroundColor Cyan -NoNewline; write-host " tabs found." 
-    return $songLinks | out-file ".\SearchResults_$($pattern)-FULL.txt" -Force -Append
+    return $songLinks | out-file "$($temp_path)\SearchResults_$($pattern)-FULL.txt" -Force -Append
     #$pageCount += $songIndex | out-file H:\.midi\PageCount.txt -Force
     #return ConvertTo-Json -InputObject (invoke-restmethod -uri "https://www.songsterr.com/api/songs?size=250&from=0&pattern=$($pattern)") -depth 10 #| out-file TEMPFILE.json
 }
 #endregion
 
 
+#region Songsterr Get tabs by Artist Functions
+<#
+.SYNOPSIS
+Search for Songsterr tabs by artist name or song title.
 
-#region Get-SongsterrTabsByArtist
-########################################################
-## Search For Tabs By Artist Using Songsterr JSON API ##
-########################################################
-# Search for Songsterr Tabs by Artist Name or Song Title...
+.DESCRIPTION
+This function searches the Songsterr API for tabs by artist name or song title, and returns a list of URLs to the tabs.
+
+.PARAMETER artistName
+The name of the artist to search for.
+
+.EXAMPLE
+Get-SongsterrTabsByArtist -artistName "Metallica"
+
+.NOTES
+Author: Zanzo
+Date: 2022-03-01
+#>
 function Get-SongsterrTabsByArtist($artistName)
 {
     $results = @()
 
-    if($artistName -eq "")
-    {
+    if(!$artistName){
         $SearchString = read-host "Enter an Artist and/or Song to search for..."
     }else{
         $SearchString = $artistName
@@ -152,6 +197,7 @@ function Get-SongsterrTabsByArtist($artistName)
 
     ## The download information is stored in the "assets" section of the data
     $songs = $webJSON.assets #$SearchResultsData
+    write-host $songs
     #$SearchResultsData | Get-Member
 
     # Generate a http URL for each song...
@@ -161,38 +207,69 @@ function Get-SongsterrTabsByArtist($artistName)
         write-host "$(CleanText($song.artist))-$(CleanText($song.title))-tab-s$($song.songId)" | out-file "SearchResults_$($artistName).txt" -Force
         $results += "http://www.songsterr.com/a/wsa/$(CleanText($song.artist))-$(CleanText($song.title))-tab-s$($song.songId)"
     }
-    $results | out-file ".\SearchResults\$($SearchString).txt" -Force
+    $results | out-file "$($temp_path)\SearchResults\$($SearchString).txt" -Force
     
     return $results
 }
-# Get Songsterr tabs by multiple Artists from a .txt list of artists...
-function GetSongsterrTabsByArtistList($artistlist)
+
+<#
+.SYNOPSIS
+Search for Songsterr tabs by a list of artist names.
+
+.DESCRIPTION
+This function reads a list of artist names from a text file and searches the Songsterr API for tabs by each artist, returning a list of URLs to the tabs.
+
+.PARAMETER artistlist
+The path to the text file containing a list of artist names.
+
+.PARAMETER Verbose
+Switch to enable verbose output.
+
+.EXAMPLE
+GetSongsterrTabsByArtistList -artistlist "artists.txt"
+
+.NOTES
+Author: Zanzo
+Date: 2022-03-01
+#>
+function GetSongsterrTabsByArtistList([string]$artistlist, [switch]$Verbose)
 {
-    $list = gc $artistlist
+    $tabs = @()
+    $results = @()
+    $list = Get-Content $artistlist
     foreach($a in $list)
     {
-        Get-SongsterrTabsByArtist $a
+        $artistTabs = Get-SongsterrTabsByArtist $a
+        foreach($t in $artistTabs){
+            if($Verbose){write-host $t}
+            $tabs += $t
+        }
+        if($Verbose){write-host "Artist: $($a) | Tabs: $($artistTabs.Count)"}
+        $results += $artistTabs
     }
+    if($Verbose){write-host "Total Tabs: $($tabs.Count)"}
+    $tabs | out-file "$($temp_path)\SearchResults\SearchResults-FULL.txt" -Force -Append
+    return $results
 }
 #endregion
 
 
-#region OLD: Combine Search Results Functions
+#region OLD Combine Search Results Functions
 ##
 # Combine all search results in the ".\SearchResults\" directory
 function CombineAllSearchResults()
 {
     cd .\SearchResults
     $results = @()
-    $getSearchResults = gci .\* -Include *.txt
+    $getSearchResults = gci $($temp_path)\* -Include *.txt
     foreach($r in $getSearchResults)
     {
         $SearchData = gc $r
-        write-host $SearchData | out-file .\SearchData.txt -Append -Force
+        write-host $SearchData | out-file $($temp_path)\SearchData.txt -Append -Force
         $results += $SearchData 
     }
     cd ..
-    $results | out-file .\CombinedSearchResults.txt -Force
+    $results | out-file $($temp_path)\CombinedSearchResults.txt -Force
     
     return $results
 }
@@ -211,7 +288,7 @@ function GetCombinedSearchResultsTabData()
 #endregion
 
 
-#region Songsterr: Download Tab By SongID
+#region Songsterr Download Tab By SongID
 <#
 .SYNOPSIS
 Retrieves tab metadata from Songsterr API and downloads the Guitar Pro tab.
@@ -250,7 +327,7 @@ function DownloadTabBySongID([string]$SongID)
     $title = $revisionMetadata[0].title
 
     # Define the destination file path
-    $destinationPath = ".\Downloads\$($oldFilename)"
+    $destinationPath = "$($savedir)\SongsterrGPDownloader\$($oldFilename)"
     # Download the file
     Invoke-WebRequest -Uri $downloadUrl -OutFile $destinationPath
     # Define the new file name
@@ -263,7 +340,7 @@ function DownloadTabBySongID([string]$SongID)
 #endregion
 
 
-#region Songsterr: Get SongID from URL Functions
+#region Songsterr Get SongID from URL Functions
 $cookie = 'OrigRef=d3d3Lmdvb2dsZS5jb20=; _ga=GA1.2.563324618.1641686257; G_ENABLED_IDPS=google; __gads=ID=b5de266b76d30fa8:T=1641686257:S=ALNI_MZxgEGqVWRkMMew-r_CunkutRPrQg; SongsterrL=b0b18683873fd827048dff32450b36910f6bba9e8ef30a9f; cto_bundle=uLgR3V94aUdUbzhmQVpDeW1nR3NlbHlReThHJTJCNlBGSUNnZklXeVpQREluamU3RmZTR21vZEtTVXdmJTJCOEtIZnVIbU5iZiUyRndCeFFvbTEyS3NES21EOUJ5N2ZHJTJGJTJGSmI0MUdUTGNGbEpsTm94RDE0TnF4V2lBRXRjbUx2NHZTQ2N1R0pzclNZb1VrMFpHUmglMkZTd0s4cXN3U2dNSkElM0QlM0Q; ScrShwn-svws=true; LastRef=d3d3Lmdvb2dsZS5jb20=; EE_STORAGE=["video_walkthrough","comments_removal"]; lastSeenTrack=/a/wsa/falling-in-reverse-wait-and-see-half-solo-tab-s398766; experiments={"aa":"on","sound_v4":"off","comments_removal":"on","new_plus_banner":"off"}; _gid=GA1.2.1968037562.1656242890; amp_9121af=XrOZ72J_mkX5E6aGJkftn4.MjMyMDYzMA==..1g6gt3qtj.1g6gt93ho.2p.2p.5i; SongsterrT=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIyMzIwNjMwIiwiZW1haWwiOiJ6Q2xvbmVIZXJvQGdtYWlsLmNvbSIsIm5hbWUiOiJ6Q2xvbmVIZXJvIiwicGxhbiI6InBsdXMiLCJzdWJzY3JpcHRpb24iOnsic3RhdHVzIjoiYWN0aXZlIiwidHlwZSI6ImJyYWludHJlZSIsInN0YXJ0RGF0ZSI6IjIwMjItMDUtMDhUMDQ6NTE6MzQuMDAwWiIsImVuZERhdGUiOm51bGwsImNhbmNlbGxhdGlvbkRhdGUiOm51bGx9LCJzcmFfbGljZW5zZSI6Im5vbmUiLCJnb29nbGUiOiIxMDExNDgyNDE3ODYwODgwNDQxMzQiLCJpYXQiOjE2NTYyNzc2NjQsImlkIjoiMjMyMDYzMCJ9.e-cSj5xaosVcet1kNciKL2cxmiOu0lGlREz3HFNLhao'
 #$dlPrefix = 'https://d12drcwhcokzqv.cloudfront.net/'
 $dlPrefix = 'https://gp.songsterr.com/'
@@ -289,19 +366,19 @@ function GetSongIdFromURL([string]$url, [switch]$Verbose)
 }
 ##
 # Get multiple SongId's from a list of URL's...
-function GetSongIdsFromURLs($URLsList, $out_path=".\Files")
+function GetSongIdsFromURLs([string]$URLsList)
 {
-    $list = gc $URLsList
+    $list = Get-Content $URLsList
     foreach($u in $list)
     {
         [string]$sngID = GetSongIdFromURL $u 
-        $sngID.Replace("True", "").Replace("False", "").Remove(0,2) | out-file "$($out_path)\SongIdsFromUrls.txt" -Append -Force
+        $sngID.Replace("True", "").Replace("False", "").Remove(0,2) | out-file ".\SongIdsFromUrls.txt" -Append -Force
     }
 }
 #endregion
 
 
-#region Songsterr: MetaData Functions by SongID
+#region Songsterr MetaData Functions by SongID
 ## 
 # Get all download related metadata from a SongID...
 function Get-SongsterrDownloadData($songid)
@@ -403,7 +480,8 @@ function GetSongsterrDownloadURLs($SongIDs_List)
 #endregion
 
 
-#region Songsterr: Misc Utility Functions
+#region Misc Utility Functions
+###############################################
 # Convert artist/titles to their url equivalent
 function CleanText([string]$rawText)
 {
@@ -417,10 +495,12 @@ function CleanText([string]$rawText)
 
     return $goodText
 }
+#################################################
 #endregion
 
 
 #region YouTube-to-MP3 Functions
+###############################################
 <#
 .SYNOPSIS
 Get the YouTube-to-MP3 Download page URL from a YouTube VideoID.
@@ -437,45 +517,14 @@ Get-YouTubeMP3('9oWclEZprdc')
 function Get-YouTubeMP3([string]$vID)
 {
     #$ytVideoID = Get-Content "./savedata/official/youtube/$($SearchString).txt" #$videoIDorURL
-    return "https://y2hub.cc/enesto/download?src=query?url=$($vID)"
+    return "https://y2hub.cc/enesto/download?src=query&url=$($vID)"
 }
-###################################################
-## Get Songsterr SongID(s) from Songsterr URL(s) ##
-###################################################
-# Get SongId From URL...
-function GetSongIdFromURL([string]$url)
-{
-    $SongIdRegEx = "([a-zA-Z]+(-[a-zA-Z]+)+)"
-    $url -match "(tab-s[0-9]+)"
-    [string]$rawSongId = $Matches[1].ToString()
-    $fName = $url.Remove(0,31)
-    $fName -match "(-tab-s[0-9]+)"
-    [string]$cleanName = $fName.Replace($Matches[1].ToString(), "").ToString()
-    
-    
-    write-host $cleanName.Replace($Matches[1].ToString(), "") -ForegroundColor Green | out-file SongIdNames.txt -Append -Force
-    write-host $rawSongId.Replace("tab-s", "") -ForegroundColor Red
-
-    return [string]$rawSongId.Replace("tab-s", "")
-}
-
-# Get multiple SongId's from a list of URL's...
-function GetSongIdsFromURLs($URLsList, $out_path=".\Files")
-{
-    $list = gc $URLsList
-    foreach($u in $list)
-    {
-        [string]$sngID = GetSongIdFromURL $u 
-        $sngID.Replace("True", "").Replace("False", "").Remove(0,2) | out-file "$($out_path)\SongIdsFromUrls.txt" -Append -Force
-    }
-}
+#################################################
 #endregion
 
 
-#region UI/Display Functions
-########################################################################################################
-#### UI/DISPLAY RELATED FUNCTIONS #####
-#######################################
+#region UI/Display FUNCTIONS
+###############################################
 function TextBar($txt)
 {
     write-host "[ " -ForegroundColor Red -NoNewline
