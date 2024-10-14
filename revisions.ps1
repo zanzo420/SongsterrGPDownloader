@@ -15,20 +15,27 @@
     return $response
 }
 
-function Get-SongIdFromUrl($url)
+function Get-SongIdFromUrl([string]$url)
 {
     $result = $url -match '(?>.*\-tab\-s)(?<songid>[0-9]*)'
     return $matches['songid']
 }
 
-$sID = Get-SongIdFromUrl("https://www.songsterr.com/a/wsa/metallica-nothing-else-matters-drum-tab-s439171")
-$revisions = Get-RevisionsData($sID)
-
-write-host "`nTotal Revisions: " -nonewline; write-host ($revisions.count - 1) -ForegroundColor Cyan
-write-host "-------------------" -ForegroundColor Gray
-$indx = 0
-foreach($rev in $revisions){
-    write-host "[" -nonewline; write-host $($indx) -nonewline -ForegroundColor Green; write-host "] $($rev.revisionId)"
-    $indx++    
+function Get-TabRevisions([string]$url, [switch]$Verbose)
+{
+    $sID = Get-SongIdFromUrl($url)
+    $revisions = Get-RevisionsData($sID)
+    if($Verbose){
+        write-host "`nTotal Revisions: " -nonewline; write-host ($revisions.count - 1) -ForegroundColor Cyan
+        write-host "-------------------" -ForegroundColor Gray
+        $indx = 0
+        foreach($rev in $revisions){
+            write-host "[" -nonewline; write-host $($indx) -nonewline -ForegroundColor Green; write-host "] $($rev.revisionId)"
+            $indx++    
+        }
+        $revisions[0]
+    }
+    return $revisions
 }
-$revisions[0]
+
+#$s = Get-TabRevisions("https://www.songsterr.com/a/wsa/metallica-nothing-else-matters-drum-tab-s439171")
