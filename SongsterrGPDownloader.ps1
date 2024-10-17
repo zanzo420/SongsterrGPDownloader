@@ -51,10 +51,12 @@ function Get-SongsterrTabs($startIndex = 0)
         }##END## SongJSON Loop ###############################################
 
         #add links from current API page to file...
-        $songLinks | out-file "$($temp_path)\SongLinks\SongLinks-pg$($i).txt" -Force -Append
+        $saveLinks = $songLinks 
+        $saveLinks | out-file "$($temp_path)\SongLinks\SongLinks-pg$($i).txt" -Force -Append
         $songIndex = $startIndex+$i*250
         write-host "[PAGE: $($i) | SONGS: $($indx)]" -ForegroundColor Green -NoNewline
         write-host " SongIndex = $($songIndex)" -ForegroundColor Red
+        # End loop if less than 250 songs are found on the page...
         if($indx -lt 250){break}
     }##END## API PAGE LOOP ################################################
 
@@ -253,6 +255,7 @@ function GetSongsterrTabsByArtistList([string]$artistlist, [switch]$Verbose)
 }
 #endregion
 
+
 #region Songsterr Get Revisions Data Functions
 function Get-RevisionsData($SongID)
 {
@@ -271,16 +274,12 @@ function Get-RevisionsData($SongID)
     return $response
 }
 
-##
-function Get-SongIdFromUrl([string]$url)
-{
-    $result = $url -match '(?>.*\-tab\-s)(?<songid>[0-9]*)'
-    return $matches['songid']
-}
-
 function Get-TabRevisions([string]$url, [switch]$Verbose)
 {
-    $sID = Get-SongIdFromUrl($url)
+    # Get the Song ID from the URL
+    $result = $url -match '(?>.*\-tab\-s)(?<songid>[0-9]*)'
+    $sID = $matches['songid']
+    # Get the revision data for the Song ID
     $revisions = Get-RevisionsData($sID)
     if($Verbose){
         write-host "`nTotal Revisions: " -nonewline; write-host ($revisions.count - 1) -ForegroundColor Cyan
@@ -384,6 +383,14 @@ function DownloadTabBySongID([string]$SongID)
 
 
 #region Songsterr Get SongID from URL Functions
+##
+# Get SongId From URL...
+function Get-SongIdFromUrl([string]$url)
+{
+    $result = $url -match '(?>.*\-tab\-s)(?<songid>[0-9]*)'
+    return $matches['songid']
+}
+
 $cookie = 'OrigRef=d3d3Lmdvb2dsZS5jb20=; _ga=GA1.2.563324618.1641686257; G_ENABLED_IDPS=google; __gads=ID=b5de266b76d30fa8:T=1641686257:S=ALNI_MZxgEGqVWRkMMew-r_CunkutRPrQg; SongsterrL=b0b18683873fd827048dff32450b36910f6bba9e8ef30a9f; cto_bundle=uLgR3V94aUdUbzhmQVpDeW1nR3NlbHlReThHJTJCNlBGSUNnZklXeVpQREluamU3RmZTR21vZEtTVXdmJTJCOEtIZnVIbU5iZiUyRndCeFFvbTEyS3NES21EOUJ5N2ZHJTJGJTJGSmI0MUdUTGNGbEpsTm94RDE0TnF4V2lBRXRjbUx2NHZTQ2N1R0pzclNZb1VrMFpHUmglMkZTd0s4cXN3U2dNSkElM0QlM0Q; ScrShwn-svws=true; LastRef=d3d3Lmdvb2dsZS5jb20=; EE_STORAGE=["video_walkthrough","comments_removal"]; lastSeenTrack=/a/wsa/falling-in-reverse-wait-and-see-half-solo-tab-s398766; experiments={"aa":"on","sound_v4":"off","comments_removal":"on","new_plus_banner":"off"}; _gid=GA1.2.1968037562.1656242890; amp_9121af=XrOZ72J_mkX5E6aGJkftn4.MjMyMDYzMA==..1g6gt3qtj.1g6gt93ho.2p.2p.5i; SongsterrT=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIyMzIwNjMwIiwiZW1haWwiOiJ6Q2xvbmVIZXJvQGdtYWlsLmNvbSIsIm5hbWUiOiJ6Q2xvbmVIZXJvIiwicGxhbiI6InBsdXMiLCJzdWJzY3JpcHRpb24iOnsic3RhdHVzIjoiYWN0aXZlIiwidHlwZSI6ImJyYWludHJlZSIsInN0YXJ0RGF0ZSI6IjIwMjItMDUtMDhUMDQ6NTE6MzQuMDAwWiIsImVuZERhdGUiOm51bGwsImNhbmNlbGxhdGlvbkRhdGUiOm51bGx9LCJzcmFfbGljZW5zZSI6Im5vbmUiLCJnb29nbGUiOiIxMDExNDgyNDE3ODYwODgwNDQxMzQiLCJpYXQiOjE2NTYyNzc2NjQsImlkIjoiMjMyMDYzMCJ9.e-cSj5xaosVcet1kNciKL2cxmiOu0lGlREz3HFNLhao'
 #$dlPrefix = 'https://d12drcwhcokzqv.cloudfront.net/'
 $dlPrefix = 'https://gp.songsterr.com/'
@@ -392,7 +399,7 @@ $data = @()
 $fileData = @()
 
 ##
-# Get SongId From URL...
+# *OLD* Get SongId From URL...
 function GetSongIdFromURL([string]$url, [switch]$Verbose)
 {
     $SongIdRegEx = "([a-zA-Z]+(-[a-zA-Z]+)+)"
@@ -424,7 +431,7 @@ function GetSongIdsFromURLs([string]$URLsList)
 #region Songsterr MetaData Functions by SongID
 ## 
 # Get all download related metadata from a SongID...
-function Get-SongsterrDownloadData($songid)
+function Get-SongsterrDownloadData([int]$songid)
 {
     $R = Invoke-RestMethod -uri "https://songsterr.com/api/meta/$($songid)/revisions" #-OutFile H:\.midi\json.json
     
@@ -437,6 +444,7 @@ function Get-SongsterrDownloadData($songid)
     $fileExt = "$($R[0].source.SubString($R[0].source.Length - 3).Replace('.', ''))"
     $nFilename = "$($Artist) - $($Title).$($fileExt)" #| out-host
 
+    $data = @()
     $data += "$($R[0].revisionId)`n"
     $data += "$($R[0].title)`n"
     $data += "$($R[0].artist)`n"
@@ -444,7 +452,7 @@ function Get-SongsterrDownloadData($songid)
     $data += "$($nFilename)`n"
     $data 
 
-    return $data | out-file .\temp\songsterrData.txt -Append -Force
+    return $data #| out-file .\temp\songsterrData.txt -Append -Force
 }
 ##
 # Get a Download URL from a Songsterr SongID...
@@ -522,6 +530,7 @@ function GetSongsterrDownloadURLs($SongIDs_List)
 }
 #endregion
 
+
 #region SongsterrAI Generate Guitar Pro Tab Functions
 ##
 function Generate-SongsterrAITab([string]$title, [string]$artist, [string]$videoId)
@@ -554,6 +563,7 @@ function Generate-SongsterrAITab([string]$title, [string]$artist, [string]$video
   return $response.Content
 }
 #endregion
+
 
 #region Misc Utility Functions
 ###############################################

@@ -1,29 +1,22 @@
-function Get-TunebatData([string]$searchQuery, [switch]$extDetails, [switch]$Verbose)
+function Get-TunebatData([string]$SearchQuery, [switch]$extDetails, [switch]$Verbose)
 {
     try {
         # Validate the search query
-        if ([string]::IsNullOrWhiteSpace($searchQuery)) {
+        if ([string]::IsNullOrWhiteSpace($SearchQuery)) {
             throw [System.ArgumentException]::new("Search Query cannot be null or empty.")
         }
         # URL encode the search query for the API request
-		$encodedQuery = [URI]::EscapeUriString($searchQuery)
+		$encodedQuery = [URI]::EscapeUriString($SearchQuery)
         
 		# Define the API endpoint with the encoded search query
 		$apiUrl = "https://api.tunebat.com/api/tracks/search?term=$($encodedQuery)&page=1"
 
 		# Send the HTTP GET request to the API endpoint and get the response
-		$response = Invoke-WebRequest -UseBasicParsing -Uri "$($apiUrl)" -UserAgent "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:130.0) Gecko/20100101 Firefox/130.0" `
-		-Headers @{
-		"Accept" = "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/png,image/svg+xml,*/*;q=0.8"
-		"Accept-Language" = "en-US,en;q=0.5"
-		"Accept-Encoding" = "gzip, deflate, br, zstd"
-		"Upgrade-Insecure-Requests" = "1"
-		"Priority" = "u=0, i"
-		"Origin" = "https://tunebat.com"
-		}
+		$response = Invoke-RestMethod -UseBasicParsing -Uri "$($apiUrl)"
+        #$response = Invoke-WebRequest -UseBasicParsing -Uri "$($apiUrl)"
 
 		# Convert the response into a JSON object
-		$json = ConvertFrom-Json($response.Content)
+		$json = ConvertFrom-Json $response.Content
 
 		# Verify that the response contains results
 		if ($json.data.totalCount -gt 0) {
@@ -31,7 +24,7 @@ function Get-TunebatData([string]$searchQuery, [switch]$extDetails, [switch]$Ver
 			$topResult = $json.data.items[0]
 
             # Create a custom object from the extracted data
-            $songDetails = [PSCustomObject]@{
+            $SongDetails = [PSCustomObject]@{
                 TunebatID = $topResult.id #$id
                 SongName = $topResult.n
                 ArtistName = $artistName = $topResult.as[0]
@@ -61,27 +54,26 @@ function Get-TunebatData([string]$searchQuery, [switch]$extDetails, [switch]$Ver
             if($Verbose){
                 # Display the song details
                 Write-Host "`n---------------------------------------------------" -ForegroundColor Gray
-                Write-Host "Tunebat Search Result for " -nonewline -BackgroundColor Black; Write-Host $searchQuery -ForegroundColor Green -BackgroundColor Black
+                Write-Host "Tunebat Search Result for " -nonewline -BackgroundColor Black; Write-Host $SearchQuery -ForegroundColor Green -BackgroundColor Black
                 write-host "---------------------------------------------------" -ForegroundColor Gray
-                Write-Host "Title:`t" -nonewline; Write-Host "$($songName)" -foregroundcolor Green
-                Write-Host "Artist:`t" -nonewline; Write-Host "$($artistName)" -foregroundcolor Green
-                if($extDetails){ Write-Host "Album:`t" -nonewline; Write-Host "$($album)" -foregroundcolor Green -NoNewline; Write-Host " (" -nonewline; Write-Host "$($releaseDate)" -foregroundcolor DarkGreen -NoNewline; Write-Host ")" }
-                Write-Host "Key:`t" -nonewline; Write-Host "$($key)" -foregroundcolor Green -NoNewline; write-host " (" -nonewline; write-host "$($key.Replace(' Minor','m').Replace(' Major',''))" -ForegroundColor Green -NoNewline; write-host ") $($keyValue)"
-                Write-Host "Tempo:`t" -nonewline; Write-Host "$($tempo)" -foregroundcolor Green 
-                if($extDetails){ Write-Host "Popularity:`t" -nonewline; Write-Host "$($popularity)" -foregroundcolor Green; Write-Host "Album Art:`t" -nonewline; Write-Host "$($coverImage)" -foregroundcolor Green }
+                Write-Host "Title:`t" -nonewline; Write-Host "$($SongDetails.SongName)" -foregroundcolor Green
+                Write-Host "Artist:`t" -nonewline; Write-Host "$($SongDetails.artistName)" -foregroundcolor Green
+                if($extDetails){ Write-Host "Album:`t" -nonewline; Write-Host "$($SongDetails.album)" -foregroundcolor Green -NoNewline; Write-Host " (" -nonewline; Write-Host "$($SongDetails.releaseDate)" -foregroundcolor DarkGreen -NoNewline; Write-Host ")" }
+                Write-Host "Key:`t" -nonewline; Write-Host "$($SongDetails.key)" -foregroundcolor Green -NoNewline; write-host " (" -nonewline; write-host "$($SongDetails.key.Replace(' Minor','m').Replace(' Major',''))" -ForegroundColor Green -NoNewline; write-host ") $($SongDetails.keyValue)"
+                Write-Host "Tempo:`t" -nonewline; Write-Host "$($SongDetails.tempo)" -foregroundcolor Green 
+                if($extDetails){ Write-Host "Popularity:`t" -nonewline; Write-Host "$($SongDetails.popularity)" -foregroundcolor Green; Write-Host "Album Art:`t" -nonewline; Write-Host "$($SongDetails.coverImage)" -foregroundcolor Green }
             }
-            return $songDetails
+            return $SongDetails
 		}else{
-            if($Verbose){ Write-Host "No results found for the search query: " -nonewline; Write-Host $searchQuery -foregroundcolor Red }
+            if($Verbose){ Write-Host "No results found for the search query: " -nonewline; Write-Host $SearchQuery -foregroundcolor Red }
             return $null
 		}
     }
     catch { 
-        Write-Error "An error occurred: $_"
+        Write-Error "An error occurred: $($_)"
         return $null
     }
 }
 
-<# $ss = Get-TunebatData "Bad Omens - Just Pretend" -Verbose -extDetails
-$t = "https://api.tunebat.com/api/tracks?trackid=$($ss.TunebatID)"
-$t #>
+$ss = Get-TunebatData -SearchQuery "Bad Omens - Just Pretend" #-Verbose -extDetails
+$ss
