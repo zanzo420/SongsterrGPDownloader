@@ -164,10 +164,10 @@ function Search-SongsterrTabs([string]$pattern, [int]$startIndex = 0)
 #region Songsterr Get tabs by Artist Functions
 <#
 .SYNOPSIS
-Search for Songsterr tabs by artist name or song title.
+Search for Songsterr tabs by artist name.
 
 .DESCRIPTION
-This function searches the Songsterr API for tabs by artist name or song title, and returns a list of URLs to the tabs.
+This function searches the Songsterr API for tabs by artist name, and returns a list of URLs to the tabs.
 
 .PARAMETER artistName
 The name of the artist to search for.
@@ -257,6 +257,26 @@ function GetSongsterrTabsByArtistList([string]$artistlist, [switch]$Verbose)
 
 
 #region Songsterr Get Revisions Data Functions
+<#
+.SYNOPSIS
+Retrieves the revision data for a Songsterr tab.
+
+.DESCRIPTION
+This function retrieves the revision data for a Songsterr tab using the Songsterr API.
+
+.PARAMETER SongID
+The Songsterr song ID for the tab.
+
+.PARAMETER Verbose
+Switch to enable verbose output.
+
+.EXAMPLE
+Get-RevisionsData "534532"
+
+.NOTES
+Author: Zanzo
+Date: 2022-03-01
+#>
 function Get-RevisionsData($SongID)
 {
     $session = New-Object Microsoft.PowerShell.Commands.WebRequestSession
@@ -274,6 +294,26 @@ function Get-RevisionsData($SongID)
     return $response
 }
 
+<#
+.SYNOPSIS
+Retrieves the revision data for a Songsterr tab.
+
+.DESCRIPTION
+This function retrieves the revision data for a Songsterr tab using the Songsterr API.
+
+.PARAMETER url
+The URL of the Songsterr tab.
+
+.PARAMETER Verbose
+Switch to enable verbose output.
+
+.EXAMPLE
+Get-TabRevisions "https://www.songsterr.com/a/wsa/metallica-enter-sandman-tab-s534532"
+
+.NOTES
+Author: Zanzo
+Date: 2022-03-01
+#>
 function Get-TabRevisions([string]$url, [switch]$Verbose)
 {
     # Get the Song ID from the URL
@@ -299,6 +339,19 @@ function Get-TabRevisions([string]$url, [switch]$Verbose)
 #region OLD Combine Search Results Functions
 ##
 # Combine all search results in the ".\SearchResults\" directory
+<#
+.SYNOPSIS
+Combine all search results in the ".\SearchResults\" directory.
+
+.DESCRIPTION
+This function combines all search results in the ".\SearchResults\" directory into a single text file.
+
+.EXAMPLE
+CombineAllSearchResults
+
+.NOTES
+Author: Zanzo
+#>
 function CombineAllSearchResults()
 {
     cd .\SearchResults
@@ -315,6 +368,19 @@ function CombineAllSearchResults()
     
     return $results
 }
+<#
+.SYNOPSIS
+Combine all search results in the ".\SearchResults\" directory.
+
+.DESCRIPTION
+This function combines all search results in the ".\SearchResults\" directory into a single text file.
+
+.EXAMPLE
+CombineAllSearchResults
+
+.NOTES
+Author: Zanzo
+#>
 function GetCombinedSearchResultsTabData()
 {
     write-host "Getting SongID's from CombinedSearchResults.txt..."
@@ -385,6 +451,23 @@ function DownloadTabBySongID([string]$SongID)
 #region Songsterr Get SongID from URL Functions
 ##
 # Get SongId From URL...
+<#
+.SYNOPSIS
+Get the SongID from a Songsterr tab URL.
+
+.DESCRIPTION
+This function extracts the SongID from a Songsterr tab URL.
+
+.PARAMETER url
+The URL of the Songsterr tab.
+
+.EXAMPLE
+Get-SongIdFromUrl "https://www.songsterr.com/a/wsa/metallica-enter-sandman-tab-s534532"
+
+.NOTES
+Author: Zanzo
+Date: 2022-03-01
+#>
 function Get-SongIdFromUrl([string]$url)
 {
     $result = $url -match '(?>.*\-tab\-s)(?<songid>[0-9]*)'
@@ -400,6 +483,27 @@ $fileData = @()
 
 ##
 # *OLD* Get SongId From URL...
+<#
+.SYNOPSIS
+Get the SongID from a Songsterr tab URL.
+
+.DESCRIPTION
+This function extracts the SongID from a Songsterr tab URL.
+
+.PARAMETER url
+The URL of the Songsterr tab.
+
+.PARAMETER Verbose
+Switch to enable verbose output.
+
+.EXAMPLE
+Get-SongIdFromUrl "https://www.songsterr.com/a/wsa/metallica-enter-sandman-tab-s534532"
+
+.NOTES
+*Use the newer version of this function instead.*
+Author: Zanzo
+Date: 2022-03-01
+#>
 function GetSongIdFromURL([string]$url, [switch]$Verbose)
 {
     $SongIdRegEx = "([a-zA-Z]+(-[a-zA-Z]+)+)"
@@ -416,6 +520,23 @@ function GetSongIdFromURL([string]$url, [switch]$Verbose)
 }
 ##
 # Get multiple SongId's from a list of URL's...
+<#
+.SYNOPSIS
+Get the SongID from a list of Songsterr tab URLs.
+
+.DESCRIPTION
+This function extracts the SongID from a list of Songsterr tab URLs.
+
+.PARAMETER URLsList
+The path to the text file containing a list of Songsterr tab URLs.
+
+.EXAMPLE
+GetSongIdsFromURLs "SongsterrURLs.txt"
+
+.NOTES
+Author: Zanzo
+Date: 2022-03-01
+#>
 function GetSongIdsFromURLs([string]$URLsList)
 {
     $list = Get-Content $URLsList
@@ -431,6 +552,24 @@ function GetSongIdsFromURLs([string]$URLsList)
 #region Songsterr MetaData Functions by SongID
 ## 
 # Get all download related metadata from a SongID...
+<#
+.SYNOPSIS
+Get the download metadata for a Songsterr tab using the Songsterr API.
+
+.DESCRIPTION
+This function retrieves the download metadata for a Songsterr tab using the Songsterr API.
+
+.PARAMETER SongID
+The Songsterr song ID for the tab.
+
+.EXAMPLE
+Get-SongsterrDownloadData -SongID "534532"
+
+.NOTES
+Author: Zanzo
+Date: 2022-03-01
+Revised: 2024-09-21
+#>
 function Get-SongsterrDownloadData([int]$songid)
 {
     $R = Invoke-RestMethod -uri "https://songsterr.com/api/meta/$($songid)/revisions" #-OutFile H:\.midi\json.json
@@ -456,6 +595,23 @@ function Get-SongsterrDownloadData([int]$songid)
 }
 ##
 # Get a Download URL from a Songsterr SongID...
+<#
+.SYNOPSIS
+Get the download URL for a Songsterr tab using the Songsterr API.
+
+.DESCRIPTION
+This function retrieves the download URL for a Songsterr tab using the Songsterr API.
+
+.PARAMETER SongID
+The Songsterr song ID for the tab.
+
+.EXAMPLE
+GetSongsterrDownloadURL -SongID "534532"
+
+.NOTES
+Author: Zanzo
+Date: 2022-03-01
+#>
 function GetSongsterrDownloadURL($songid)
 {
     $R = Invoke-RestMethod -uri "https://songsterr.com/api/meta/$($songid)/revisions" #-OutFile H:\.midi\json.json
@@ -465,6 +621,23 @@ function GetSongsterrDownloadURL($songid)
 }
 ##
 # Get the latest Revision ID from a Songsterr SongID...
+<#
+.SYNOPSIS
+Get the latest revision ID for a Songsterr tab using the Songsterr API.
+
+.DESCRIPTION
+This function retrieves the latest revision ID for a Songsterr tab using the Songsterr API.
+
+.PARAMETER SongID
+The Songsterr song ID for the tab.
+
+.EXAMPLE
+GetSongsterrRevisionID -SongID "534532"
+
+.NOTES
+Author: Zanzo
+Date: 2022-03-01
+#>
 function GetSongsterrRevisionID($songid)
 {
     $R = Invoke-RestMethod -uri "https://songsterr.com/api/meta/$($songid)/revisions" #-OutFile H:\.midi\json.json
@@ -474,6 +647,23 @@ function GetSongsterrRevisionID($songid)
 }
 ##
 # Get the Song Title from a Songsterr SongID...
+<#
+.SYNOPSIS
+Get the title of a Songsterr tab using the Songsterr API.
+
+.DESCRIPTION
+This function retrieves the title of a Songsterr tab using the Songsterr API.
+
+.PARAMETER SongID
+The Songsterr song ID for the tab.
+
+.EXAMPLE
+GetSongsterrTitle -SongID "534532"
+
+.NOTES
+Author: Zanzo
+Date: 2022-03-01
+#>
 function GetSongsterrTitle($songid)
 {
     $R = Invoke-RestMethod -uri "https://songsterr.com/api/meta/$($songid)/revisions" #-OutFile H:\.midi\json.json
@@ -483,6 +673,23 @@ function GetSongsterrTitle($songid)
 }
 ##
 # Get the Artist Name from a Songsterr SongID...
+<#
+.SYNOPSIS
+Get the artist name of a Songsterr tab using the Songsterr API.
+
+.DESCRIPTION
+This function retrieves the artist name of a Songsterr tab using the Songsterr API.
+
+.PARAMETER SongID
+The Songsterr song ID for the tab.
+
+.EXAMPLE
+GetSongsterrArtist -SongID "534532"
+
+.NOTES
+Author: Zanzo
+Date: 2022-03-01
+#>
 function GetSongsterrArtist($songid)
 {
     $R = Invoke-RestMethod -uri "https://songsterr.com/api/meta/$($songid)/revisions" #-OutFile H:\.midi\json.json
@@ -492,6 +699,23 @@ function GetSongsterrArtist($songid)
 }
 ##
 # Get the Tracks from a Songsterr SongID...
+<#
+.SYNOPSIS
+Get the tracks of a Songsterr tab using the Songsterr API.
+
+.DESCRIPTION
+This function retrieves the tracks of a Songsterr tab using the Songsterr API.
+
+.PARAMETER SongID
+The Songsterr song ID for the tab.
+
+.EXAMPLE
+GetSongsterrTracks -SongID "534532"
+
+.NOTES
+Author: Zanzo
+Date: 2022-03-01
+#>
 function GetSongsterrTracks($songid)
 {
     $R = Invoke-RestMethod -uri "https://songsterr.com/api/meta/$($songid)/revisions" #-OutFile H:\.midi\json.json
@@ -501,6 +725,23 @@ function GetSongsterrTracks($songid)
 }
 ##
 # Get the Artist and SongTitle from a Songsterr SongID...
+<#
+.SYNOPSIS
+Get the artist and title of a Songsterr tab using the Songsterr API.
+
+.DESCRIPTION
+This function retrieves the artist and title of a Songsterr tab using the Songsterr API.
+
+.PARAMETER SongID
+The Songsterr song ID for the tab.
+
+.EXAMPLE
+GetSongsterrArtistAndTitle -SongID "534532"
+
+.NOTES
+Author: Zanzo
+Date: 2022-03-01
+#>
 function GetSongsterrArtistAndTitle($songid)
 {
     $dlUrlPrefix = 'https://gp.songsterr.com/'
@@ -515,6 +756,23 @@ function GetSongsterrArtistAndTitle($songid)
 }
 ##
 # Get the Download URL's from a list of SongID's...
+<#
+.SYNOPSIS
+Get the download URL's for a list of Songsterr tabs using the Songsterr API.
+
+.DESCRIPTION
+This function retrieves the download URL's for a list of Songsterr tabs using the Songsterr API.
+
+.PARAMETER SongID
+The Songsterr song ID for the tab.
+
+.EXAMPLE
+GetSongsterrDownloadURLs "SongIds.txt"
+
+.NOTES
+Author: Zanzo
+Date: 2022-03-01
+#>
 function GetSongsterrDownloadURLs($SongIDs_List)
 {
     write-host "Getting Songsterr download URL's from SongId list file: " -NoNewLine; write-host $SongIDs_List -ForegroundColor Green -NoNewline; write-host "...`n"
@@ -532,7 +790,23 @@ function GetSongsterrDownloadURLs($SongIDs_List)
 
 
 #region SongsterrAI Generate Guitar Pro Tab Functions
-##
+<#
+.SYNOPSIS
+Generate a Guitar Pro tab from a YouTube video using the Songsterr AI API.
+
+.DESCRIPTION
+This function generates a Guitar Pro tab from a YouTube video using the Songsterr AI API.
+
+.PARAMETER SongID
+The Songsterr song ID for the tab.
+
+.EXAMPLE
+Generate-SongsterrAITab "534532"
+
+.NOTES
+Author: Zanzo
+Date: 2022-03-01
+#>
 function Generate-SongsterrAITab([string]$title, [string]$artist, [string]$videoId)
 {
   $session = New-Object Microsoft.PowerShell.Commands.WebRequestSession
@@ -568,6 +842,23 @@ function Generate-SongsterrAITab([string]$title, [string]$artist, [string]$video
 #region Misc Utility Functions
 ###############################################
 # Convert artist/titles to their url equivalent
+<#
+.SYNOPSIS
+Convert a string to a URL-friendly format.
+
+.DESCRIPTION
+This function converts a string to a URL-friendly format by replacing spaces with hyphens and removing special characters.
+
+.PARAMETER rawText
+The raw text to convert.
+
+.EXAMPLE
+CleanText "Metallica - Enter Sandman"
+
+.NOTES
+Author: Zanzo
+Date: 2022-03-01
+#>
 function CleanText([string]$rawText)
 {
     $cText = $rawText.Replace(" ", "-")
@@ -610,28 +901,109 @@ function Get-YouTubeMP3([string]$vID)
 
 #region UI/Display FUNCTIONS
 ###############################################
+<#
+.SYNOPSIS
+Display a text bar.
+
+.DESCRIPTION
+This function displays a text bar with the specified text.
+
+.PARAMETER txt
+The text to display in the text bar.
+
+.EXAMPLE
+TextBar "Downloading tabs..."
+
+.NOTES
+Author: Zanzo
+#>
 function TextBar($txt)
 {
     write-host "[ " -ForegroundColor Red -NoNewline
     write-host $txt -ForegroundColor DarkRed -NoNewline
     write-host " ]" -ForegroundColor Red -NoNewline
 }
+<#
+.SYNOPSIS
+Display a text bar with a title and text.
+
+.DESCRIPTION
+This function displays a text bar with the specified title and text.
+
+.PARAMETER txt
+The text to display in the text bar.
+
+.EXAMPLE
+TextBar "Downloading tabs..."
+
+.NOTES
+Author: Zanzo
+#>
 function TextBarW($txt)
 {
     write-host "[ " -ForegroundColor Red -BackgroundColor Black -NoNewline
     write-host $txt -ForegroundColor DarkRed -BackgroundColor Black -NoNewline
     write-host " ]" -ForegroundColor Red -BackgroundColor Black -NoNewline
 }
+<#
+.SYNOPSIS
+Display a text bar with a title and text.
+
+.DESCRIPTION
+This function displays a text bar with the specified title and text.
+
+.PARAMETER title
+The title to display in the text bar.
+
+.PARAMETER txt
+The text to display in the text bar.
+
+.EXAMPLE
+TextBarL "Downloading tabs..." "Metallica"
+
+.NOTES
+Author: Zanzo
+#>
 function TextBarL($title, $txt)
 {
     TextBarW($title); write-host " $($txt)"
 }
+<#
+.SYNOPSIS
+Display a text log message.
 
+.DESCRIPTION
+This function displays a text log message with the specified text.
+
+.PARAMETER txt
+The text to display in the log message.
+
+.EXAMPLE
+TextLog "Downloading tabs..."
+
+.NOTES
+Author: Zanzo
+Date: 2022-03-01
+#>
 function TextLog($txt)
 {
     TextBar("SongsterrGPDownloader"); write-host " $($txt)"
 }
 
+<#
+.SYNOPSIS
+Display a banner
+
+.DESCRIPTION
+This function displays a banner with the text "zRocksmith Utilities" in red.
+
+.EXAMPLE
+uiBanner
+
+.NOTES
+Author: Zanzo
+Date: 2022-03-01
+#>
 function uiBanner()
 {
     write-host ""
@@ -644,6 +1016,22 @@ function uiBanner()
     write-host ' ]|' -ForegroundColor Red -BackgroundColor Black
     write-host
 }
+<#
+.SYNOPSIS
+Display text with a zRS prefix.
+
+.DESCRIPTION
+This function displays text with a zRS prefix.
+
+.PARAMETER txt
+The text to display.
+
+.EXAMPLE
+uiText "Downloading tabs..."
+
+.NOTES
+Author: Zanzo
+#>
 function uiText($txt)
 {
     write-host ""
@@ -652,6 +1040,22 @@ function uiText($txt)
     write-host ']' -ForegroundColor Red -BackgroundColor Black -NoNewline
     write-host " $($txt)"
 }
+<#
+.SYNOPSIS
+Display a banner with text.
+
+.DESCRIPTION
+This function displays a banner with the specified text.
+
+.PARAMETER txt
+The text to display in the banner.
+
+.EXAMPLE
+uiBannerText "Hello, World!"
+
+.NOTES
+Author: Zanzo
+#>
 function uiBannerText($txt)
 {
     write-host ""
@@ -662,6 +1066,26 @@ function uiBannerText($txt)
     write-host ' ]||' -ForegroundColor Red -BackgroundColor Black
     write-host " $($txt)"
 }
+<#
+.SYNOPSIS
+Display a banner with text in a specified color.
+
+.DESCRIPTION
+This function displays a banner with the specified text in the specified color.
+
+.PARAMETER txt
+The text to display in the banner.
+
+.PARAMETER color
+The color of the text in the banner.
+
+.EXAMPLE
+uiBannerText "Hello, World!" "Green"
+
+.NOTES
+Author: Zanzo
+Date: 2022-03-01
+#>
 function uiBannerText($txt, [System.ConsoleColor]$color = "White")
 {
     write-host ""
