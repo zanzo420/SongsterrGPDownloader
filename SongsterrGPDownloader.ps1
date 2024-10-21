@@ -923,6 +923,7 @@ function TextBar($txt)
     write-host $txt -ForegroundColor DarkRed -NoNewline
     write-host " ]" -ForegroundColor Red -NoNewline
 }
+
 <#
 .SYNOPSIS
 Display a text bar with a title and text.
@@ -945,6 +946,7 @@ function TextBarW($txt)
     write-host $txt -ForegroundColor DarkRed -BackgroundColor Black -NoNewline
     write-host " ]" -ForegroundColor Red -BackgroundColor Black -NoNewline
 }
+
 <#
 .SYNOPSIS
 Display a text bar with a title and text.
@@ -968,6 +970,7 @@ function TextBarL($title, $txt)
 {
     TextBarW($title); write-host " $($txt)"
 }
+
 <#
 .SYNOPSIS
 Display a text log message.
@@ -1016,6 +1019,7 @@ function uiBanner()
     write-host ' ]|' -ForegroundColor Red -BackgroundColor Black
     write-host
 }
+
 <#
 .SYNOPSIS
 Display text with a zRS prefix.
@@ -1040,6 +1044,7 @@ function uiText($txt)
     write-host ']' -ForegroundColor Red -BackgroundColor Black -NoNewline
     write-host " $($txt)"
 }
+
 <#
 .SYNOPSIS
 Display a banner with text.
@@ -1066,6 +1071,7 @@ function uiBannerText($txt)
     write-host ' ]||' -ForegroundColor Red -BackgroundColor Black
     write-host " $($txt)"
 }
+
 <#
 .SYNOPSIS
 Display a banner with text in a specified color.
@@ -1096,3 +1102,4 @@ function uiBannerText($txt, [System.ConsoleColor]$color = "White")
     write-host ' ]||' -ForegroundColor Red -BackgroundColor Black
 }
 #endregion
+

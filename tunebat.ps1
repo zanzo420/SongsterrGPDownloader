@@ -1,3 +1,60 @@
+<#
+.SYNOPSIS
+Open a Tunebat search for a given query.
+
+.DESCRIPTION
+This function opens a web browser to the Tunebat search page with the specified search query. The search query is URL-encoded before being appended to the Tunebat search URL.
+
+.PARAMETER SearchQuery
+The search query to be used in the Tunebat search.
+
+.EXAMPLE
+Open-Tunebat "Bad Omens - Just Pretend"
+
+.NOTES
+Author: Zanzo
+#>
+function Open-Tunebat([string]$SearchQuery)
+{
+    write-host "Opening Tunebat search for: " -nonewline; write-host $SearchQuery -foregroundcolor Green
+    $url = "https://www.tunebat.com/Search?q=$([URI]::EscapeUriString($SearchQuery))"
+    Start-Process $url
+}
+
+function Open-TunebatSearch([string]$Artist, [string]$Title)
+{
+    [string]$SearchQuery = "$($Artist) - $($Title)"
+    $escQuery = [URI]::EscapeUriString($SearchQuery)
+    write-host "Opening Tunebat search for: " -nonewline; write-host $SearchQuery -foregroundcolor Green
+    $url = "https://www.tunebat.com/Search?q=$($escQuery)"
+    Start-Process msedge $url
+}
+
+Open-TunebatSearch -Artist "Bad Omens" -Title "Just Pretend"
+
+<#
+.SYNOPSIS
+Get Tunebat data for a given search query.
+
+.DESCRIPTION
+This function retrieves Tunebat data for a given search query. It sends an HTTP GET request to the Tunebat API with the search query and retrieves the top search result. The function then extracts relevant data from the search result and returns it as a custom object.
+
+.PARAMETER SearchQuery
+The search query to be sent to the Tunebat API.
+
+.PARAMETER extDetails
+Switch to include extended details in the output.
+
+.PARAMETER Verbose
+Switch to enable verbose output.
+
+.EXAMPLE
+Get-TunebatData -SearchQuery "Bad Omens - Just Pretend" -Verbose -extDetails
+
+.NOTES
+Author: Zanzo
+Date: 2022-03-01
+#>
 function Get-TunebatData([string]$SearchQuery, [switch]$extDetails, [switch]$Verbose)
 {
     try {

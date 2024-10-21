@@ -5,4 +5,4 @@ function Convert-WinForm([string]$Source, [string]$Destination)
 	Convert-Form -Path $Source -Destination $Destination -Encoding ascii -force
 }
 
-Convert-WinForm -Source "C:\Users\Zanzo\source\repos\WinForms2Powershell-GUI\frmMain.Designer.cs" -Destination "D:\GitHub\WinForms2Powershell-GUI\"
+Convert-WinForm -Source "C:\Users\Zanzo\source\repos\SongsterrGPDownloader-GUI\frmMain.Designer.cs" -Destination "D:\GitHub\SongsterrGPDownloader\gui\"

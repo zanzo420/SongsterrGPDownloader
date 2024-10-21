@@ -1,0 +1,101 @@
+[
+  {
+    "songId": 577356,
+    "artistId": 55942,
+    "artist": "Bad Omens",
+    "title": "Just Pretend",
+    "hasChords": false,
+    "hasPlayer": true,
+    "tracks": [
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 38,
+        "name": "Rhythm Guitar",
+        "tuning": [
+          60,
+          55,
+          51,
+          46,
+          41,
+          34
+        ],
+        "difficulty": 2,
+        "hash": "guitar_0BqOUKae"
+      },
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 18,
+        "name": "Lead Guitar 1",
+        "tuning": [
+          60,
+          55,
+          51,
+          46,
+          41,
+          34
+        ],
+        "difficulty": 2,
+        "hash": "guitar_C4Wt1kjg"
+      },
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 11,
+        "name": "Lead Guitar 2",
+        "tuning": [
+          60,
+          55,
+          51,
+          46,
+          41,
+          34
+        ],
+        "difficulty": 2,
+        "hash": "guitar_2PZMYdiM"
+      },
+      {
+        "instrumentId": 27,
+        "instrument": "Electric Guitar (clean)",
+        "views": 15,
+        "name": "Clean Guitar",
+        "tuning": [
+          60,
+          55,
+          51,
+          46,
+          41,
+          34
+        ],
+        "difficulty": 1,
+        "hash": "guitar_Ha5Io7gq"
+      },
+      {
+        "instrumentId": 33,
+        "instrument": "Electric Bass (finger)",
+        "views": 33,
+        "name": "",
+        "tuning": [
+          39,
+          34,
+          29,
+          22
+        ],
+        "hash": "bass_HfikUASn"
+      },
+      {
+        "instrumentId": 1024,
+        "instrument": "Drums",
+        "views": 107,
+        "name": "",
+        "hash": "drums_f5PnOP79"
+      }
+    ],
+    "defaultTrack": 5,
+    "popularTrack": 5,
+    "popularTrackGuitar": 0,
+    "popularTrackBass": 4,
+    "popularTrackDrum": 5
+  }
+]

@@ -1,0 +1,3224 @@
+[
+  {
+    "songId": 654392,
+    "artistId": 106892,
+    "artist": "Bad Omens ft. poppy",
+    "title": "VAN",
+    "hasChords": false,
+    "hasPlayer": true,
+    "tracks": [
+      {
+        "instrumentId": 1024,
+        "instrument": "Drums",
+        "views": 6,
+        "name": "",
+        "hash": "drums_elz7f1FL"
+      },
+      {
+        "instrumentId": 34,
+        "instrument": "Electric Bass (pick)",
+        "views": 22,
+        "name": "",
+        "tuning": [
+          41,
+          36,
+          31,
+          24
+        ],
+        "hash": "bass_kPUcZPTI"
+      },
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 0,
+        "name": "",
+        "tuning": [
+          62,
+          57,
+          53,
+          48,
+          43,
+          36
+        ],
+        "difficulty": 2,
+        "hash": "guitar_dGPJW9dY"
+      },
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 2686,
+        "name": "",
+        "tuning": [
+          62,
+          57,
+          53,
+          48,
+          43,
+          36
+        ],
+        "difficulty": 2,
+        "hash": "guitar_tXwhzGbT"
+      }
+    ],
+    "defaultTrack": 3,
+    "popularTrack": 3,
+    "popularTrackGuitar": 3,
+    "popularTrackBass": 1,
+    "popularTrackDrum": 0
+  },
+  {
+    "songId": 501996,
+    "artistId": 55942,
+    "artist": "Bad Omens",
+    "title": "Like A Villain",
+    "hasChords": false,
+    "hasPlayer": true,
+    "tracks": [
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 787,
+        "name": "",
+        "tuning": [
+          59,
+          54,
+          50,
+          45,
+          40,
+          33
+        ],
+        "difficulty": 2,
+        "hash": "guitar_PFK6xbSw"
+      },
+      {
+        "instrumentId": 33,
+        "instrument": "Electric Bass (finger)",
+        "views": 172,
+        "name": "",
+        "tuning": [
+          38,
+          33,
+          28,
+          21
+        ],
+        "hash": "bass_upp4eR8y"
+      },
+      {
+        "instrumentId": 1024,
+        "instrument": "Drums",
+        "views": 93,
+        "name": "",
+        "hash": "drums_eYxsXeP1"
+      },
+      {
+        "instrumentId": 1024,
+        "instrument": "Drums",
+        "views": 0,
+        "name": "Electronic Drums",
+        "hash": "drums_mmIHl7pa"
+      }
+    ],
+    "defaultTrack": 0,
+    "popularTrack": 0,
+    "popularTrackGuitar": 0,
+    "popularTrackBass": 1,
+    "popularTrackDrum": 2
+  },
+  {
+    "songId": 483047,
+    "artistId": 55942,
+    "artist": "Bad Omens",
+    "title": "Dethrone",
+    "hasChords": false,
+    "hasPlayer": true,
+    "tracks": [
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 3370,
+        "name": "Dist. Guitar(Left)",
+        "tuning": [
+          60,
+          55,
+          51,
+          46,
+          41,
+          34
+        ],
+        "difficulty": 4,
+        "hash": "guitar_Ia0ef8W5"
+      },
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 178,
+        "name": "Dist. Guitar(Right)",
+        "tuning": [
+          60,
+          55,
+          51,
+          46,
+          41,
+          34
+        ],
+        "difficulty": 4,
+        "hash": "guitar_VW6DRvex"
+      },
+      {
+        "instrumentId": 33,
+        "instrument": "Electric Bass (finger)",
+        "views": 414,
+        "name": "Electric Bass",
+        "tuning": [
+          39,
+          34,
+          29,
+          22
+        ],
+        "hash": "bass_iXdJ5pkE"
+      },
+      {
+        "instrumentId": 1024,
+        "instrument": "Drums",
+        "views": 403,
+        "name": "Drumkit",
+        "hash": "drums_gYB6pKTB"
+      }
+    ],
+    "defaultTrack": 0,
+    "popularTrack": 0,
+    "popularTrackGuitar": 0,
+    "popularTrackBass": 2,
+    "popularTrackDrum": 3
+  },
+  {
+    "songId": 529442,
+    "artistId": 55942,
+    "artist": "Bad Omens",
+    "title": "Artificial Suicide",
+    "hasChords": false,
+    "hasPlayer": true,
+    "tracks": [
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 1683,
+        "name": "Rhythm Guitar",
+        "tuning": [
+          52,
+          47,
+          43,
+          38,
+          33,
+          28
+        ],
+        "difficulty": 2,
+        "hash": "guitar_tJCNkLR1"
+      },
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 1,
+        "name": "Muted Guitar",
+        "tuning": [
+          52,
+          47,
+          43,
+          38,
+          33,
+          28
+        ],
+        "difficulty": 2,
+        "hash": "guitar_mIXRXCSU"
+      },
+      {
+        "instrumentId": 33,
+        "instrument": "Electric Bass (finger)",
+        "views": 97,
+        "name": "Electric Bass",
+        "tuning": [
+          31,
+          26,
+          21,
+          16
+        ],
+        "hash": "bass_j1m0Gb5m"
+      },
+      {
+        "instrumentId": 81,
+        "instrument": "Lead 2 (sawtooth)",
+        "views": 12,
+        "name": "Lead Synth",
+        "tuning": [
+          54,
+          49,
+          45,
+          40,
+          35,
+          28
+        ],
+        "hash": "other_jpxt9cr4"
+      },
+      {
+        "instrumentId": 80,
+        "instrument": "Lead 1 (square)",
+        "views": 0,
+        "name": "Bass Synth",
+        "tuning": [
+          45,
+          40,
+          35,
+          28
+        ],
+        "hash": "other_CtywDD5p"
+      },
+      {
+        "instrumentId": 1024,
+        "instrument": "Drums",
+        "views": 524,
+        "name": "Drumkit",
+        "hash": "drums_DZdiWAN4"
+      }
+    ],
+    "defaultTrack": 0,
+    "popularTrack": 0,
+    "popularTrackGuitar": 0,
+    "popularTrackBass": 2,
+    "popularTrackDrum": 5
+  },
+  {
+    "songId": 577356,
+    "artistId": 55942,
+    "artist": "Bad Omens",
+    "title": "Just Pretend",
+    "hasChords": false,
+    "hasPlayer": true,
+    "tracks": [
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 38,
+        "name": "Rhythm Guitar",
+        "tuning": [
+          60,
+          55,
+          51,
+          46,
+          41,
+          34
+        ],
+        "difficulty": 2,
+        "hash": "guitar_0BqOUKae"
+      },
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 18,
+        "name": "Lead Guitar 1",
+        "tuning": [
+          60,
+          55,
+          51,
+          46,
+          41,
+          34
+        ],
+        "difficulty": 2,
+        "hash": "guitar_C4Wt1kjg"
+      },
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 11,
+        "name": "Lead Guitar 2",
+        "tuning": [
+          60,
+          55,
+          51,
+          46,
+          41,
+          34
+        ],
+        "difficulty": 2,
+        "hash": "guitar_2PZMYdiM"
+      },
+      {
+        "instrumentId": 27,
+        "instrument": "Electric Guitar (clean)",
+        "views": 15,
+        "name": "Clean Guitar",
+        "tuning": [
+          60,
+          55,
+          51,
+          46,
+          41,
+          34
+        ],
+        "difficulty": 1,
+        "hash": "guitar_Ha5Io7gq"
+      },
+      {
+        "instrumentId": 33,
+        "instrument": "Electric Bass (finger)",
+        "views": 33,
+        "name": "",
+        "tuning": [
+          39,
+          34,
+          29,
+          22
+        ],
+        "hash": "bass_HfikUASn"
+      },
+      {
+        "instrumentId": 1024,
+        "instrument": "Drums",
+        "views": 107,
+        "name": "",
+        "hash": "drums_f5PnOP79"
+      }
+    ],
+    "defaultTrack": 5,
+    "popularTrack": 5,
+    "popularTrackGuitar": 0,
+    "popularTrackBass": 4,
+    "popularTrackDrum": 5
+  },
+  {
+    "songId": 516141,
+    "artistId": 55942,
+    "artist": "Bad Omens",
+    "title": "The Grey",
+    "hasChords": false,
+    "hasPlayer": true,
+    "tracks": [
+      {
+        "instrumentId": 27,
+        "instrument": "Electric Guitar (clean)",
+        "views": 19,
+        "name": "Clean Guitar",
+        "tuning": [
+          59,
+          54,
+          50,
+          47,
+          40,
+          35,
+          28
+        ],
+        "difficulty": 2,
+        "hash": "guitar_CR13Q9GV"
+      },
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 392,
+        "name": "",
+        "tuning": [
+          59,
+          54,
+          50,
+          47,
+          40,
+          35,
+          28
+        ],
+        "difficulty": 3,
+        "hash": "guitar_qAr6DiUd"
+      },
+      {
+        "instrumentId": 29,
+        "instrument": "Overdriven Guitar",
+        "views": 13,
+        "name": "",
+        "tuning": [
+          59,
+          54,
+          50,
+          47,
+          40,
+          35,
+          28
+        ],
+        "difficulty": 2,
+        "hash": "guitar_SA5YSTSA"
+      },
+      {
+        "instrumentId": 33,
+        "instrument": "Electric Bass (finger)",
+        "views": 23,
+        "name": "",
+        "tuning": [
+          38,
+          35,
+          28,
+          23,
+          16
+        ],
+        "hash": "bass_3nGyWwUn"
+      },
+      {
+        "instrumentId": 0,
+        "instrument": "Acoustic Grand Piano",
+        "views": 6,
+        "name": "Acoustic Piano",
+        "tuning": [
+          64,
+          59,
+          55,
+          50,
+          45,
+          40
+        ],
+        "hash": "other_t6OVaYUc"
+      },
+      {
+        "instrumentId": 1024,
+        "instrument": "Drums",
+        "views": 62,
+        "name": "",
+        "hash": "drums_zadGO9AD"
+      }
+    ],
+    "defaultTrack": 1,
+    "popularTrack": 1,
+    "popularTrackGuitar": 1,
+    "popularTrackBass": 3,
+    "popularTrackDrum": 5
+  },
+  {
+    "songId": 502561,
+    "artistId": 55942,
+    "artist": "Bad Omens",
+    "title": "Glass Houses",
+    "hasChords": false,
+    "hasPlayer": true,
+    "tracks": [
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 145,
+        "name": "Lead Guitar",
+        "tuning": [
+          60,
+          55,
+          51,
+          46,
+          41,
+          34
+        ],
+        "difficulty": 2,
+        "hash": "guitar_lMn85cuP"
+      },
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 1522,
+        "name": "Rhythm Guitar(Right)",
+        "tuning": [
+          60,
+          55,
+          51,
+          46,
+          41,
+          34
+        ],
+        "difficulty": 4,
+        "hash": "guitar_u994tgNk"
+      },
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 34,
+        "name": "Rhythm Guitar(Left)",
+        "tuning": [
+          60,
+          55,
+          51,
+          46,
+          41,
+          34
+        ],
+        "difficulty": 4,
+        "hash": "guitar_Z8LU3ncp"
+      },
+      {
+        "instrumentId": 33,
+        "instrument": "Electric Bass (finger)",
+        "views": 125,
+        "name": "Electric Bass",
+        "tuning": [
+          39,
+          34,
+          29,
+          22
+        ],
+        "hash": "bass_AcAU5H3y"
+      },
+      {
+        "instrumentId": 1024,
+        "instrument": "Drums",
+        "views": 215,
+        "name": "Drumkit",
+        "hash": "drums_IB4nFLlj"
+      },
+      {
+        "instrumentId": 0,
+        "instrument": "Acoustic Grand Piano",
+        "views": 59,
+        "name": "Acoustic Piano",
+        "tuning": [
+          62,
+          57,
+          53,
+          48,
+          43,
+          36
+        ],
+        "hash": "other_e1wwWJl4"
+      }
+    ],
+    "defaultTrack": 1,
+    "popularTrack": 1,
+    "popularTrackGuitar": 1,
+    "popularTrackBass": 3,
+    "popularTrackDrum": 4
+  },
+  {
+    "songId": 433187,
+    "artistId": 55942,
+    "artist": "Bad Omens",
+    "title": "The Worst In Me",
+    "hasChords": false,
+    "hasPlayer": true,
+    "tracks": [
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 782,
+        "name": "Rhythm Guitar",
+        "tuning": [
+          61,
+          56,
+          52,
+          47,
+          42,
+          35
+        ],
+        "difficulty": 3,
+        "hash": "guitar_Hyci37HT"
+      },
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 120,
+        "name": "Lead Guitar (Dist.)",
+        "tuning": [
+          61,
+          56,
+          52,
+          47,
+          42,
+          35
+        ],
+        "difficulty": 2,
+        "hash": "guitar_7mLPa6VV"
+      },
+      {
+        "instrumentId": 27,
+        "instrument": "Electric Guitar (clean)",
+        "views": 165,
+        "name": "Lead Guitar (Clean)",
+        "tuning": [
+          61,
+          56,
+          52,
+          47,
+          42,
+          35
+        ],
+        "difficulty": 3,
+        "hash": "guitar_xtxACEkX"
+      },
+      {
+        "instrumentId": 26,
+        "instrument": "Electric Guitar (jazz)",
+        "views": 13,
+        "name": "Lead Guitar (Light Dist.)",
+        "tuning": [
+          61,
+          56,
+          52,
+          47,
+          42,
+          35
+        ],
+        "difficulty": 4,
+        "hash": "guitar_ukCPwmpq"
+      },
+      {
+        "instrumentId": 33,
+        "instrument": "Electric Bass (finger)",
+        "views": 57,
+        "name": "Electric Bass",
+        "tuning": [
+          40,
+          35,
+          30,
+          23
+        ],
+        "hash": "bass_mG3gyukn"
+      },
+      {
+        "instrumentId": 0,
+        "instrument": "Acoustic Grand Piano",
+        "views": 56,
+        "name": "Acoustic Piano",
+        "tuning": [
+          61,
+          56,
+          52,
+          47,
+          42,
+          35
+        ],
+        "hash": "other_BDr6TPFt"
+      },
+      {
+        "instrumentId": 42,
+        "instrument": "Cello",
+        "views": 14,
+        "name": "Cello",
+        "tuning": [
+          56,
+          49,
+          42,
+          35
+        ],
+        "hash": "other_OjW5lRS5"
+      },
+      {
+        "instrumentId": 1024,
+        "instrument": "Drums",
+        "views": 50,
+        "name": "Drumkit",
+        "hash": "drums_JiQYi5EI"
+      }
+    ],
+    "defaultTrack": 0,
+    "popularTrack": 0,
+    "popularTrackGuitar": 0,
+    "popularTrackBass": 4,
+    "popularTrackDrum": 7
+  },
+  {
+    "songId": 577494,
+    "artistId": 55942,
+    "artist": "Bad Omens",
+    "title": "The Death Of Peace Of Mind",
+    "hasChords": false,
+    "hasPlayer": true,
+    "tracks": [
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 50,
+        "name": "Rhythm Guitar",
+        "tuning": [
+          60,
+          55,
+          51,
+          46,
+          41,
+          36,
+          29
+        ],
+        "difficulty": 2,
+        "hash": "guitar_bPhMbhf8"
+      },
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 1,
+        "name": "Lead Guitar 1",
+        "tuning": [
+          60,
+          55,
+          51,
+          46,
+          41,
+          36,
+          29
+        ],
+        "difficulty": 2,
+        "hash": "guitar_xbd7RyKx"
+      },
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 0,
+        "name": "Lead Guitar 2",
+        "tuning": [
+          60,
+          55,
+          51,
+          46,
+          41,
+          36,
+          29
+        ],
+        "difficulty": 2,
+        "hash": "guitar_4X1OJaPS"
+      },
+      {
+        "instrumentId": 27,
+        "instrument": "Electric Guitar (clean)",
+        "views": 0,
+        "name": "Clean Guitar",
+        "tuning": [
+          60,
+          55,
+          51,
+          46,
+          41,
+          36,
+          29
+        ],
+        "difficulty": 2,
+        "hash": "guitar_s852otJ8"
+      },
+      {
+        "instrumentId": 33,
+        "instrument": "Electric Bass (finger)",
+        "views": 2,
+        "name": "",
+        "tuning": [
+          39,
+          34,
+          29,
+          24,
+          17
+        ],
+        "hash": "bass_AisvIbJp"
+      },
+      {
+        "instrumentId": 89,
+        "instrument": "Pad 2 (warm)",
+        "views": 0,
+        "name": "Pad Synthesizer",
+        "tuning": [
+          67,
+          63,
+          58,
+          53,
+          48,
+          41
+        ],
+        "hash": "other_rj5sZyQU"
+      },
+      {
+        "instrumentId": 1024,
+        "instrument": "Drums",
+        "views": 48,
+        "name": "",
+        "hash": "drums_1zhUf3gB"
+      }
+    ],
+    "defaultTrack": 0,
+    "popularTrack": 0,
+    "popularTrackGuitar": 0,
+    "popularTrackBass": 4,
+    "popularTrackDrum": 6
+  },
+  {
+    "songId": 564238,
+    "artistId": 55942,
+    "artist": "Bad Omens",
+    "title": "Limits",
+    "hasChords": false,
+    "hasPlayer": true,
+    "tracks": [
+      {
+        "instrumentId": 29,
+        "instrument": "Overdriven Guitar",
+        "views": 1871,
+        "name": "Guitar A",
+        "tuning": [
+          59,
+          54,
+          50,
+          45,
+          40,
+          33
+        ],
+        "difficulty": 2,
+        "hash": "guitar_kInaK8d7"
+      },
+      {
+        "instrumentId": 29,
+        "instrument": "Overdriven Guitar",
+        "views": 81,
+        "name": "Guitar B",
+        "tuning": [
+          59,
+          54,
+          50,
+          45,
+          40,
+          33
+        ],
+        "difficulty": 2,
+        "hash": "guitar_gtgoJDgI"
+      },
+      {
+        "instrumentId": 29,
+        "instrument": "Overdriven Guitar",
+        "views": 113,
+        "name": "Guitar C",
+        "tuning": [
+          59,
+          54,
+          50,
+          45,
+          40,
+          33
+        ],
+        "difficulty": 2,
+        "hash": "guitar_pgbAphdZ"
+      },
+      {
+        "instrumentId": 33,
+        "instrument": "Electric Bass (finger)",
+        "views": 157,
+        "name": "Bass",
+        "tuning": [
+          47,
+          30,
+          25,
+          18
+        ],
+        "hash": "bass_9ViEZqsj"
+      },
+      {
+        "instrumentId": 1024,
+        "instrument": "Drums",
+        "views": 158,
+        "name": "Drums",
+        "hash": "drums_sAihPegh"
+      },
+      {
+        "instrumentId": 102,
+        "instrument": "FX 7 (echoes)",
+        "views": 1,
+        "name": "Synthesizer (Left Hand)",
+        "tuning": [
+          64,
+          59,
+          55,
+          50,
+          45,
+          40
+        ],
+        "hash": "other_sLSIkFTy"
+      },
+      {
+        "instrumentId": 102,
+        "instrument": "FX 7 (echoes)",
+        "views": 5,
+        "name": "Synthesizer (Right Hand)",
+        "tuning": [
+          43,
+          38,
+          33,
+          28
+        ],
+        "hash": "other_iomZUDvR"
+      }
+    ],
+    "defaultTrack": 0,
+    "popularTrack": 0,
+    "popularTrackGuitar": 0,
+    "popularTrackBass": 3,
+    "popularTrackDrum": 4
+  },
+  {
+    "songId": 643972,
+    "artistId": 55942,
+    "artist": "Bad Omens",
+    "title": "If I'm There",
+    "hasChords": false,
+    "hasPlayer": true,
+    "tracks": [
+      {
+        "instrumentId": 1024,
+        "instrument": "Drums",
+        "views": 391,
+        "name": "Drums",
+        "hash": "drums_4UKsRJTV"
+      },
+      {
+        "instrumentId": 33,
+        "instrument": "Electric Bass (finger)",
+        "views": 5,
+        "name": "Bass ",
+        "tuning": [
+          38,
+          33,
+          28,
+          21
+        ],
+        "hash": "bass_fMrOmJ1o"
+      },
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 111,
+        "name": "Rhythm Guitar",
+        "tuning": [
+          59,
+          54,
+          50,
+          45,
+          40,
+          33
+        ],
+        "difficulty": 2,
+        "hash": "guitar_FjyTYlsQ"
+      },
+      {
+        "instrumentId": 27,
+        "instrument": "Electric Guitar (clean)",
+        "views": 13,
+        "name": "Clean Guitar",
+        "tuning": [
+          59,
+          54,
+          50,
+          45,
+          40,
+          33
+        ],
+        "difficulty": 2,
+        "hash": "guitar_ugCFC2om"
+      },
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 4,
+        "name": "Lead Guitar 1",
+        "tuning": [
+          59,
+          54,
+          50,
+          45,
+          40,
+          33
+        ],
+        "difficulty": 2,
+        "hash": "guitar_TUVoYhI5"
+      },
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 2,
+        "name": "Lead Guitar 2",
+        "tuning": [
+          59,
+          54,
+          50,
+          45,
+          40,
+          33
+        ],
+        "difficulty": 2,
+        "hash": "guitar_82qEKDjQ"
+      }
+    ],
+    "defaultTrack": 0,
+    "popularTrack": 0,
+    "popularTrackGuitar": 2,
+    "popularTrackBass": 1,
+    "popularTrackDrum": 0
+  },
+  {
+    "songId": 594257,
+    "artistId": 55942,
+    "artist": "Bad Omens",
+    "title": "Nowhere To Go",
+    "hasChords": false,
+    "hasPlayer": true,
+    "tracks": [
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 372,
+        "name": "Guitar 1",
+        "tuning": [
+          56,
+          51,
+          47,
+          42,
+          37,
+          30
+        ],
+        "difficulty": 2,
+        "hash": "guitar_YlQyffdR"
+      },
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 18,
+        "name": "Guitar 2",
+        "tuning": [
+          56,
+          51,
+          47,
+          42,
+          37,
+          30
+        ],
+        "difficulty": 2,
+        "hash": "guitar_qXu6FdXV"
+      },
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 38,
+        "name": "Guitar 3",
+        "tuning": [
+          56,
+          51,
+          47,
+          42,
+          37,
+          30
+        ],
+        "difficulty": 2,
+        "hash": "guitar_j7A9lZlS"
+      },
+      {
+        "instrumentId": 1024,
+        "instrument": "Drums",
+        "views": 80,
+        "name": "Drums",
+        "hash": "drums_HJ3HJSEs"
+      }
+    ],
+    "defaultTrack": 0,
+    "popularTrack": 0,
+    "popularTrackGuitar": 0,
+    "popularTrackDrum": 3
+  },
+  {
+    "songId": 586782,
+    "artistId": 55942,
+    "artist": "Bad Omens",
+    "title": "V.A.N",
+    "hasChords": false,
+    "hasPlayer": true,
+    "tracks": [
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 893,
+        "name": "Track 1",
+        "tuning": [
+          62,
+          57,
+          53,
+          48,
+          43,
+          36
+        ],
+        "difficulty": 3,
+        "hash": "guitar_E9Z5Tojk"
+      }
+    ],
+    "defaultTrack": 0,
+    "popularTrack": 0,
+    "popularTrackGuitar": 0
+  },
+  {
+    "songId": 647914,
+    "artistId": 55942,
+    "artist": "Bad Omens",
+    "title": "CONCRETE JUNGLE",
+    "hasChords": false,
+    "hasPlayer": true,
+    "tracks": [
+      {
+        "instrumentId": 27,
+        "instrument": "Electric Guitar (clean)",
+        "views": 0,
+        "name": "Joakim Karlsson",
+        "tuning": [
+          60,
+          55,
+          51,
+          46,
+          41,
+          34
+        ],
+        "difficulty": 4,
+        "hash": "guitar_0xEgWhlb"
+      },
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 64,
+        "name": "Joakim Karlsson",
+        "tuning": [
+          60,
+          55,
+          51,
+          46,
+          41,
+          34
+        ],
+        "difficulty": 3,
+        "hash": "guitar_8I0QMkc2"
+      },
+      {
+        "instrumentId": 1024,
+        "instrument": "Drums",
+        "views": 3,
+        "name": "Drum Synth",
+        "hash": "drums_ycWcpdMu"
+      },
+      {
+        "instrumentId": 1024,
+        "instrument": "Drums",
+        "views": 0,
+        "name": "Hand Clap",
+        "hash": "drums_VLPnWxAi"
+      },
+      {
+        "instrumentId": 119,
+        "instrument": "Reverse Cymbal",
+        "views": 0,
+        "name": "FX",
+        "tuning": [
+          64,
+          59,
+          55,
+          50,
+          45,
+          40
+        ],
+        "hash": "other_prUs7Pkd"
+      },
+      {
+        "instrumentId": 1024,
+        "instrument": "Drums",
+        "views": 23,
+        "name": "Nick Folio | Drum Kit",
+        "hash": "drums_GeV88pyf"
+      },
+      {
+        "instrumentId": 29,
+        "instrument": "Overdriven Guitar",
+        "views": 0,
+        "name": "Joakim Karlsson | 8-bit effect",
+        "tuning": [
+          60,
+          55,
+          51,
+          46,
+          41,
+          34
+        ],
+        "difficulty": 4,
+        "hash": "guitar_5g7n3sTR"
+      },
+      {
+        "instrumentId": 34,
+        "instrument": "Electric Bass (pick)",
+        "views": 5,
+        "name": "Nicholas Ruffilo | Bass",
+        "tuning": [
+          39,
+          34,
+          29,
+          22
+        ],
+        "hash": "bass_qvnbPrwC"
+      },
+      {
+        "instrumentId": 81,
+        "instrument": "Lead 2 (sawtooth)",
+        "views": 0,
+        "name": "Synth 1",
+        "tuning": [
+          60,
+          55,
+          51,
+          46,
+          41,
+          34
+        ],
+        "hash": "other_vZdB9QiN"
+      },
+      {
+        "instrumentId": 9,
+        "instrument": "Glockenspiel",
+        "views": 0,
+        "name": "Synth 2",
+        "tuning": [
+          58,
+          53,
+          49,
+          44,
+          39,
+          32
+        ],
+        "hash": "other_GW3jFeFH"
+      },
+      {
+        "instrumentId": 71,
+        "instrument": "Clarinet",
+        "views": 0,
+        "name": "Vocals | Noah Sebastian",
+        "tuning": [
+          60,
+          55,
+          51,
+          46,
+          41,
+          34
+        ],
+        "hash": "vocals_d5zoYsqo"
+      },
+      {
+        "instrumentId": 81,
+        "instrument": "Lead 2 (sawtooth)",
+        "views": 0,
+        "name": "Synth 3",
+        "tuning": [
+          60,
+          55,
+          51,
+          46,
+          41,
+          34
+        ],
+        "hash": "other_E9jT8V3F"
+      },
+      {
+        "instrumentId": 50,
+        "instrument": "SynthStrings 1",
+        "views": 0,
+        "name": "Synth 4",
+        "tuning": [
+          60,
+          55,
+          51,
+          46,
+          41,
+          34
+        ],
+        "hash": "other_Ov99TvB9"
+      },
+      {
+        "instrumentId": 42,
+        "instrument": "Cello",
+        "views": 0,
+        "name": "Cello Sample",
+        "tuning": [
+          60,
+          55,
+          51,
+          46,
+          41,
+          34
+        ],
+        "hash": "other_Jufx5QNf"
+      },
+      {
+        "instrumentId": 39,
+        "instrument": "Synth Bass 2",
+        "views": 0,
+        "name": "Synth Bass 1",
+        "tuning": [
+          39,
+          34,
+          29,
+          22
+        ],
+        "hash": "bass_MUZXvfje"
+      },
+      {
+        "instrumentId": 81,
+        "instrument": "Lead 2 (sawtooth)",
+        "views": 0,
+        "name": "Synth Bass 2",
+        "tuning": [
+          39,
+          34,
+          29,
+          22
+        ],
+        "hash": "other_oThEgXgL"
+      }
+    ],
+    "defaultTrack": 1,
+    "popularTrack": 1,
+    "popularTrackGuitar": 1,
+    "popularTrackBass": 7,
+    "popularTrackDrum": 5
+  },
+  {
+    "songId": 673129,
+    "artistId": 55942,
+    "artist": "Bad Omens",
+    "title": "IDWT$",
+    "hasChords": false,
+    "hasPlayer": true,
+    "tracks": [
+      {
+        "instrumentId": 2,
+        "instrument": "Electric Grand Piano",
+        "views": 0,
+        "name": "Electric Piano",
+        "tuning": [
+          64,
+          59,
+          55,
+          50,
+          45,
+          40
+        ],
+        "hash": "other_0UspS6zj"
+      },
+      {
+        "instrumentId": 49,
+        "instrument": "String Ensemble 2",
+        "views": 0,
+        "name": "Violin",
+        "tuning": [
+          64,
+          59,
+          55,
+          50,
+          45,
+          40
+        ],
+        "hash": "other_SwLBwLCY"
+      },
+      {
+        "instrumentId": 96,
+        "instrument": "FX 1 (rain)",
+        "views": 0,
+        "name": "Sequencer Synthesizer",
+        "tuning": [
+          64,
+          59,
+          55,
+          50,
+          45,
+          40
+        ],
+        "hash": "other_PRWB7dfl"
+      },
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 0,
+        "name": "Harmonics",
+        "tuning": [
+          60,
+          55,
+          51,
+          46,
+          41,
+          36,
+          29
+        ],
+        "difficulty": 3,
+        "hash": "guitar_ZpbDfai6"
+      },
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 3,
+        "name": "",
+        "tuning": [
+          60,
+          55,
+          51,
+          46,
+          41,
+          36,
+          29
+        ],
+        "difficulty": 2,
+        "hash": "guitar_p6FhhEJy"
+      },
+      {
+        "instrumentId": 52,
+        "instrument": "Choir Aahs",
+        "views": 0,
+        "name": "",
+        "tuning": [
+          64,
+          59,
+          55,
+          50,
+          45,
+          40
+        ],
+        "hash": "other_4A4r4v7m"
+      },
+      {
+        "instrumentId": 38,
+        "instrument": "Synth Bass 1",
+        "views": 0,
+        "name": "Bass Synthesizer",
+        "tuning": [
+          57,
+          53,
+          48,
+          43,
+          38,
+          33,
+          26
+        ],
+        "hash": "bass_20RC5hcn"
+      },
+      {
+        "instrumentId": 33,
+        "instrument": "Electric Bass (finger)",
+        "views": 125,
+        "name": "",
+        "tuning": [
+          43,
+          38,
+          33,
+          26
+        ],
+        "hash": "bass_36h8x947"
+      },
+      {
+        "instrumentId": 1024,
+        "instrument": "Drums",
+        "views": 0,
+        "name": "",
+        "hash": "drums_yS3yptGK"
+      },
+      {
+        "instrumentId": 1024,
+        "instrument": "Drums",
+        "views": 0,
+        "name": "Electronic Drums",
+        "hash": "drums_T7BAIAuh"
+      }
+    ],
+    "defaultTrack": 7,
+    "popularTrack": 7,
+    "popularTrackGuitar": 4,
+    "popularTrackBass": 7,
+    "popularTrackDrum": 8
+  },
+  {
+    "songId": 434993,
+    "artistId": 55942,
+    "artist": "Bad Omens",
+    "title": "Broken Youth",
+    "hasChords": false,
+    "hasPlayer": true,
+    "tracks": [
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 4,
+        "name": "Rhythm Guitar (Left)",
+        "tuning": [
+          60,
+          55,
+          51,
+          46,
+          41,
+          34
+        ],
+        "difficulty": 3,
+        "hash": "guitar_ktJ2EvWG"
+      },
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 314,
+        "name": "Rhythm Guitar (Right)",
+        "tuning": [
+          60,
+          55,
+          51,
+          46,
+          41,
+          34
+        ],
+        "difficulty": 3,
+        "hash": "guitar_bU7SMGpT"
+      },
+      {
+        "instrumentId": 33,
+        "instrument": "Electric Bass (finger)",
+        "views": 11,
+        "name": "Electric Bass",
+        "tuning": [
+          39,
+          34,
+          29,
+          22
+        ],
+        "hash": "bass_HArJBTzb"
+      },
+      {
+        "instrumentId": 1024,
+        "instrument": "Drums",
+        "views": 1,
+        "name": "Drums",
+        "hash": "drums_Up8XImpN"
+      }
+    ],
+    "defaultTrack": 1,
+    "popularTrack": 1,
+    "popularTrackGuitar": 1,
+    "popularTrackBass": 2,
+    "popularTrackDrum": 3
+  },
+  {
+    "songId": 448388,
+    "artistId": 55942,
+    "artist": "Bad Omens",
+    "title": "The Hell I Overcame",
+    "hasChords": false,
+    "hasPlayer": true,
+    "tracks": [
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 352,
+        "name": "Guitar 1",
+        "tuning": [
+          60,
+          55,
+          51,
+          46,
+          41,
+          34
+        ],
+        "difficulty": 3,
+        "hash": "guitar_KiGDvqoJ"
+      },
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 18,
+        "name": "Guitar 2",
+        "tuning": [
+          60,
+          55,
+          51,
+          46,
+          41,
+          34
+        ],
+        "difficulty": 4,
+        "hash": "guitar_9jGAi8TJ"
+      },
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 217,
+        "name": "Guitar 3",
+        "tuning": [
+          60,
+          55,
+          51,
+          46,
+          41,
+          34
+        ],
+        "difficulty": 3,
+        "hash": "guitar_c2EujnMJ"
+      }
+    ],
+    "defaultTrack": 0,
+    "popularTrack": 0,
+    "popularTrackGuitar": 0
+  },
+  {
+    "songId": 581475,
+    "artistId": 55942,
+    "artist": "Bad Omens",
+    "title": "Never Know",
+    "hasChords": false,
+    "hasPlayer": true,
+    "tracks": [
+      {
+        "instrumentId": 27,
+        "instrument": "Electric Guitar (clean)",
+        "views": 83,
+        "name": "Clean Guitar 1",
+        "tuning": [
+          59,
+          54,
+          50,
+          45,
+          40,
+          33
+        ],
+        "difficulty": 2,
+        "hash": "guitar_qtIHPN8b"
+      },
+      {
+        "instrumentId": 27,
+        "instrument": "Electric Guitar (clean)",
+        "views": 19,
+        "name": "Clean Guitar 2",
+        "tuning": [
+          59,
+          54,
+          50,
+          45,
+          40,
+          33
+        ],
+        "difficulty": 2,
+        "hash": "guitar_T1DOYXNR"
+      },
+      {
+        "instrumentId": 27,
+        "instrument": "Electric Guitar (clean)",
+        "views": 0,
+        "name": "Clean Guitar 3",
+        "tuning": [
+          59,
+          54,
+          50,
+          45,
+          40,
+          33
+        ],
+        "difficulty": 2,
+        "hash": "guitar_kahKKAXF"
+      },
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 128,
+        "name": "Rhythm Guitar",
+        "tuning": [
+          59,
+          54,
+          50,
+          45,
+          40,
+          33
+        ],
+        "difficulty": 2,
+        "hash": "guitar_nbM8LwVX"
+      },
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 2,
+        "name": "Lead Guitar 1",
+        "tuning": [
+          59,
+          54,
+          50,
+          45,
+          40,
+          33
+        ],
+        "difficulty": 2,
+        "hash": "guitar_67g8BRT8"
+      },
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 32,
+        "name": "Lead Guitar 2",
+        "tuning": [
+          59,
+          54,
+          50,
+          45,
+          40,
+          33
+        ],
+        "difficulty": 3,
+        "hash": "guitar_OEDu943k"
+      },
+      {
+        "instrumentId": 33,
+        "instrument": "Electric Bass (finger)",
+        "views": 14,
+        "name": "Electric Bass",
+        "tuning": [
+          38,
+          33,
+          28,
+          21
+        ],
+        "hash": "bass_PruQCfFL"
+      }
+    ],
+    "defaultTrack": 3,
+    "popularTrack": 3,
+    "popularTrackGuitar": 3,
+    "popularTrackBass": 6
+  },
+  {
+    "songId": 594260,
+    "artistId": 55942,
+    "artist": "Bad Omens",
+    "title": "Take Me First",
+    "hasChords": false,
+    "hasPlayer": true,
+    "tracks": [
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 96,
+        "name": "Guitar 1",
+        "tuning": [
+          61,
+          56,
+          52,
+          47,
+          42,
+          35
+        ],
+        "difficulty": 2,
+        "hash": "guitar_Bb1EAGYA"
+      },
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 77,
+        "name": "Guitar 2",
+        "tuning": [
+          61,
+          56,
+          52,
+          47,
+          42,
+          35
+        ],
+        "difficulty": 3,
+        "hash": "guitar_t1tQcZtT"
+      }
+    ],
+    "defaultTrack": 0,
+    "popularTrack": 0,
+    "popularTrackGuitar": 0
+  },
+  {
+    "songId": 712814,
+    "artistId": 55942,
+    "artist": "Bad Omens",
+    "title": "Hedonistt",
+    "hasChords": false,
+    "hasPlayer": true,
+    "tracks": [
+      {
+        "instrumentId": 1024,
+        "instrument": "Drums",
+        "views": 0,
+        "name": "",
+        "hash": "drums_g710mLjI"
+      },
+      {
+        "instrumentId": 33,
+        "instrument": "Electric Bass (finger)",
+        "views": 0,
+        "name": "",
+        "tuning": [
+          38,
+          33,
+          28,
+          21
+        ],
+        "hash": "guitar_FxEjZCXA"
+      },
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 21,
+        "name": "Guitar 1",
+        "tuning": [
+          59,
+          54,
+          50,
+          45,
+          40,
+          33
+        ],
+        "difficulty": 3,
+        "hash": "guitar_XmPpKKHH"
+      },
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 0,
+        "name": "Guitar 2",
+        "tuning": [
+          59,
+          54,
+          50,
+          45,
+          40,
+          33
+        ],
+        "difficulty": 3,
+        "hash": "bass_3vDaFxRI"
+      }
+    ],
+    "defaultTrack": 2,
+    "popularTrack": 2,
+    "popularTrackGuitar": 2,
+    "popularTrackBass": 1,
+    "popularTrackDrum": 0
+  },
+  {
+    "songId": 634203,
+    "artistId": 101356,
+    "artist": "Bad Omens x ERRA",
+    "title": "ANYTHING > HUMAN",
+    "hasChords": false,
+    "hasPlayer": true,
+    "tracks": [
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 323,
+        "name": "Guitar",
+        "tuning": [
+          57,
+          52,
+          48,
+          43,
+          38,
+          33,
+          26
+        ],
+        "difficulty": 2,
+        "hash": "guitar_ICdzy1ih"
+      }
+    ],
+    "defaultTrack": 0,
+    "popularTrack": 0,
+    "popularTrackGuitar": 0
+  },
+  {
+    "songId": 467179,
+    "artistId": 55942,
+    "artist": "Bad Omens",
+    "title": "Said & Done",
+    "hasChords": false,
+    "hasPlayer": true,
+    "tracks": [
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 51,
+        "name": "Guitar 1",
+        "tuning": [
+          59,
+          54,
+          50,
+          45,
+          40,
+          33
+        ],
+        "difficulty": 2,
+        "hash": "guitar_VAVIQk3t"
+      },
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 304,
+        "name": "Guitar 2",
+        "tuning": [
+          59,
+          54,
+          50,
+          45,
+          40,
+          33
+        ],
+        "difficulty": 3,
+        "hash": "guitar_rfTZoKR5"
+      },
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 43,
+        "name": "Guitar 3",
+        "tuning": [
+          59,
+          54,
+          50,
+          45,
+          40,
+          33
+        ],
+        "difficulty": 3,
+        "hash": "guitar_TIShmCzx"
+      }
+    ],
+    "defaultTrack": 1,
+    "popularTrack": 1,
+    "popularTrackGuitar": 1
+  },
+  {
+    "songId": 744949,
+    "artistId": 55942,
+    "artist": "Bad Omens",
+    "title": "Malice",
+    "hasChords": false,
+    "hasPlayer": true,
+    "tracks": [
+      {
+        "instrumentId": 1024,
+        "instrument": "Drums",
+        "views": 0,
+        "name": "",
+        "hash": "drums_stde1QbD"
+      },
+      {
+        "instrumentId": 33,
+        "instrument": "Electric Bass (finger)",
+        "views": 0,
+        "name": "",
+        "tuning": [
+          39,
+          34,
+          29,
+          22
+        ],
+        "hash": "guitar_zrMjpY5l"
+      },
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 0,
+        "name": "Guitar 1",
+        "tuning": [
+          60,
+          55,
+          51,
+          46,
+          41,
+          34
+        ],
+        "difficulty": 3,
+        "hash": "guitar_pmMyjk2x"
+      },
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 0,
+        "name": "Guitar 2",
+        "tuning": [
+          60,
+          55,
+          51,
+          46,
+          41,
+          34
+        ],
+        "difficulty": 2,
+        "hash": "guitar_1JX9kNKJ"
+      },
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 0,
+        "name": "Guitar 3",
+        "tuning": [
+          60,
+          55,
+          51,
+          46,
+          41,
+          34
+        ],
+        "difficulty": 2,
+        "hash": "guitar_XPTKhdAQ"
+      }
+    ],
+    "defaultTrack": 0,
+    "popularTrack": 0,
+    "popularTrackGuitar": 2,
+    "popularTrackBass": 1,
+    "popularTrackDrum": 0
+  },
+  {
+    "songId": 572217,
+    "artistId": 55942,
+    "artist": "Bad Omens",
+    "title": "Careful What You Wish For",
+    "hasChords": false,
+    "hasPlayer": true,
+    "tracks": [
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 455,
+        "name": "Guitar 1",
+        "tuning": [
+          59,
+          54,
+          50,
+          45,
+          40,
+          33
+        ],
+        "difficulty": 2,
+        "hash": "guitar_FSbj5WVU"
+      },
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 6,
+        "name": "Guitar 2",
+        "tuning": [
+          59,
+          54,
+          50,
+          45,
+          40,
+          33
+        ],
+        "difficulty": 2,
+        "hash": "guitar_lqqMsZdP"
+      },
+      {
+        "instrumentId": 27,
+        "instrument": "Electric Guitar (clean)",
+        "views": 11,
+        "name": "Electric Guitar (clean)",
+        "tuning": [
+          59,
+          54,
+          50,
+          45,
+          40,
+          33
+        ],
+        "difficulty": 2,
+        "hash": "guitar_jsXDckW4"
+      }
+    ],
+    "defaultTrack": 0,
+    "popularTrack": 0,
+    "popularTrackGuitar": 0
+  },
+  {
+    "songId": 455119,
+    "artistId": 55942,
+    "artist": "Bad Omens",
+    "title": "Burning Out",
+    "hasChords": false,
+    "hasPlayer": true,
+    "tracks": [
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 56,
+        "name": "Electric Guitar",
+        "tuning": [
+          60,
+          55,
+          51,
+          46,
+          41,
+          34
+        ],
+        "difficulty": 2,
+        "hash": "guitar_uI1nQa5J"
+      },
+      {
+        "instrumentId": 27,
+        "instrument": "Electric Guitar (clean)",
+        "views": 0,
+        "name": "Clean Guitar (Rhythm)",
+        "tuning": [
+          60,
+          55,
+          51,
+          46,
+          41,
+          34
+        ],
+        "difficulty": 1,
+        "hash": "guitar_3z6i5bsY"
+      },
+      {
+        "instrumentId": 27,
+        "instrument": "Electric Guitar (clean)",
+        "views": 2,
+        "name": "Clean Guitar (Lead)",
+        "tuning": [
+          60,
+          55,
+          51,
+          46,
+          41,
+          34
+        ],
+        "difficulty": 2,
+        "hash": "guitar_1G7ofJPD"
+      },
+      {
+        "instrumentId": 25,
+        "instrument": "Acoustic Guitar (steel)",
+        "views": 62,
+        "name": "Steel Guitar",
+        "tuning": [
+          64,
+          59,
+          55,
+          50,
+          45,
+          40
+        ],
+        "difficulty": 2,
+        "hash": "guitar_727Xbkhn"
+      }
+    ],
+    "defaultTrack": 3,
+    "popularTrack": 3,
+    "popularTrackGuitar": 3
+  },
+  {
+    "songId": 572592,
+    "artistId": 55942,
+    "artist": "Bad Omens",
+    "title": "Blood",
+    "hasChords": false,
+    "hasPlayer": true,
+    "tracks": [
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 290,
+        "name": "Guitar 1",
+        "tuning": [
+          60,
+          55,
+          51,
+          46,
+          41,
+          34
+        ],
+        "difficulty": 2,
+        "hash": "guitar_qhGYLUAV"
+      },
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 97,
+        "name": "Guitar 2",
+        "tuning": [
+          60,
+          55,
+          51,
+          46,
+          41,
+          34
+        ],
+        "difficulty": 2,
+        "hash": "guitar_JMrnR38g"
+      },
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 2,
+        "name": "Guitar 3",
+        "tuning": [
+          60,
+          55,
+          51,
+          46,
+          41,
+          34
+        ],
+        "difficulty": 2,
+        "hash": "guitar_lmyobb7a"
+      }
+    ],
+    "defaultTrack": 0,
+    "popularTrack": 0,
+    "popularTrackGuitar": 0
+  },
+  {
+    "songId": 579002,
+    "artistId": 55942,
+    "artist": "Bad Omens",
+    "title": "Mercy",
+    "hasChords": false,
+    "hasPlayer": true,
+    "tracks": [
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 284,
+        "name": "Guitar 1",
+        "tuning": [
+          61,
+          56,
+          52,
+          47,
+          42,
+          37,
+          30
+        ],
+        "difficulty": 2,
+        "hash": "guitar_BBypKDgi"
+      },
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 1,
+        "name": "Guitar 2",
+        "tuning": [
+          61,
+          56,
+          52,
+          47,
+          42,
+          37,
+          30
+        ],
+        "difficulty": 1,
+        "hash": "guitar_nRrLu7rj"
+      },
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 2,
+        "name": "Guitar 3",
+        "tuning": [
+          61,
+          56,
+          52,
+          47,
+          42,
+          37,
+          30
+        ],
+        "difficulty": 2,
+        "hash": "guitar_TM9aBH87"
+      }
+    ],
+    "defaultTrack": 0,
+    "popularTrack": 0,
+    "popularTrackGuitar": 0
+  },
+  {
+    "songId": 742294,
+    "artistId": 55942,
+    "artist": "Bad Omens",
+    "title": "bad decisions",
+    "hasChords": false,
+    "hasPlayer": true,
+    "tracks": [
+      {
+        "instrumentId": 1024,
+        "instrument": "Drums",
+        "views": 3,
+        "name": "",
+        "hash": "drums_cj7SfJZX"
+      },
+      {
+        "instrumentId": 33,
+        "instrument": "Electric Bass (finger)",
+        "views": 22,
+        "name": "",
+        "tuning": [
+          43,
+          38,
+          33,
+          28
+        ],
+        "hash": "bass_AsIL46kW"
+      },
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 34,
+        "name": "",
+        "tuning": [
+          64,
+          59,
+          55,
+          50,
+          45,
+          40
+        ],
+        "difficulty": 2,
+        "hash": "guitar_aFNg0cvw"
+      },
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 8,
+        "name": "",
+        "tuning": [
+          64,
+          59,
+          55,
+          50,
+          45,
+          40
+        ],
+        "difficulty": 2,
+        "hash": "guitar_mF9sn4A7"
+      }
+    ],
+    "defaultTrack": 2,
+    "popularTrack": 2,
+    "popularTrackGuitar": 2,
+    "popularTrackBass": 1,
+    "popularTrackDrum": 0
+  },
+  {
+    "songId": 706307,
+    "artistId": 55942,
+    "artist": "Bad Omens",
+    "title": "Hedonist",
+    "hasChords": false,
+    "hasPlayer": true,
+    "tracks": [
+      {
+        "instrumentId": 1024,
+        "instrument": "Drums",
+        "views": 0,
+        "name": "",
+        "hash": "drums_vs1Zt7mB"
+      },
+      {
+        "instrumentId": 33,
+        "instrument": "Electric Bass (finger)",
+        "views": 1,
+        "name": "",
+        "tuning": [
+          38,
+          33,
+          28,
+          21
+        ],
+        "hash": "bass_gBUdNGAX"
+      },
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 18,
+        "name": "Guitar 1",
+        "tuning": [
+          59,
+          54,
+          50,
+          45,
+          40,
+          33
+        ],
+        "difficulty": 3,
+        "hash": "guitar_hCTRXbv3"
+      },
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 3,
+        "name": "Guitar 2",
+        "tuning": [
+          59,
+          54,
+          50,
+          45,
+          40,
+          33
+        ],
+        "difficulty": 3,
+        "hash": "guitar_UH8KvMgC"
+      }
+    ],
+    "defaultTrack": 2,
+    "popularTrack": 2,
+    "popularTrackGuitar": 2,
+    "popularTrackBass": 1,
+    "popularTrackDrum": 0
+  },
+  {
+    "songId": 759013,
+    "artistId": 55942,
+    "artist": "Bad Omens",
+    "title": "Reprise (The Sound Of The End)",
+    "hasChords": false,
+    "hasPlayer": true,
+    "tracks": [
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 10,
+        "name": "Nicholas Ruffilo",
+        "tuning": [
+          59,
+          54,
+          50,
+          45,
+          40,
+          33
+        ],
+        "difficulty": 2,
+        "hash": "guitar_xIxh7NMd"
+      },
+      {
+        "instrumentId": 34,
+        "instrument": "Electric Bass (pick)",
+        "views": 0,
+        "name": "Vincent Riquier",
+        "tuning": [
+          38,
+          33,
+          28,
+          21
+        ],
+        "hash": "bass_ebZREfJn"
+      },
+      {
+        "instrumentId": 1024,
+        "instrument": "Drums",
+        "views": 4,
+        "name": "Nick Folio",
+        "hash": "drums_5tpoULZA"
+      },
+      {
+        "instrumentId": 100,
+        "instrument": "FX 5 (brightness)",
+        "views": 0,
+        "name": "",
+        "tuning": [
+          59,
+          54,
+          50,
+          45,
+          40,
+          33
+        ],
+        "hash": "other_lBxEnqq7"
+      },
+      {
+        "instrumentId": 52,
+        "instrument": "Choir Aahs",
+        "views": 1,
+        "name": "",
+        "tuning": [
+          59,
+          54,
+          50,
+          45,
+          40,
+          33
+        ],
+        "hash": "guitar_XnwAzLGU"
+      }
+    ],
+    "defaultTrack": 0,
+    "popularTrack": 0,
+    "popularTrackGuitar": 0,
+    "popularTrackBass": 1,
+    "popularTrackDrum": 2
+  },
+  {
+    "songId": 571558,
+    "artistId": 55942,
+    "artist": "Bad Omens",
+    "title": "Running in Circles",
+    "hasChords": false,
+    "hasPlayer": true,
+    "tracks": [
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 38,
+        "name": "Guitar 1",
+        "tuning": [
+          60,
+          55,
+          51,
+          46,
+          41,
+          34
+        ],
+        "difficulty": 2,
+        "hash": "guitar_g5COs1Hv"
+      },
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 4,
+        "name": "Guitar 2",
+        "tuning": [
+          60,
+          55,
+          51,
+          46,
+          41,
+          34
+        ],
+        "difficulty": 2,
+        "hash": "guitar_IVPhAhwK"
+      }
+    ],
+    "defaultTrack": 0,
+    "popularTrack": 0,
+    "popularTrackGuitar": 0
+  },
+  {
+    "songId": 583625,
+    "artistId": 55942,
+    "artist": "Bad Omens",
+    "title": "What do you want from me?",
+    "hasChords": false,
+    "hasPlayer": true,
+    "tracks": [
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 2,
+        "name": "Guitar 1",
+        "tuning": [
+          57,
+          52,
+          48,
+          43,
+          38,
+          33,
+          26
+        ],
+        "difficulty": 3,
+        "hash": "guitar_5WYACzEo"
+      },
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 0,
+        "name": "Guitar 2",
+        "tuning": [
+          57,
+          52,
+          48,
+          43,
+          38,
+          33,
+          26
+        ],
+        "difficulty": 4,
+        "hash": "guitar_KQn1YZUL"
+      }
+    ],
+    "defaultTrack": 0,
+    "popularTrack": 0,
+    "popularTrackGuitar": 0
+  },
+  {
+    "songId": 571454,
+    "artistId": 55942,
+    "artist": "Bad Omens",
+    "title": "Kingdom Of Cards",
+    "hasChords": false,
+    "hasPlayer": true,
+    "tracks": [
+      {
+        "instrumentId": 25,
+        "instrument": "Acoustic Guitar (steel)",
+        "views": 60,
+        "name": "Guitar 1",
+        "tuning": [
+          60,
+          55,
+          51,
+          46,
+          41,
+          36
+        ],
+        "difficulty": 1,
+        "hash": "guitar_rRYczpCU"
+      },
+      {
+        "instrumentId": 29,
+        "instrument": "Overdriven Guitar",
+        "views": 8,
+        "name": "Guitar 2",
+        "tuning": [
+          60,
+          55,
+          51,
+          46,
+          41,
+          36
+        ],
+        "difficulty": 4,
+        "hash": "guitar_yQ0ib4yh"
+      },
+      {
+        "instrumentId": 25,
+        "instrument": "Acoustic Guitar (steel)",
+        "views": 6,
+        "name": "Guitar 3",
+        "tuning": [
+          63,
+          58,
+          54,
+          49,
+          44,
+          39
+        ],
+        "difficulty": 1,
+        "hash": "guitar_aIz0rwg9"
+      },
+      {
+        "instrumentId": 26,
+        "instrument": "Electric Guitar (jazz)",
+        "views": 32,
+        "name": "Guitar 4",
+        "tuning": [
+          60,
+          55,
+          51,
+          46,
+          41,
+          36
+        ],
+        "difficulty": 3,
+        "hash": "guitar_xgEAuDYq"
+      },
+      {
+        "instrumentId": 26,
+        "instrument": "Electric Guitar (jazz)",
+        "views": 0,
+        "name": "Guitar 5",
+        "tuning": [
+          60,
+          55,
+          51,
+          46,
+          41,
+          36
+        ],
+        "difficulty": 2,
+        "hash": "guitar_2oVFs2wn"
+      },
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 14,
+        "name": "Guitar 6",
+        "tuning": [
+          60,
+          55,
+          51,
+          46,
+          41,
+          34
+        ],
+        "difficulty": 1,
+        "hash": "guitar_hICBlXpC"
+      }
+    ],
+    "defaultTrack": 0,
+    "popularTrack": 0,
+    "popularTrackGuitar": 0
+  },
+  {
+    "songId": 772640,
+    "artistId": 55942,
+    "artist": "Bad Omens",
+    "title": "Exit Wounds",
+    "hasChords": false,
+    "hasPlayer": true,
+    "tracks": [
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 6,
+        "name": "Guitar 1",
+        "tuning": [
+          60,
+          55,
+          51,
+          46,
+          41,
+          34
+        ],
+        "difficulty": 3,
+        "hash": "guitar_topwn1yJ"
+      },
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 4,
+        "name": "Guitar 2",
+        "tuning": [
+          60,
+          55,
+          51,
+          46,
+          41,
+          34
+        ],
+        "difficulty": 2,
+        "hash": "guitar_KVeSceuD"
+      },
+      {
+        "instrumentId": 33,
+        "instrument": "Electric Bass (finger)",
+        "views": 1,
+        "name": "",
+        "tuning": [
+          39,
+          34,
+          29,
+          22
+        ],
+        "hash": "bass_wbakshbU"
+      },
+      {
+        "instrumentId": 1024,
+        "instrument": "Drums",
+        "views": 0,
+        "name": "",
+        "hash": "guitar_9YDgJYG7"
+      }
+    ],
+    "defaultTrack": 0,
+    "popularTrack": 0,
+    "popularTrackGuitar": 0,
+    "popularTrackBass": 2,
+    "popularTrackDrum": 3
+  },
+  {
+    "songId": 745112,
+    "artistId": 55942,
+    "artist": "Bad Omens",
+    "title": "THE DEATH OF PEACE OF MIND [WE ARE FURY PATCH]",
+    "hasChords": false,
+    "hasPlayer": true,
+    "tracks": [
+      {
+        "instrumentId": 1024,
+        "instrument": "Drums",
+        "views": 5,
+        "name": "",
+        "hash": "drums_KT7kbQGY"
+      },
+      {
+        "instrumentId": 33,
+        "instrument": "Electric Bass (finger)",
+        "views": 0,
+        "name": "",
+        "tuning": [
+          43,
+          38,
+          33,
+          28
+        ],
+        "hash": "bass_eaIZnSTd"
+      },
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 0,
+        "name": "",
+        "tuning": [
+          64,
+          59,
+          55,
+          50,
+          45,
+          40
+        ],
+        "difficulty": 2,
+        "hash": "guitar_NotA5taj"
+      },
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 12,
+        "name": "",
+        "tuning": [
+          64,
+          59,
+          55,
+          50,
+          45,
+          40
+        ],
+        "difficulty": 2,
+        "hash": "guitar_U74X9Pzo"
+      }
+    ],
+    "defaultTrack": 3,
+    "popularTrack": 3,
+    "popularTrackGuitar": 3,
+    "popularTrackBass": 1,
+    "popularTrackDrum": 0
+  },
+  {
+    "songId": 483677,
+    "artistId": 55942,
+    "artist": "Bad Omens",
+    "title": "Careful What You Wish For (6 String)",
+    "hasChords": false,
+    "hasPlayer": true,
+    "tracks": [
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 112,
+        "name": "Distortion",
+        "tuning": [
+          59,
+          54,
+          50,
+          45,
+          40,
+          33
+        ],
+        "difficulty": 2,
+        "hash": "guitar_kFFOXZte"
+      },
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 6,
+        "name": "Clean",
+        "tuning": [
+          59,
+          54,
+          50,
+          45,
+          40,
+          33
+        ],
+        "difficulty": 2,
+        "hash": "guitar_UUIC7rGI"
+      }
+    ],
+    "defaultTrack": 0,
+    "popularTrack": 0,
+    "popularTrackGuitar": 0
+  },
+  {
+    "songId": 596004,
+    "artistId": 55942,
+    "artist": "Bad Omens",
+    "title": "F E R A L",
+    "hasChords": false,
+    "hasPlayer": true,
+    "tracks": [
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 1,
+        "name": "Guitar 1",
+        "tuning": [
+          60,
+          55,
+          51,
+          46,
+          41,
+          34
+        ],
+        "difficulty": 2,
+        "hash": "guitar_kzuUllHn"
+      },
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 0,
+        "name": "Guitar 2",
+        "tuning": [
+          60,
+          55,
+          51,
+          46,
+          41,
+          34
+        ],
+        "difficulty": 2,
+        "hash": "guitar_gIoxbX8e"
+      },
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 0,
+        "name": "Guitar 3",
+        "tuning": [
+          60,
+          55,
+          51,
+          46,
+          41,
+          34
+        ],
+        "difficulty": 2,
+        "hash": "guitar_LGU7yqeK"
+      },
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 0,
+        "name": "Guitar 4",
+        "tuning": [
+          60,
+          55,
+          51,
+          46,
+          41,
+          34
+        ],
+        "difficulty": 2,
+        "hash": "guitar_yIs9zumA"
+      }
+    ],
+    "defaultTrack": 0,
+    "popularTrack": 0,
+    "popularTrackGuitar": 0
+  },
+  {
+    "songId": 89792,
+    "artistId": 18131,
+    "artist": "A Call To Sincerity",
+    "title": "Walking Straight Across Bad Omens",
+    "hasChords": false,
+    "hasPlayer": true,
+    "tracks": [
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 0,
+        "name": "Piste 1",
+        "tuning": [
+          60,
+          55,
+          51,
+          46,
+          41,
+          34
+        ],
+        "difficulty": 4,
+        "hash": "guitar_9xIURz89"
+      },
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 0,
+        "name": "Piste 2",
+        "tuning": [
+          60,
+          55,
+          51,
+          46,
+          41,
+          34
+        ],
+        "difficulty": 3,
+        "hash": "guitar_d4GDr2ij"
+      },
+      {
+        "instrumentId": 1024,
+        "instrument": "Drums",
+        "views": 7,
+        "name": "Percussions",
+        "hash": "drums_FnHczKnk"
+      },
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 0,
+        "name": "Piste 4",
+        "tuning": [
+          60,
+          55,
+          51,
+          46,
+          41,
+          34
+        ],
+        "difficulty": 2,
+        "hash": "guitar_uonYpsvW"
+      },
+      {
+        "instrumentId": 34,
+        "instrument": "Electric Bass (pick)",
+        "views": 0,
+        "name": "Piste 5",
+        "tuning": [
+          39,
+          34,
+          29,
+          22
+        ],
+        "hash": "bass_LfJ0gjH4"
+      },
+      {
+        "instrumentId": 26,
+        "instrument": "Electric Guitar (jazz)",
+        "views": 0,
+        "name": "Piano Sampler",
+        "tuning": [
+          60,
+          55,
+          51,
+          46,
+          41,
+          34
+        ],
+        "difficulty": 3,
+        "hash": "guitar_uE3X1Qvd"
+      }
+    ],
+    "defaultTrack": 2,
+    "popularTrack": 2,
+    "popularTrackGuitar": 0,
+    "popularTrackBass": 4,
+    "popularTrackDrum": 2
+  },
+  {
+    "songId": 763290,
+    "artistId": 55942,
+    "artist": "Bad Omens",
+    "title": "What It Cost",
+    "hasChords": false,
+    "hasPlayer": true,
+    "tracks": [
+      {
+        "instrumentId": 27,
+        "instrument": "Electric Guitar (clean)",
+        "views": 4,
+        "name": "Guitar 1",
+        "tuning": [
+          59,
+          54,
+          50,
+          45,
+          40,
+          33
+        ],
+        "difficulty": 2,
+        "hash": "guitar_YqfXGt9F"
+      }
+    ],
+    "defaultTrack": 0,
+    "popularTrack": 0,
+    "popularTrackGuitar": 0
+  },
+  {
+    "songId": 712220,
+    "artistId": 55942,
+    "artist": "Bad Omens",
+    "title": "Miracle",
+    "hasChords": false,
+    "hasPlayer": true,
+    "tracks": [
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 3,
+        "name": "Guitar 1",
+        "tuning": [
+          55,
+          50,
+          46,
+          41,
+          36,
+          29
+        ],
+        "difficulty": 2,
+        "hash": "drums_DivfDS6l"
+      },
+      {
+        "instrumentId": 30,
+        "instrument": "Distortion Guitar",
+        "views": 0,
+        "name": "Guitar 2",
+        "tuning": [
+          55,
+          50,
+          46,
+          41,
+          36,
+          29
+        ],
+        "difficulty": 4,
+        "hash": "guitar_HiNs7zik"
+      }
+    ],
+    "defaultTrack": 0,
+    "popularTrack": 0,
+    "popularTrackGuitar": 0
+  },
+  {
+    "songId": 774075,
+    "artistId": 55942,
+    "artist": "Bad Omens",
+    "title": "Crawl",
+    "hasChords": false,
+    "hasPlayer": true,
+    "tracks": [
+      {
+        "instrumentId": 27,
+        "instrument": "Electric Guitar (clean)",
+        "views": 0,
+        "name": "Guitar 1",
+        "tuning": [
+          64,
+          59,
+          55,
+          50,
+          45,
+          40
+        ],
+        "hash": "guitar_tDXzy5Oy"
+      }
+    ],
+    "defaultTrack": 0,
+    "popularTrack": 0,
+    "popularTrackGuitar": 0
+  },
+  {
+    "songId": 602601,
+    "artistId": 55942,
+    "artist": "Bad Omens",
+    "title": "TDOPOM",
+    "hasChords": false,
+    "hasPlayer": true,
+    "tracks": [
+      {
+        "instrumentId": 25,
+        "instrument": "Acoustic Guitar (steel)",
+        "views": 1,
+        "name": "Steel Guitar",
+        "tuning": [
+          64,
+          59,
+          55,
+          50,
+          45,
+          40
+        ],
+        "difficulty": 8,
+        "hash": "guitar_4NdKlDjr"
+      }
+    ],
+    "defaultTrack": 0,
+    "popularTrack": 0,
+    "popularTrackGuitar": 0
+  }
+]
