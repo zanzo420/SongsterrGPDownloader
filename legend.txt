@@ -1,0 +1,14 @@
+frm = Form
+mnu = MenuStrip
+msi = MenuStipItem
+tc = TabControl
+tp = TabPage
+grp = GroupBox
+cb = CheckBox
+cmb = ComboBox
+rb = RadioButton
+lbl = Label
+btn = Button
+dgv = DataGridView
+txt = Textbox
+mtxt = Masked Textbox

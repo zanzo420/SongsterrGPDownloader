@@ -1,4 +1,9 @@
-#### TO-DO: ######################################################################
+$script_path = $PSScriptRoot
+. $script_path\ug.ps1
+. $script_path\tunebat.ps1
+. $script_path\youtube.ps1
+. $script_path\azlyrics.ps1
+### TO-DO: ######################################################################
 ## - Output list of generated urls to .txt file                                 ##
 ## - Scrape GPT download link from each URL in .txt file                        ##
 ## - Loop each scraped GPT download link and download each file.                ##
@@ -6,65 +11,15 @@
 ##################################################################################
 Import-Module -Name ImportExcel
 ###### GLOBAL VARIABLES #######
+
 $savedir = "D:\.Tabs\GuitarPro\.songsterr"
 $temp_path = "$($env:TEMP)\SongsterrGPDownloader"
 #$SpotifyAPIUrl = "https://api.spotify.com/"
 
 
+
+
 #region Songsterr Tab Search Functions
-<#
-.SYNOPSIS
-Get Songsterr tabs using the Songsterr API.
-
-.DESCRIPTION
-This function retrieves a list of Songsterr tabs using the Songsterr API and saves the URLs to a text file.
-
-.PARAMETER startIndex
-The index in the search results to start from... Leave blank to start from the beginning.
-
-.EXAMPLE
-Get-SongsterrTabs
-
-.NOTES
-Author: Zanzo
-Date: 2022-03-01
-#>
-function Get-SongsterrTabs($startIndex = 0)
-{
-    $prefix = "http://www.songsterr.com/a/wsa/"
-    $apiURL = "https://www.songsterr.com/api/songs?size=250&from="
-    $songLinks = @()
-    
-    $pageMax = 50
-    $songIndex = $startIndex
-    
-    for($i=0; $i -lt $pageMax; $i++)
-    {
-        $SearchResultsData = Invoke-RestMethod -Uri "$($apiURL)$($songIndex)"
-        #loop through all songs in the JSON...
-        $indx = 0
-        foreach($songJSON in $SearchResultsData)
-        {
-            $songLinks += "$($prefix)$(CleanText($songJSON.artist))-$(CleanText($songJSON.title))-tab-s$($songJSON.songId)"
-            write-host "$($prefix)$(CleanText($songJSON.artist))-$(CleanText($songJSON.title))-tab-s$($songJSON.songId)" | out-file ".\songsterr_LINKS.txt" -Append -Force
-            $indx++
-        }##END## SongJSON Loop ###############################################
-
-        #add links from current API page to file...
-        $saveLinks = $songLinks 
-        $saveLinks | out-file "$($temp_path)\SongLinks\SongLinks-pg$($i).txt" -Force -Append
-        $songIndex = $startIndex+$i*250
-        write-host "[PAGE: $($i) | SONGS: $($indx)]" -ForegroundColor Green -NoNewline
-        write-host " SongIndex = $($songIndex)" -ForegroundColor Red
-        # End loop if less than 250 songs are found on the page...
-        if($indx -lt 250){break}
-    }##END## API PAGE LOOP ################################################
-
-    $songLinks | out-file "$($temp_path)\SongLinks\SongLinks-FULL.txt" -Force -Append
-    #$pageCount += $songIndex | out-file H:\.midi\PageCount.txt -Force
-}
-
-
 <#
 .SYNOPSIS
 Performs a search on Songsterr using the songsterr api.
@@ -157,6 +112,61 @@ function Search-SongsterrTabs([string]$pattern, [int]$startIndex = 0)
     return $songLinks | out-file "$($temp_path)\SearchResults_$($pattern)-FULL.txt" -Force -Append
     #$pageCount += $songIndex | out-file H:\.midi\PageCount.txt -Force
     #return ConvertTo-Json -InputObject (invoke-restmethod -uri "https://www.songsterr.com/api/songs?size=250&from=0&pattern=$($pattern)") -depth 10 #| out-file TEMPFILE.json
+}
+#endregion
+
+
+#region Songsterr Get Tabs Function(s)
+<#
+.SYNOPSIS
+Get Songsterr tabs using the Songsterr API.
+
+.DESCRIPTION
+This function retrieves a list of Songsterr tabs using the Songsterr API and saves the URLs to a text file.
+
+.PARAMETER startIndex
+The index in the search results to start from... Leave blank to start from the beginning.
+
+.EXAMPLE
+Get-SongsterrTabs
+
+.NOTES
+Author: Zanzo
+Date: 2022-03-01
+#>
+function Get-SongsterrTabs($startIndex = 0)
+{
+    $prefix = "http://www.songsterr.com/a/wsa/"
+    $apiURL = "https://www.songsterr.com/api/songs?size=250&from="
+    $songLinks = @()
+    
+    $pageMax = 50
+    $songIndex = $startIndex
+    
+    for($i=0; $i -lt $pageMax; $i++)
+    {
+        $SearchResultsData = Invoke-RestMethod -Uri "$($apiURL)$($songIndex)"
+        #loop through all songs in the JSON...
+        $indx = 0
+        foreach($songJSON in $SearchResultsData)
+        {
+            $songLinks += "$($prefix)$(CleanText($songJSON.artist))-$(CleanText($songJSON.title))-tab-s$($songJSON.songId)"
+            write-host "$($prefix)$(CleanText($songJSON.artist))-$(CleanText($songJSON.title))-tab-s$($songJSON.songId)" | out-file ".\songsterr_LINKS.txt" -Append -Force
+            $indx++
+        }##END## SongJSON Loop ###############################################
+
+        #add links from current API page to file...
+        $saveLinks = $songLinks 
+        $saveLinks | out-file "$($temp_path)\SongLinks\SongLinks-pg$($i).txt" -Force -Append
+        $songIndex = $startIndex+$i*250
+        write-host "[PAGE: $($i) | SONGS: $($indx)]" -ForegroundColor Green -NoNewline
+        write-host " SongIndex = $($songIndex)" -ForegroundColor Red
+        # End loop if less than 250 songs are found on the page...
+        if($indx -lt 250){break}
+    }##END## API PAGE LOOP ################################################
+
+    $songLinks | out-file "$($temp_path)\SongLinks\SongLinks-FULL.txt" -Force -Append
+    #$pageCount += $songIndex | out-file H:\.midi\PageCount.txt -Force
 }
 #endregion
 
