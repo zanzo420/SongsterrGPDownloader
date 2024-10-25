@@ -20,6 +20,7 @@ $temp_path = "$($env:TEMP)\SongsterrGPDownloader"
 
 
 #region Songsterr Tab Search Functions
+###################################################################
 <#
 .SYNOPSIS
 Performs a search on Songsterr using the songsterr api.
@@ -31,12 +32,8 @@ Performs a search on Songster and retrieves json data from the songsterr api, th
 The search query to use... aka the artist and/or song title to search for...
 (e.g. "Metallica" or "Enter Sandman" or "Metallica - Enter Sandman")
 
-.PARAMETER instrument
-(Optional) The instrument to search for a tab of... Leave blank for "any" instrument(s).
-(e.g. "guitar", "bass", "drums", or "any" for all instruments) 
-
 .PARAMETER startIndex
-(Optional) The index in the search results to start from... Leave blank to start from the beginning.
+(Optional) The index in the search results to start from... Leave blank to start from the beginning. 
 
 .EXAMPLE
 Search-Songsterr "Metallica - Enter Sandman"
@@ -59,7 +56,7 @@ function Search-Songsterr([string]$pattern, [int]$startIndex = 0)
 Search for Songsterr tabs by artist name or song title.
 
 .DESCRIPTION
-This function searches the Songsterr API for tabs by artist name or song title, and returns a list of URLs to the tabs.
+This function searches the Songsterr API for tabs by artist name and/or song title, and returns a list of URLs to the tabs.
 
 .PARAMETER pattern
 The search query to use... aka the artist and/or song title to search for...
@@ -78,7 +75,7 @@ function Search-SongsterrTabs([string]$pattern, [int]$startIndex = 0)
 {
     $prefix = "http://www.songsterr.com/a/wsa/"
     $apiURL = "https://www.songsterr.com/api/songs?size=250&pattern=$($pattern)&from="
-    $songLinks = @()
+    $songLinks,$saveLinks = @()
     $results = ''
     
     #[int]$pageCount = [int]$(gc -Path "H:\.midi\PageCount.txt")
@@ -90,16 +87,21 @@ function Search-SongsterrTabs([string]$pattern, [int]$startIndex = 0)
         $webAPIDataPage = Invoke-RestMethod -Uri "$($apiURL)$($songIndex)" -UseBasicParsing
         $results = ConvertFrom-Json -InputObject (ConvertTo-Json($webAPIDataPage) -Depth 10) | out-file "$($temp_path)\SearchResults_$($pattern)-pg$($i).json" -Force
         write-host $results
+
         #loop through all songs in the JSON data...
         $indx = 0
+        $saveLinks.clear
         foreach($songJSON in $webAPIDataPage)
         {
-            $songLinks += "$($prefix)$(CleanText($songJSON.artist))-$(CleanText($songJSON.title))-tab-s$($songJSON.songId)"
-            write-host "$($prefix)$(CleanText($songJSON.artist))-$(CleanText($songJSON.title))-tab-s$($songJSON.songId)" | out-file "$($temp_path)\songsterr_LINKS.txt" -Append -Force
-            $saveLinks = $songLinks
+            $tabLink = "$($prefix)$(CleanText($songJSON.artist))-$(CleanText($songJSON.title))-tab-s$($songJSON.songId)"
+
+            $songLinks += $tabLink
+            write-host $tabLink | out-file "$($temp_path)\songsterr_LINKS.txt" -Append -Force
+            $saveLinks += $tabLink
             $saveLinks | out-file "$($temp_path)\SearchResults-pg$($i).txt" -Force -Append
             $indx++
-        }##END## SongJSON Loop ###############################################
+        }
+
         #add links from current API page to file...
         $songLinks | out-file "$($temp_path)\SearchResults_$($pattern)-pg$($i).txt" -Force
         $songIndex = $startIndex+($i*250)+$indx

@@ -1,6 +1,7 @@
 
 
 #region Ultimate-Guitar Search Functions
+########################################################
 function Get-UGSearchData([string]$queryString)
 {
     try {
@@ -93,6 +94,8 @@ function Check-UGHasProTab([string]$query, [switch]$Verbose)
 
 
 #region Ultimate-Guitar MetaData Functions
+##################################################
+# This gets the meta data for a specific tab by SongID, using UG's Pro MetaData API
 function Get-UGProMetaData([int]$SongID)
 {
     try {
@@ -112,6 +115,7 @@ function Get-UGProMetaData([int]$SongID)
     }
 }
 
+# This function gets the 'js-store' data from a page on UG, and returns a JSON object of the data
 function Get-UGMetaData([string]$url)
 {
     $res = Invoke-WebRequest -Uri $url -UseBasicParsing
@@ -124,6 +128,7 @@ function Get-UGMetaData([string]$url)
     }
 }
 
+# This function gets the 'js-store' data from a page on UG, and returns a JSON object of the 'store.page.data' object
 function Get-UGPageData([string]$url)
 {
     $res = Invoke-WebRequest -UseBasicParsing -Uri $url #"https://www.ultimate-guitar.com/explore?order=date_desc&type[]=Official"
@@ -135,6 +140,7 @@ function Get-UGPageData([string]$url)
     }
 }
 
+# This is the same as the above function, but returns the raw JSON data instead of the 'store.page.data' object
 function Get-UGPageJSON([string]$url)
 {
     try {
@@ -147,11 +153,11 @@ function Get-UGPageJSON([string]$url)
         $response = Invoke-WebRequest -Uri $url
         # Extract the HTML content
         $htmlContent = $response.Content
-        # Define the regex pattern to match the data-content attribute of the js-store div class
+        # Define the regex pattern to match the contents of the 'data-content' attribute of the 'js-store' div class
         $regex_pattern = '<div class="js-store" data-content="([^"]*)">'
         # Use the regex_pattern to find the JSON data
-        $matches = [regex]::Matches($htmlContent, $regex_pattern)
-
+        $jsonData = [regex]::Matches($htmlContent, $regex_pattern)
+        $jsonData
         if ($matches.Count -eq 0) {
             throw [System.Exception]::new("No JSON data found in the HTML content.")
         }
@@ -172,8 +178,25 @@ function Get-UGPageJSON([string]$url)
 
 
 #region Ultimate-Guitar Backing Tracks Functions
-##
-function Get-UGBackingTracksTabsList([switch]$Verbose)
+##########################################################
+<#
+.SYNOPSIS
+Get-UGBackingTracksTabsList retrieves a list of all UG Tabs with Backing Tracks
+
+.DESCRIPTION
+This function retrieves a list of all UG Tabs with Backing Tracks, and saves the list to a text file.
+
+.PARAMETER Verbose
+Switch to display verbose output
+
+.EXAMPLE
+$TabsWithBackingTracks = Get-UGBackingTracksTabsList -Verbose
+
+.NOTES
+Author: Zanzo
+Date: 2024-09-01
+#>
+function Get-UGBackingTracksTabList([switch]$Verbose)
 {
     write-host "Retrieving list of all UG Tabs w/ Backing Tracks, this will take 2-5 minutes to complete..." -ForegroundColor Yellow
     $btData = Get-UGMetaData("https://www.ultimate-guitar.com/backing_track/")
@@ -198,18 +221,53 @@ function Get-UGBackingTracksTabsList([switch]$Verbose)
     return $retData | out-file ".\UGBackingTracksTabsList.txt"
 }
 
-function Get-UGTabBackingTracks([string]$backingTracksUrl)
+<#
+.SYNOPSIS
+Get-UGBackingTracks retrieves the name and audio dl url for each track from a UG Backing Tracks URL
+
+.DESCRIPTION
+This function retrieves the name and audio dl url for each track from a UG Backing Tracks URL and returns the url's to the audio for each track.
+
+.PARAMETER backingTracksUrl
+The URL of the UG Backing Tracks page to retrieve the backing tracks from.
+
+.EXAMPLE
+$BackingTracks = Get-UGBackingTracks "https://www.ultimate-guitar.com/backing_track/artist/artist_name/song/song_name"
+
+.NOTES
+Author: Zanzo
+Date: 2024-09-01
+#>
+function Get-UGBackingTracks([string]$backingTracksUrl)
 {
     $r = Get-UGMetaData($backingTracksUrl)
     # get the url to the audio for each track
     $backingTracks = $r.viewer.backing_track
     $newTracks,$newTrack = @()
     foreach($track in $backingTracks.content_urls){
-        write-host "$($track.name)`n$($track.content_urls.normal)"
+        $newTracks += "$($track.name)`t$($track.content_urls.normal)"
+        write-host "$($track.name)`t$($track.content_urls.normal)"
     }
     return $backingTracks.content_urls
 }
 
+<#
+.SYNOPSIS
+Download-UGBackingTracks downloads the backing tracks from a UG Backing Tracks URL
+
+.DESCRIPTION
+This function downloads the backing tracks from a UG Backing Tracks URL and saves them to the 'backing_tracks' directory.
+
+.PARAMETER BackingTracksUrl
+The URL of the UG Backing Tracks page to retrieve the backing tracks from.
+
+.EXAMPLE
+Download-UGBackingTracks "https://www.ultimate-guitar.com/backing_track/artist/artist_name/song/song_name"
+
+.NOTES
+Author: Zanzo
+Date: 2024-09-01
+#>
 function Download-UGBackingTracks([string]$BackingTracksUrl)
 {
     $r = Get-UGMetaData($BackingTracksUrl)
