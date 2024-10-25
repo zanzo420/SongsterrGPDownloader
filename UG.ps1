@@ -226,7 +226,7 @@ function Get-UGBackingTracksTabList([switch]$Verbose)
 Get-UGBackingTracks retrieves the name and audio dl url for each track from a UG Backing Tracks URL
 
 .DESCRIPTION
-This function retrieves the name and audio dl url for each track from a UG Backing Tracks URL and returns the url's to the audio for each track.
+This function retrieves the name and download url for each track from a UG Backing Tracks URL, and returns the url's to the audio for each track.
 
 .PARAMETER backingTracksUrl
 The URL of the UG Backing Tracks page to retrieve the backing tracks from.
