@@ -10,13 +10,13 @@ $script_path = $PSScriptRoot
 ## - Rename all files downloaded using their associated artist name/song title. ##
 ##################################################################################
 Import-Module -Name ImportExcel
+
 ###### GLOBAL VARIABLES #######
+$Global:savedir = "D:\.Tabs\GuitarPro\.songsterr"
+$Global:temp_path = "$($env:TEMP)\SongsterrGPDownloader"
 
-$savedir = "D:\.Tabs\GuitarPro\.songsterr"
-$temp_path = "$($env:TEMP)\SongsterrGPDownloader"
-#$SpotifyAPIUrl = "https://api.spotify.com/"
-
-
+# Check if the temp directory exists, if not create it
+if(-not (test-path $temp_path)){mkdir $temp_path}
 
 
 #region Songsterr Tab Search Functions
@@ -47,7 +47,7 @@ function Search-Songsterr([string]$pattern, [int]$startIndex = 0)
     $escString = [URI]::EscapeUriString($pattern)
     $data = ConvertTo-Json -InputObject (Invoke-RestMethod -Uri "https://www.songsterr.com/api/songs?size=250&pattern=$($escString)&from=$($startIndex)") -depth 10 
     $saveData = $data
-    $saveData | out-file "$($pattern)_searchResults.json"
+    $saveData | out-file "$($temp_path)\SearchResults\$($pattern)_searchResults.json"
     return ConvertFrom-Json -InputObject $data -Depth 10
 }
 
@@ -85,7 +85,7 @@ function Search-SongsterrTabs([string]$pattern, [int]$startIndex = 0)
     for($i=0; $i -lt $pageMax; $i++)
     {
         $webAPIDataPage = Invoke-RestMethod -Uri "$($apiURL)$($songIndex)" -UseBasicParsing
-        $results = ConvertFrom-Json -InputObject (ConvertTo-Json($webAPIDataPage) -Depth 10) | out-file "$($temp_path)\SearchResults_$($pattern)-pg$($i).json" -Force
+        $results = ConvertFrom-Json -InputObject (ConvertTo-Json($webAPIDataPage) -Depth 10) | out-file "$($temp_path)\SearchResults\SearchResults_$($pattern)-pg$($i).json" -Force
         write-host $results
 
         #loop through all songs in the JSON data...
@@ -98,12 +98,12 @@ function Search-SongsterrTabs([string]$pattern, [int]$startIndex = 0)
             $songLinks += $tabLink
             write-host $tabLink | out-file "$($temp_path)\songsterr_LINKS.txt" -Append -Force
             $saveLinks += $tabLink
-            $saveLinks | out-file "$($temp_path)\SearchResults-pg$($i).txt" -Force -Append
+            $saveLinks | out-file "$($temp_path)\SearchResults\SearchResults-pg$($i).txt" -Force -Append
             $indx++
         }
 
         #add links from current API page to file...
-        $songLinks | out-file "$($temp_path)\SearchResults_$($pattern)-pg$($i).txt" -Force
+        $saveLinks | out-file "$($temp_path)\SearchResults\SearchResults_$($pattern)-pg$($i).txt" -Force
         $songIndex = $startIndex+($i*250)+$indx
         write-host "[PAGE: $($i+1) | SONGS: $($indx)] " -ForegroundColor Green
         #write-host "$($songIndex) Tabs" -ForegroundColor Red
@@ -111,7 +111,7 @@ function Search-SongsterrTabs([string]$pattern, [int]$startIndex = 0)
         if($indx -lt 250){break}
     }##END## API PAGE LOOP ################################################
     write-host "Searched " -nonewline; write-host $sIndx -ForegroundColor Cyan -NoNewline; write-host " pages, with " -NoNewline; write-host $songIndex -ForegroundColor Cyan -NoNewline; write-host " tabs found." 
-    return $songLinks | out-file "$($temp_path)\SearchResults_$($pattern)-FULL.txt" -Force -Append
+    return $songLinks | out-file "$($temp_path)\SearchResults\SearchResults_$($pattern)-FULL.txt" -Force -Append
     #$pageCount += $songIndex | out-file H:\.midi\PageCount.txt -Force
     #return ConvertTo-Json -InputObject (invoke-restmethod -uri "https://www.songsterr.com/api/songs?size=250&from=0&pattern=$($pattern)") -depth 10 #| out-file TEMPFILE.json
 }
@@ -153,7 +153,7 @@ function Get-SongsterrTabs($startIndex = 0)
         foreach($songJSON in $SearchResultsData)
         {
             $songLinks += "$($prefix)$(CleanText($songJSON.artist))-$(CleanText($songJSON.title))-tab-s$($songJSON.songId)"
-            write-host "$($prefix)$(CleanText($songJSON.artist))-$(CleanText($songJSON.title))-tab-s$($songJSON.songId)" | out-file ".\songsterr_LINKS.txt" -Append -Force
+            write-host "$($prefix)$(CleanText($songJSON.artist))-$(CleanText($songJSON.title))-tab-s$($songJSON.songId)" | out-file "$($temp_path)\songsterr_LINKS.txt" -Append -Force
             $indx++
         }##END## SongJSON Loop ###############################################
 
@@ -218,7 +218,7 @@ function Get-SongsterrTabsByArtist($artistName)
     foreach($song in $SearchResultsData)
     {
         write-host "http://www.songsterr.com/a/wsa/" -NoNewline
-        write-host "$(CleanText($song.artist))-$(CleanText($song.title))-tab-s$($song.songId)" | out-file "SearchResults_$($artistName).txt" -Force
+        write-host "$(CleanText($song.artist))-$(CleanText($song.title))-tab-s$($song.songId)" | out-file "$($temp_path)\SearchResults\SearchResults_$($artistName).txt" -Force
         $results += "http://www.songsterr.com/a/wsa/$(CleanText($song.artist))-$(CleanText($song.title))-tab-s$($song.songId)"
     }
     $results | out-file "$($temp_path)\SearchResults\$($SearchString).txt" -Force
@@ -400,7 +400,7 @@ function GetCombinedSearchResultsTabData()
     GetSongIdsFromUrls CombinedSearchResults.txt
     write-host "Getting DownloadURL's from SongID's..."
     pause
-    GetSongsterrDownloadURLs SongIdsFromUrls.txt
+    Get-SongsterrDownloadURLs SongIdsFromUrls.txt
     #write-host "Downloading all Tabs from DownloadURLs.txt..."
     #DownloadSongsterrTabs
     write-host "COMPLETE!"
@@ -461,7 +461,7 @@ function DownloadTabBySongID([string]$SongID)
 
 
 #region Songsterr Get SongID from URL Functions
-##
+###########################################################
 # Get SongId From URL...
 <#
 .SYNOPSIS
@@ -486,14 +486,13 @@ function Get-SongIdFromUrl([string]$url)
     return $matches['songid']
 }
 
-$cookie = 'OrigRef=d3d3Lmdvb2dsZS5jb20=; _ga=GA1.2.563324618.1641686257; G_ENABLED_IDPS=google; __gads=ID=b5de266b76d30fa8:T=1641686257:S=ALNI_MZxgEGqVWRkMMew-r_CunkutRPrQg; SongsterrL=b0b18683873fd827048dff32450b36910f6bba9e8ef30a9f; cto_bundle=uLgR3V94aUdUbzhmQVpDeW1nR3NlbHlReThHJTJCNlBGSUNnZklXeVpQREluamU3RmZTR21vZEtTVXdmJTJCOEtIZnVIbU5iZiUyRndCeFFvbTEyS3NES21EOUJ5N2ZHJTJGJTJGSmI0MUdUTGNGbEpsTm94RDE0TnF4V2lBRXRjbUx2NHZTQ2N1R0pzclNZb1VrMFpHUmglMkZTd0s4cXN3U2dNSkElM0QlM0Q; ScrShwn-svws=true; LastRef=d3d3Lmdvb2dsZS5jb20=; EE_STORAGE=["video_walkthrough","comments_removal"]; lastSeenTrack=/a/wsa/falling-in-reverse-wait-and-see-half-solo-tab-s398766; experiments={"aa":"on","sound_v4":"off","comments_removal":"on","new_plus_banner":"off"}; _gid=GA1.2.1968037562.1656242890; amp_9121af=XrOZ72J_mkX5E6aGJkftn4.MjMyMDYzMA==..1g6gt3qtj.1g6gt93ho.2p.2p.5i; SongsterrT=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIyMzIwNjMwIiwiZW1haWwiOiJ6Q2xvbmVIZXJvQGdtYWlsLmNvbSIsIm5hbWUiOiJ6Q2xvbmVIZXJvIiwicGxhbiI6InBsdXMiLCJzdWJzY3JpcHRpb24iOnsic3RhdHVzIjoiYWN0aXZlIiwidHlwZSI6ImJyYWludHJlZSIsInN0YXJ0RGF0ZSI6IjIwMjItMDUtMDhUMDQ6NTE6MzQuMDAwWiIsImVuZERhdGUiOm51bGwsImNhbmNlbGxhdGlvbkRhdGUiOm51bGx9LCJzcmFfbGljZW5zZSI6Im5vbmUiLCJnb29nbGUiOiIxMDExNDgyNDE3ODYwODgwNDQxMzQiLCJpYXQiOjE2NTYyNzc2NjQsImlkIjoiMjMyMDYzMCJ9.e-cSj5xaosVcet1kNciKL2cxmiOu0lGlREz3HFNLhao'
+#$cookie = 'OrigRef=d3d3Lmdvb2dsZS5jb20=; _ga=GA1.2.563324618.1641686257; G_ENABLED_IDPS=google; __gads=ID=b5de266b76d30fa8:T=1641686257:S=ALNI_MZxgEGqVWRkMMew-r_CunkutRPrQg; SongsterrL=b0b18683873fd827048dff32450b36910f6bba9e8ef30a9f; cto_bundle=uLgR3V94aUdUbzhmQVpDeW1nR3NlbHlReThHJTJCNlBGSUNnZklXeVpQREluamU3RmZTR21vZEtTVXdmJTJCOEtIZnVIbU5iZiUyRndCeFFvbTEyS3NES21EOUJ5N2ZHJTJGJTJGSmI0MUdUTGNGbEpsTm94RDE0TnF4V2lBRXRjbUx2NHZTQ2N1R0pzclNZb1VrMFpHUmglMkZTd0s4cXN3U2dNSkElM0QlM0Q; ScrShwn-svws=true; LastRef=d3d3Lmdvb2dsZS5jb20=; EE_STORAGE=["video_walkthrough","comments_removal"]; lastSeenTrack=/a/wsa/falling-in-reverse-wait-and-see-half-solo-tab-s398766; experiments={"aa":"on","sound_v4":"off","comments_removal":"on","new_plus_banner":"off"}; _gid=GA1.2.1968037562.1656242890; amp_9121af=XrOZ72J_mkX5E6aGJkftn4.MjMyMDYzMA==..1g6gt3qtj.1g6gt93ho.2p.2p.5i; SongsterrT=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIyMzIwNjMwIiwiZW1haWwiOiJ6Q2xvbmVIZXJvQGdtYWlsLmNvbSIsIm5hbWUiOiJ6Q2xvbmVIZXJvIiwicGxhbiI6InBsdXMiLCJzdWJzY3JpcHRpb24iOnsic3RhdHVzIjoiYWN0aXZlIiwidHlwZSI6ImJyYWludHJlZSIsInN0YXJ0RGF0ZSI6IjIwMjItMDUtMDhUMDQ6NTE6MzQuMDAwWiIsImVuZERhdGUiOm51bGwsImNhbmNlbGxhdGlvbkRhdGUiOm51bGx9LCJzcmFfbGljZW5zZSI6Im5vbmUiLCJnb29nbGUiOiIxMDExNDgyNDE3ODYwODgwNDQxMzQiLCJpYXQiOjE2NTYyNzc2NjQsImlkIjoiMjMyMDYzMCJ9.e-cSj5xaosVcet1kNciKL2cxmiOu0lGlREz3HFNLhao'
 #$dlPrefix = 'https://d12drcwhcokzqv.cloudfront.net/'
-$dlPrefix = 'https://gp.songsterr.com/'
-$SongIDs = gc -Path D:\SongIDs.txt
+#$dlPrefix = 'https://gp.songsterr.com/'
+$SongIDs = Get-Content -Path D:\SongIDs.txt
 $data = @()
-$fileData = @()
+#$fileData = @()
 
-##
 # *OLD* Get SongId From URL...
 <#
 .SYNOPSIS
@@ -585,15 +584,9 @@ Revised: 2024-09-21
 function Get-SongsterrDownloadData([int]$songid)
 {
     $R = Invoke-RestMethod -uri "https://songsterr.com/api/meta/$($songid)/revisions" #-OutFile H:\.midi\json.json
-    
-    $RevisionId = $R[0].revisionId #| out-host
-    $Tracks = $R[0].tracks #| out-host
-    $Title = $R[0].title #| out-host
-    $Artist = $R[0].artist #| out-host
 
-    $DownloadURL = $R[0].source #| out-host
     $fileExt = "$($R[0].source.SubString($R[0].source.Length - 3).Replace('.', ''))"
-    $nFilename = "$($Artist) - $($Title).$($fileExt)" #| out-host
+    $nFilename = "$($R[0].artist) - $($R[0].title).$($fileExt)" #| out-host
 
     $data = @()
     $data += "$($R[0].revisionId)`n"
@@ -603,9 +596,9 @@ function Get-SongsterrDownloadData([int]$songid)
     $data += "$($nFilename)`n"
     $data 
 
-    return $data #| out-file .\temp\songsterrData.txt -Append -Force
+    return $data
 }
-##
+
 # Get a Download URL from a Songsterr SongID...
 <#
 .SYNOPSIS
@@ -624,14 +617,12 @@ GetSongsterrDownloadURL -SongID "534532"
 Author: Zanzo
 Date: 2022-03-01
 #>
-function GetSongsterrDownloadURL($songid)
+function Get-SongsterrDownloadURL($songid)
 {
     $R = Invoke-RestMethod -uri "https://songsterr.com/api/meta/$($songid)/revisions" #-OutFile H:\.midi\json.json
-    $getDownloadURL = $R[0].source
-    
     return $($R[0].source).ToString()
 }
-##
+
 # Get the latest Revision ID from a Songsterr SongID...
 <#
 .SYNOPSIS
@@ -650,14 +641,12 @@ GetSongsterrRevisionID -SongID "534532"
 Author: Zanzo
 Date: 2022-03-01
 #>
-function GetSongsterrRevisionID($songid)
+function Get-SongsterrRevisionID($songid)
 {
     $R = Invoke-RestMethod -uri "https://songsterr.com/api/meta/$($songid)/revisions" #-OutFile H:\.midi\json.json
-    $getRevisionID = $R[0].revisionId
-    
     return $R[0].revisionId.ToString()
 }
-##
+
 # Get the Song Title from a Songsterr SongID...
 <#
 .SYNOPSIS
@@ -676,14 +665,12 @@ GetSongsterrTitle -SongID "534532"
 Author: Zanzo
 Date: 2022-03-01
 #>
-function GetSongsterrTitle($songid)
+function Get-SongsterrTitle($songid)
 {
-    $R = Invoke-RestMethod -uri "https://songsterr.com/api/meta/$($songid)/revisions" #-OutFile H:\.midi\json.json
-    $getTitle = $R[0].title
-    
+    $R = Invoke-RestMethod -uri "https://songsterr.com/api/meta/$($songid)/revisions" #-OutFile H:\.midi\json.json    
     return $($R[0].title).ToString()
 }
-##
+
 # Get the Artist Name from a Songsterr SongID...
 <#
 .SYNOPSIS
@@ -702,14 +689,12 @@ GetSongsterrArtist -SongID "534532"
 Author: Zanzo
 Date: 2022-03-01
 #>
-function GetSongsterrArtist($songid)
+function Get-SongsterrArtist($songid)
 {
     $R = Invoke-RestMethod -uri "https://songsterr.com/api/meta/$($songid)/revisions" #-OutFile H:\.midi\json.json
-    $getArtist = $R[0].artist
-    
     return $($R[0].artist).ToString()
 }
-##
+
 # Get the Tracks from a Songsterr SongID...
 <#
 .SYNOPSIS
@@ -728,14 +713,12 @@ GetSongsterrTracks -SongID "534532"
 Author: Zanzo
 Date: 2022-03-01
 #>
-function GetSongsterrTracks($songid)
+function Get-SongsterrTracks($songid)
 {
     $R = Invoke-RestMethod -uri "https://songsterr.com/api/meta/$($songid)/revisions" #-OutFile H:\.midi\json.json
-    $getTracks = $R[0].tracks
-    
     return $R[0].tracks
 }
-##
+
 # Get the Artist and SongTitle from a Songsterr SongID...
 <#
 .SYNOPSIS
@@ -754,7 +737,7 @@ GetSongsterrArtistAndTitle -SongID "534532"
 Author: Zanzo
 Date: 2022-03-01
 #>
-function GetSongsterrArtistAndTitle($songid)
+function Get-SongsterrArtistAndTitle($songid)
 {
     $dlUrlPrefix = 'https://gp.songsterr.com/'
     $R = Invoke-RestMethod -uri "https://songsterr.com/api/meta/$($songid)/revisions" #-OutFile H:\.midi\json.json
@@ -766,7 +749,7 @@ function GetSongsterrArtistAndTitle($songid)
 
     return $output.ToString()
 }
-##
+
 # Get the Download URL's from a list of SongID's...
 <#
 .SYNOPSIS
@@ -785,7 +768,7 @@ GetSongsterrDownloadURLs "SongIds.txt"
 Author: Zanzo
 Date: 2022-03-01
 #>
-function GetSongsterrDownloadURLs($SongIDs_List)
+function Get-SongsterrDownloadURLs($SongIDs_List)
 {
     write-host "Getting Songsterr download URL's from SongId list file: " -NoNewLine; write-host $SongIDs_List -ForegroundColor Green -NoNewline; write-host "...`n"
 
@@ -794,7 +777,7 @@ function GetSongsterrDownloadURLs($SongIDs_List)
     {
         write-host "SongID: " -NoNewline; write-host $sID -ForegroundColor DarkGreen
         write-host "DownloadURL: " -NoNewline
-        $dlUrl = GetSongsterrDownloadURL $sID | out-tee -FilePath .\DownloadURLs.txt -Append -Force
+        $dlUrl = Get-SongsterrDownloadURL $sID | out-tee -FilePath .\DownloadURLs.txt -Append -Force
         write-host "$($dlUrl)" -ForegroundColor Green
     }
 }

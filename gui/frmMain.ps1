@@ -28,7 +28,7 @@ function Search-Songsterr([string]$pattern, [int]$startIndex = 0)
     $escString = [URI]::EscapeUriString($pattern)
     $data = ConvertTo-Json -InputObject (Invoke-RestMethod -Uri "https://www.songsterr.com/api/songs?size=250&pattern=$($escString)&from=$($startIndex)") -depth 10 
     $saveData = $data
-    $saveData | out-file "$($pattern)_searchResults.json"
+    $saveData | out-file ".\$($pattern)_searchResults.json"
     return ConvertFrom-Json -InputObject $data -Depth 10
 }
 

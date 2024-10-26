@@ -218,7 +218,7 @@ function Get-UGBackingTracksTabList([switch]$Verbose)
             write-host "[PAGE: " -nonewline; write-host "$($i+1)" -NoNewline -ForegroundColor Green; write-host "/" -nonewline; write-host "$($btTotalPages)" -nonewline -ForegroundColor Green; write-host "]"
         }
     }
-    return $retData | out-file ".\UGBackingTracksTabsList.txt"
+    return $retData | out-file "$($temp_path)\UGBackingTracksTabsList.txt"
 }
 
 <#
