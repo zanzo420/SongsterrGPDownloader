@@ -1,15 +1,19 @@
-$script_path = $PSScriptRoot
-. $script_path\ug.ps1
-. $script_path\tunebat.ps1
-. $script_path\youtube.ps1
-. $script_path\azlyrics.ps1
 ### TO-DO: ######################################################################
 ## - Output list of generated urls to .txt file                                 ##
 ## - Scrape GPT download link from each URL in .txt file                        ##
 ## - Loop each scraped GPT download link and download each file.                ##
 ## - Rename all files downloaded using their associated artist name/song title. ##
 ##################################################################################
-Import-Module -Name ImportExcel
+
+#### DOT INCLUDES ####
+. $PSScriptRoot\ug.ps1
+. $PSScriptRoot\tunebat.ps1
+. $PSScriptRoot\youtube.ps1
+. $PSScriptRoot\genius.ps1
+. $PSScriptRoot\azlyrics.ps1
+
+#### IMPORT MODULES ####
+Import-Module -Name ImportExcel # Excel (.xlsx) File Import/Export Module
 
 ###### GLOBAL VARIABLES #######
 $Global:savedir = "D:\.Tabs\GuitarPro\.songsterr"
@@ -73,12 +77,10 @@ Date: 2022-03-01
 #>
 function Search-SongsterrTabs([string]$pattern, [int]$startIndex = 0)
 {
-    $prefix = "http://www.songsterr.com/a/wsa/"
     $apiURL = "https://www.songsterr.com/api/songs?size=250&pattern=$($pattern)&from="
     $songLinks,$saveLinks = @()
     $results = ''
     
-    #[int]$pageCount = [int]$(gc -Path "H:\.midi\PageCount.txt")
     $pageMax = 42
     $songIndex = $startIndex
     $sIndx = 0
@@ -93,16 +95,16 @@ function Search-SongsterrTabs([string]$pattern, [int]$startIndex = 0)
         $saveLinks.clear
         foreach($songJSON in $webAPIDataPage)
         {
-            $tabLink = "$($prefix)$(CleanText($songJSON.artist))-$(CleanText($songJSON.title))-tab-s$($songJSON.songId)"
+            $tabLink = "http://www.songsterr.com/a/wsa/$(CleanText($songJSON.artist))-$(CleanText($songJSON.title))-tab-s$($songJSON.songId)"
 
             $songLinks += $tabLink
-            write-host $tabLink | out-file "$($temp_path)\songsterr_LINKS.txt" -Append -Force
+            write-host $tabLink | out-file "$($temp_path)\songsterr_LINKS.txt" -Append -Force           #<-- add the link to a file...
             $saveLinks += $tabLink
             $saveLinks | out-file "$($temp_path)\SearchResults\SearchResults-pg$($i).txt" -Force -Append
             $indx++
         }
 
-        #add links from current API page to file...
+        #add links from current API page to a file...
         $saveLinks | out-file "$($temp_path)\SearchResults\SearchResults_$($pattern)-pg$($i).txt" -Force
         $songIndex = $startIndex+($i*250)+$indx
         write-host "[PAGE: $($i+1) | SONGS: $($indx)] " -ForegroundColor Green
@@ -329,7 +331,7 @@ Date: 2022-03-01
 function Get-TabRevisions([string]$url, [switch]$Verbose)
 {
     # Get the Song ID from the URL
-    $result = $url -match '(?>.*\-tab\-s)(?<songid>[0-9]*)'
+    $url -match '(?>.*\-tab\-s)(?<songid>[0-9]*)' | Out-Null
     $sID = $matches['songid']
     # Get the revision data for the Song ID
     $revisions = Get-RevisionsData($sID)
@@ -366,16 +368,16 @@ Author: Zanzo
 #>
 function CombineAllSearchResults()
 {
-    cd .\SearchResults
+    Set-Location .\SearchResults
     $results = @()
-    $getSearchResults = gci $($temp_path)\* -Include *.txt
+    $getSearchResults = Get-ChildItem $($temp_path)\* -Include *.txt
     foreach($r in $getSearchResults)
     {
-        $SearchData = gc $r
+        $SearchData = Get-Content $r
         write-host $SearchData | out-file $($temp_path)\SearchData.txt -Append -Force
         $results += $SearchData 
     }
-    cd ..
+    Set-Location ..
     $results | out-file $($temp_path)\CombinedSearchResults.txt -Force
     
     return $results
@@ -482,7 +484,7 @@ Date: 2022-03-01
 #>
 function Get-SongIdFromUrl([string]$url)
 {
-    $result = $url -match '(?>.*\-tab\-s)(?<songid>[0-9]*)'
+    $url -match '(?>.*\-tab\-s)(?<songid>[0-9]*)'
     return $matches['songid']
 }
 
@@ -517,7 +519,7 @@ Date: 2022-03-01
 #>
 function GetSongIdFromURL([string]$url, [switch]$Verbose)
 {
-    $SongIdRegEx = "([a-zA-Z]+(-[a-zA-Z]+)+)"
+    #$SongIdRegEx = "([a-zA-Z]+(-[a-zA-Z]+)+)"
     $url -match "(tab-s[0-9]+)"
     $rawSongId = $Matches[1].ToString()
     $fName = $url.Remove(0,31)
@@ -784,7 +786,7 @@ function Get-SongsterrDownloadURLs($SongIDs_List)
 #endregion
 
 
-#region SongsterrAI Generate Guitar Pro Tab Functions
+#region SongsterrAI Generate Guitar Pro Tab from YouTube video ID Function(s)
 <#
 .SYNOPSIS
 Generate a Guitar Pro tab from a YouTube video using the Songsterr AI API.
@@ -792,17 +794,25 @@ Generate a Guitar Pro tab from a YouTube video using the Songsterr AI API.
 .DESCRIPTION
 This function generates a Guitar Pro tab from a YouTube video using the Songsterr AI API.
 
-.PARAMETER SongID
-The Songsterr song ID for the tab.
+.PARAMETER Title
+The title of the song that you want to generate a Guitar Pro tab for.
+
+.PARAMETER Artist
+The artist name of the song that you want to generate a Guitar Pro tab for.
+
+.PARAMETER VideoId
+The VideoID of the YouTube video to generate the Guitar Pro tab from.
+(note: You can right-click on any YouTube video and select "Copy video URL" to get the VideoID)
 
 .EXAMPLE
-Generate-SongsterrAITab "534532"
+New-SongsterrAITab -VideoId "534532" -Title "Enter Sandman" -Artist "Metallica"
 
 .NOTES
 Author: Zanzo
-Date: 2022-03-01
+Date: 2024-09-01
+Updated: 2024-10-25
 #>
-function Generate-SongsterrAITab([string]$title, [string]$artist, [string]$videoId)
+function New-SongsterrAITab([string]$Title, [string]$Artist, [string]$VideoId)
 {
   $session = New-Object Microsoft.PowerShell.Commands.WebRequestSession
   $session.Cookies.Add((New-Object System.Net.Cookie("lastSeenTrack", "/a/wsa/jason-aldean-rearview-town-drum-tab-s737929", "/", "www.songsterr.com")))
@@ -827,7 +837,7 @@ function Generate-SongsterrAITab([string]$title, [string]$artist, [string]$video
     "Priority" = "u=0"
   } `
   -ContentType "application/json" `
-  -Body "{`"title`":`"$($title)`",`"artist`":`"$($artist)`",`"videoId`":`"$($videoId)`"}"
+  -Body "{`"title`":`"$($Title)`",`"artist`":`"$($Artist)`",`"videoId`":`"$($VideoId)`"}"
 
   return $response.Content
 }

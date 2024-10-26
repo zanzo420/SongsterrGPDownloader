@@ -1,2 +1,2 @@
 # SongsterrGPDownloader
-A Powershell script to download Guitar Pro files for tabs on Songsterr
+A Powershell script to download Guitar Pro files for tabs on Songsterr or Ultimate-Guitar, as well as functions for various other sites, such as azlyrics/genius/youtube/tunebat/and more!
