@@ -181,7 +181,7 @@ function Get-UGPageJSON([string]$url)
 ##########################################################
 <#
 .SYNOPSIS
-Get-UGBackingTracksTabsList retrieves a list of all UG Tabs with Backing Tracks
+Retrieves a list of all UG Tabs with Backing Tracks
 
 .DESCRIPTION
 This function retrieves a list of all UG Tabs with Backing Tracks, and saves the list to a text file.
@@ -190,7 +190,7 @@ This function retrieves a list of all UG Tabs with Backing Tracks, and saves the
 Switch to display verbose output
 
 .EXAMPLE
-$TabsWithBackingTracks = Get-UGBackingTracksTabsList -Verbose
+$TabsWithBackingTracks = Get-UGBackingTracksTabList -Verbose
 
 .NOTES
 Author: Zanzo
@@ -202,7 +202,7 @@ function Get-UGBackingTracksTabList([switch]$Verbose)
     $btData = Get-UGMetaData("https://www.ultimate-guitar.com/backing_track/")
     $btData.models
     
-    [int]$btPageSize = $btData.pagination.pageSize
+    #[int]$btPageSize = $btData.pagination.pageSize
     [int]$btTotalPages = $btData.pagination.total
     [int]$btTotalCount = $btData.pagination.totalCount
 
