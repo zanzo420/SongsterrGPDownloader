@@ -21,6 +21,26 @@ function Open-Tunebat([string]$SearchQuery)
     Start-Process $url
 }
 
+<#
+.SYNOPSIS
+Open a Tunebat search for a given artist and title.
+
+.DESCRIPTION
+This function opens a web browser to the Tunebat search page with the specified artist and title search query. The search query is URL-encoded before being appended to the Tunebat search URL.
+
+.PARAMETER Artist
+The artist name to be used in the Tunebat search.
+
+.PARAMETER Title
+The title of the song to be used in the Tunebat search.
+
+.EXAMPLE
+Open-TunebatSearch "Bad Omens" "Just Pretend"
+
+.NOTES
+Author: Zanzo
+Date: 2022-03-01
+#>
 function Open-TunebatSearch([string]$Artist, [string]$Title)
 {
     [string]$SearchQuery = "$($Artist) - $($Title)"
@@ -29,8 +49,6 @@ function Open-TunebatSearch([string]$Artist, [string]$Title)
     $url = "https://www.tunebat.com/Search?q=$($escQuery)"
     Start-Process msedge $url
 }
-
-Open-TunebatSearch -Artist "Bad Omens" -Title "Just Pretend"
 
 <#
 .SYNOPSIS
@@ -62,15 +80,12 @@ function Get-TunebatData([string]$SearchQuery, [switch]$extDetails, [switch]$Ver
         if ([string]::IsNullOrWhiteSpace($SearchQuery)) {
             throw [System.ArgumentException]::new("Search Query cannot be null or empty.")
         }
-        # URL encode the search query for the API request
+        # URL encode the search query for the API request and define the API endpoint.
 		$encodedQuery = [URI]::EscapeUriString($SearchQuery)
-		# Define the API endpoint with the encoded search query
 		$apiUrl = "https://api.tunebat.com/api/tracks/search?term=$($encodedQuery)&page=1"
 		# Send the HTTP GET request to the API endpoint and get the response
 		$response = Invoke-RestMethod -UseBasicParsing -Uri "$($apiUrl)"
-        #$response = Invoke-WebRequest -UseBasicParsing -Uri "$($apiUrl)"
-
-		# Convert the response into a JSON object
+        # Convert the response into a JSON object
 		$json = ConvertFrom-Json $response.Content
 
 		# Verify that the response contains results
@@ -106,7 +121,8 @@ function Get-TunebatData([string]$SearchQuery, [switch]$extDetails, [switch]$Ver
                 DataURL = "https://api.tunebat.com/api/tracks?trackid=$($topResult.id)"
             }
 
-            if($Verbose){   # Display the song details
+            # If the Verbose switch is enabled, display the song details in the console  
+            if($Verbose){   
                 Write-Host "`n---------------------------------------------------" -ForegroundColor Gray
                 Write-Host "Tunebat Search Result for " -nonewline -BackgroundColor Black; Write-Host $SearchQuery -ForegroundColor Green -BackgroundColor Black
                 write-host "---------------------------------------------------" -ForegroundColor Gray
@@ -117,17 +133,16 @@ function Get-TunebatData([string]$SearchQuery, [switch]$extDetails, [switch]$Ver
                 Write-Host "Tempo:`t" -nonewline; Write-Host "$($TunebatData.tempo)" -foregroundcolor Green 
                 if($extDetails){ Write-Host "Popularity:`t" -nonewline; Write-Host "$($TunebatData.popularity)" -foregroundcolor Green; Write-Host "Album Art:`t" -nonewline; Write-Host "$($TunebatData.coverImage)" -foregroundcolor Green }
             }
+
             return $TunebatData
 		}else{
-            if($Verbose){ Write-Host "No results found for the search query: " -nonewline; Write-Host $SearchQuery -foregroundcolor Red }
+            if($Verbose){ Write-Host "No results found for the search query: $($SearchQuery)"}
             return $null
-		}
+        }
     }
     catch { 
         Write-Error "An error occurred: $($_)"
         return $null
     }
+    #if($Verbose){Write-Host "Function completed." -ForegroundColor Green
 }
-
-$ss = Get-TunebatData -SearchQuery "Bad Omens - Just Pretend" #-Verbose -extDetails
-$ss

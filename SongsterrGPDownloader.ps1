@@ -5,7 +5,7 @@
 ## - Rename all files downloaded using their associated artist name/song title. ##
 ##################################################################################
 
-#### DOT INCLUDES ####
+#### wINCLUDES ####
 . $PSScriptRoot\ug.ps1
 . $PSScriptRoot\tunebat.ps1
 . $PSScriptRoot\youtube.ps1
@@ -108,14 +108,13 @@ function Search-SongsterrTabs([string]$pattern, [int]$startIndex = 0)
         $saveLinks | out-file "$($temp_path)\SearchResults\SearchResults_$($pattern)-pg$($i).txt" -Force
         $songIndex = $startIndex+($i*250)+$indx
         write-host "[PAGE: $($i+1) | SONGS: $($indx)] " -ForegroundColor Green
-        #write-host "$($songIndex) Tabs" -ForegroundColor Red
+        
         $sIndx++
         if($indx -lt 250){break}
-    }##END## API PAGE LOOP ################################################
+    }
+
     write-host "Searched " -nonewline; write-host $sIndx -ForegroundColor Cyan -NoNewline; write-host " pages, with " -NoNewline; write-host $songIndex -ForegroundColor Cyan -NoNewline; write-host " tabs found." 
     return $songLinks | out-file "$($temp_path)\SearchResults\SearchResults_$($pattern)-FULL.txt" -Force -Append
-    #$pageCount += $songIndex | out-file H:\.midi\PageCount.txt -Force
-    #return ConvertTo-Json -InputObject (invoke-restmethod -uri "https://www.songsterr.com/api/songs?size=250&from=0&pattern=$($pattern)") -depth 10 #| out-file TEMPFILE.json
 }
 #endregion
 
@@ -235,24 +234,24 @@ Search for Songsterr tabs by a list of artist names.
 .DESCRIPTION
 This function reads a list of artist names from a text file and searches the Songsterr API for tabs by each artist, returning a list of URLs to the tabs.
 
-.PARAMETER artistlist
+.PARAMETER ArtistList
 The path to the text file containing a list of artist names.
 
 .PARAMETER Verbose
 Switch to enable verbose output.
 
 .EXAMPLE
-GetSongsterrTabsByArtistList -artistlist "artists.txt"
+GetSongsterrTabsByArtistList -ArtistList "artists.txt"
 
 .NOTES
 Author: Zanzo
 Date: 2022-03-01
 #>
-function GetSongsterrTabsByArtistList([string]$artistlist, [switch]$Verbose)
+function Get-SongsterrTabsByArtistList([string]$ArtistList, [switch]$Verbose)
 {
     $tabs = @()
     $results = @()
-    $list = Get-Content $artistlist
+    $list = Get-Content $ArtistList
     foreach($a in $list)
     {
         $artistTabs = Get-SongsterrTabsByArtist $a
@@ -271,6 +270,7 @@ function GetSongsterrTabsByArtistList([string]$artistlist, [switch]$Verbose)
 
 
 #region Songsterr Get Revisions Data Functions
+# Get revision data for a Songsterr tab, by SongID, using the Songsterr API
 <#
 .SYNOPSIS
 Retrieves the revision data for a Songsterr tab.
@@ -308,6 +308,7 @@ function Get-RevisionsData($SongID)
     return $response
 }
 
+# Get revision data for a Songsterr tab, by URL, using the Songsterr API
 <#
 .SYNOPSIS
 Retrieves the revision data for a Songsterr tab.
@@ -351,7 +352,7 @@ function Get-TabRevisions([string]$url, [switch]$Verbose)
 
 
 #region OLD Combine Search Results Functions
-##
+
 # Combine all search results in the ".\SearchResults\" directory
 <#
 .SYNOPSIS
@@ -399,7 +400,7 @@ function GetCombinedSearchResultsTabData()
 {
     write-host "Getting SongID's from CombinedSearchResults.txt..."
     pause
-    GetSongIdsFromUrls CombinedSearchResults.txt
+    Get-SongIdsFromUrls CombinedSearchResults.txt
     write-host "Getting DownloadURL's from SongID's..."
     pause
     Get-SongsterrDownloadURLs SongIdsFromUrls.txt
@@ -531,7 +532,7 @@ function GetSongIdFromURL([string]$url, [switch]$Verbose)
     }
     return $rawSongId.Replace("tab-s", "").ToInteger()
 }
-##
+
 # Get multiple SongId's from a list of URL's...
 <#
 .SYNOPSIS
@@ -563,7 +564,7 @@ function GetSongIdsFromURLs([string]$URLsList)
 
 
 #region Songsterr MetaData Functions by SongID
-## 
+
 # Get all download related metadata from a SongID...
 <#
 .SYNOPSIS
@@ -787,6 +788,7 @@ function Get-SongsterrDownloadURLs($SongIDs_List)
 
 
 #region SongsterrAI Generate Guitar Pro Tab from YouTube video ID Function(s)
+###################################################################################
 <#
 .SYNOPSIS
 Generate a Guitar Pro tab from a YouTube video using the Songsterr AI API.
