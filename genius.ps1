@@ -149,9 +149,7 @@ Date: 2024-10-09
 function Get-GeniusLyrics([string]$url, [switch]$Verbose) {
     # Extract the URL for the first result
     $songUrl = $url
-
     if($Verbose){ Write-Host "[Genius] Fetching lyrics from $($songUrl) "}
-
     # Fetch the lyrics from the song's URL
     try {
         $html = Invoke-WebRequest -Uri $songUrl
@@ -160,7 +158,8 @@ function Get-GeniusLyrics([string]$url, [switch]$Verbose) {
         Write-Error "[Genius] Error fetching or parsing lyrics from $($songUrl)"
         return
     }
-
+    # Display the lyrics if Verbose mode is enabled
     if($Verbose){ Write-Host "`n[Genius] --- Lyrics for '$($songTitle)' by '$($artist)' ---`n"; Write-Host "$($lyrics)" }
+    # Return the lyrics as a string
     return $lyrics
 }
