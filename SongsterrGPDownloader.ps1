@@ -16,8 +16,8 @@
 Import-Module -Name ImportExcel # Excel (.xlsx) File Import/Export Module
 
 ###### GLOBAL VARIABLES #######
-$Global:savedir = "D:\.Tabs\GuitarPro\.songsterr"
-$Global:temp_path = "$($env:TEMP)\SongsterrGPDownloader"
+$Script:save_path = "D:\.Tabs\GuitarPro\.songsterr"
+$Script:temp_path = "$($env:TEMP)\SongsterrGPDownloader"
 
 # Check if the temp directory exists, if not create it
 if(-not (test-path $temp_path)){mkdir $temp_path}
@@ -450,7 +450,7 @@ function DownloadTabBySongID([string]$SongID)
     $title = $revisionMetadata[0].title
 
     # Define the destination file path
-    $destinationPath = "$($savedir)\SongsterrGPDownloader\$($oldFilename)"
+    $destinationPath = "$($save_path)\SongsterrGPDownloader\$($oldFilename)"
     # Download the file
     Invoke-WebRequest -Uri $downloadUrl -OutFile $destinationPath
     # Define the new file name
@@ -564,7 +564,7 @@ function GetSongIdsFromURLs([string]$URLsList)
 
 
 #region Songsterr MetaData Functions by SongID
-
+#######################################################
 # Get all download related metadata from a SongID...
 <#
 .SYNOPSIS
@@ -787,8 +787,8 @@ function Get-SongsterrDownloadURLs($SongIDs_List)
 #endregion
 
 
-#region SongsterrAI Generate Guitar Pro Tab from YouTube video ID Function(s)
-###################################################################################
+#region SongsterrAI Generate Guitar Pro Tab from YouTube video using SongsterrAI API Function(s)
+#################################################################################################
 <#
 .SYNOPSIS
 Generate a Guitar Pro tab from a YouTube video using the Songsterr AI API.

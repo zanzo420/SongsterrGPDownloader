@@ -52,7 +52,7 @@ function DownloadTabBySongID([string]$SongID)
     $title = $revisionMetadata[0].title
 
     # Define the destination file path
-    $destinationPath = "$($savedir)\SongsterrGPDownloader\$($oldFilename)"
+    $destinationPath = "$($save_path)\SongsterrGPDownloader\$($oldFilename)"
     # Download the file
     Invoke-WebRequest -Uri $downloadUrl -OutFile $destinationPath
     # Define the new file name
