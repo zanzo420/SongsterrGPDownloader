@@ -5,7 +5,7 @@
 ## - Rename all files downloaded using their associated artist name/song title. ##
 ##################################################################################
 
-#### wINCLUDES ####
+#### DOT SOURCE SCRIPTS ####
 . $PSScriptRoot\ug.ps1
 . $PSScriptRoot\tunebat.ps1
 . $PSScriptRoot\youtube.ps1
