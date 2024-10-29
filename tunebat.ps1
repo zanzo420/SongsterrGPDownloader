@@ -55,7 +55,8 @@ function Open-TunebatSearch([string]$Artist, [string]$Title)
 Get Tunebat data for a given search query.
 
 .DESCRIPTION
-This function retrieves Tunebat data for a given search query. It sends an HTTP GET request to the Tunebat API with the search query and retrieves the top search result. The function then extracts relevant data from the search result and returns it as a custom object.
+This function retrieves Tunebat data for a given search query. It sends an HTTP GET request to the Tunebat API with the search query and retrieves the top search result.
+The function then extracts relevant data from the top search result and returns it as a custom object.
 
 .PARAMETER SearchQuery
 The search query to be sent to the Tunebat API.
@@ -75,11 +76,10 @@ Date: 2022-03-01
 #>
 function Get-TunebatData([string]$SearchQuery, [switch]$extDetails, [switch]$Verbose)
 {
+    if($Verbose){ Write-Host "Retrieving Tunebat data for: $($SearchQuery)" -ForegroundColor Green }
     try {
         # Validate the search query
-        if ([string]::IsNullOrWhiteSpace($SearchQuery)) {
-            throw [System.ArgumentException]::new("Search Query cannot be null or empty.")
-        }
+        if ([string]::IsNullOrWhiteSpace($SearchQuery)) { throw [System.ArgumentException]::new("Search Query cannot be null or empty.") }
         # URL encode the search query for the API request and define the API endpoint.
 		$encodedQuery = [URI]::EscapeUriString($SearchQuery)
 		$apiUrl = "https://api.tunebat.com/api/tracks/search?term=$($encodedQuery)&page=1"
@@ -89,15 +89,14 @@ function Get-TunebatData([string]$SearchQuery, [switch]$extDetails, [switch]$Ver
 		$json = ConvertFrom-Json $response.Content
 
 		# Verify that the response contains results
-		if ($json.data.totalCount -gt 0) {
+		if ($json.data.totalCount -gt 0) { # If results are found
 			# Get the top Tunebat search result
 			$topResult = $json.data.items[0]
-
             # Create a custom object from the extracted data
             $TunebatData = [PSCustomObject]@{
                 TunebatID = $topResult.id #$id
                 SongName = $topResult.n
-                ArtistName = $artistName = $topResult.as[0]
+                ArtistName = $topResult.as[0]
                 Key = $topResult.k
                 KeyValue = $topResult.kv
                 Tempo = $topResult.b
@@ -120,7 +119,6 @@ function Get-TunebatData([string]$SearchQuery, [switch]$extDetails, [switch]$Ver
                 isSingle = $topResult.is
                 DataURL = "https://api.tunebat.com/api/tracks?trackid=$($topResult.id)"
             }
-
             # If the Verbose switch is enabled, display the song details in the console  
             if($Verbose){   
                 Write-Host "`n---------------------------------------------------" -ForegroundColor Gray
@@ -133,7 +131,6 @@ function Get-TunebatData([string]$SearchQuery, [switch]$extDetails, [switch]$Ver
                 Write-Host "Tempo:`t" -nonewline; Write-Host "$($TunebatData.tempo)" -foregroundcolor Green 
                 if($extDetails){ Write-Host "Popularity:`t" -nonewline; Write-Host "$($TunebatData.popularity)" -foregroundcolor Green; Write-Host "Album Art:`t" -nonewline; Write-Host "$($TunebatData.coverImage)" -foregroundcolor Green }
             }
-
             return $TunebatData
 		}else{
             if($Verbose){ Write-Host "No results found for the search query: $($SearchQuery)"}
@@ -141,7 +138,7 @@ function Get-TunebatData([string]$SearchQuery, [switch]$extDetails, [switch]$Ver
         }
     }
     catch { 
-        Write-Error "An error occurred: $($_)"
+        Write-Error "An error occurred while attempting to retrieve Tunebat data: $($_)"
         return $null
     }
     #if($Verbose){Write-Host "Function completed." -ForegroundColor Green
