@@ -1,10 +1,3 @@
-### TO-DO: ######################################################################
-## - Output list of generated urls to .txt file                                 ##
-## - Scrape GPT download link from each URL in .txt file                        ##
-## - Loop each scraped GPT download link and download each file.                ##
-## - Rename all files downloaded using their associated artist name/song title. ##
-##################################################################################
-
 #### DOT SOURCE SCRIPTS ####
 . $PSScriptRoot\ug.ps1
 . $PSScriptRoot\tunebat.ps1
