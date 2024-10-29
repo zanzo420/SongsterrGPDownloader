@@ -109,7 +109,7 @@ Date: 2024-10-06
 function Get-AZLyricsArtistSongs([string]$Artist) {
     $cArtist = $Artist.ToLower().Replace(" ", "")
     # Define the artist page URL
-    $url = "https://www.azlyrics.com/$($Artist[0])/$($cArtist).html"
+    $url = "https://www.azlyrics.com/$($cArtist[0])/$($cArtist).html"
     # Send a GET request to the artist page URL
     $response = Invoke-WebRequest -Uri $url
     # Parse the HTML content

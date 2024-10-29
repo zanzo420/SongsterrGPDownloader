@@ -2,7 +2,7 @@
 #API Search query URL: https://genius.com/api/search/multi?q=
 #HTTPS Search query URL: https://genius.com/search?q=
 
-function Search-GenuisLyrics {
+function Search-GeniusLyrics {
     [CmdletBinding()]
     param (
         [Parameter(Mandatory = $true)]
