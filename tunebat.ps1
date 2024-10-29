@@ -1,3 +1,6 @@
+# Tunebat API functions, search and retriev song data from Tunebat.com
+
+
 <#
 .SYNOPSIS
 Open a Tunebat search for a given query.
@@ -76,11 +79,10 @@ Date: 2022-03-01
 #>
 function Get-TunebatData([string]$SearchQuery, [switch]$extDetails, [switch]$Verbose)
 {
-    if($Verbose){ Write-Host "Retrieving Tunebat data for: $($SearchQuery)" -ForegroundColor Green }
     try {
         # Validate the search query
         if ([string]::IsNullOrWhiteSpace($SearchQuery)) { throw [System.ArgumentException]::new("Search Query cannot be null or empty.") }
-        # URL encode the search query for the API request and define the API endpoint.
+        # URL encode the search query for the API request and define the API endpoint url.
 		$encodedQuery = [URI]::EscapeUriString($SearchQuery)
 		$apiUrl = "https://api.tunebat.com/api/tracks/search?term=$($encodedQuery)&page=1"
 		# Send the HTTP GET request to the API endpoint and get the response
@@ -141,5 +143,4 @@ function Get-TunebatData([string]$SearchQuery, [switch]$extDetails, [switch]$Ver
         Write-Error "An error occurred while attempting to retrieve Tunebat data: $($_)"
         return $null
     }
-    #if($Verbose){Write-Host "Function completed." -ForegroundColor Green
 }
