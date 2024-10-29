@@ -882,30 +882,6 @@ function CleanText([string]$rawText)
 #endregion
 
 
-#region YouTube-to-MP3 Functions
-###############################################
-<#
-.SYNOPSIS
-Get the YouTube-to-MP3 Download page URL from a YouTube VideoID.
-
-.DESCRIPTION
-Returns the URL to a YouTube-to-MP3 download page from a YouTube VideoID (vID).
-
-.PARAMETER vID
-The YouTube VideoID to get the download page URL for.
-
-.EXAMPLE
-Get-YouTubeMP3('9oWclEZprdc')
-#>
-function Get-YouTubeMP3([string]$vID)
-{
-    #$ytVideoID = Get-Content "./savedata/official/youtube/$($SearchString).txt" #$videoIDorURL
-    return "https://y2hub.cc/enesto/download?src=query&url=$($vID)"
-}
-#################################################
-#endregion
-
-
 #region UI/Display FUNCTIONS
 ###############################################
 <#

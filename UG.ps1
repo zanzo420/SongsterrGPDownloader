@@ -20,7 +20,7 @@ function Get-UGSearchData([string]$queryString)
         # Define the regex pattern to match the data-content attribute of the js-store div class
         $regex_pattern = '<div class="js-store" data-content="([^"]*)">'
         # Use the regex_pattern to find the JSON search data
-        $matches = [regex]::Matches($htmlContent, $regex_pattern)
+        [regex]::Matches($htmlContent, $regex_pattern)
 
         if ($matches.Count -eq 0) {
             throw [System.Exception]::new("No JSON data found in the HTML content.")
@@ -196,7 +196,7 @@ $TabsWithBackingTracks = Get-UGBackingTracksTabList -Verbose
 Author: Zanzo
 Date: 2024-09-01
 #>
-function Get-UGBackingTracksTabList([switch]$Verbose)
+function Get-UGBackingTracksTabsList([switch]$Verbose)
 {
     write-host "Retrieving list of all UG Tabs w/ Backing Tracks, this will take 2-5 minutes to complete..." -ForegroundColor Yellow
     $btData = Get-UGMetaData("https://www.ultimate-guitar.com/backing_track/")
