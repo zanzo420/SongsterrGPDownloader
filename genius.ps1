@@ -4,8 +4,7 @@
 
 # Set your Genius API token here
 $apiToken = $env:GENIUS_ACCESS_TOKEN
-$LYRICS_CONTAINER_CLASS = "Lyrics__Container-sc-1ynbvzw-1 kUgSbL"
-.Lyrics__Container-sc-1ynbvzw-1
+$LYRICS_CONTAINER_CLASS = "Lyrics__Container-sc-1ynbvzw-1 kUgSbL"   # last updated 2024-10-29
 
 function Search-GeniusLyrics {
     [CmdletBinding()]
@@ -65,8 +64,29 @@ function Search-GeniusLyrics {
     }
 }
 
+<#
+.SYNOPSIS
+Get lyrics for a song from Genius.com using the Genius API.
 
+.DESCRIPTION
+This function retrieves the lyrics for a song from Genius.com using the Genius API. It takes the artist name and song title as input parameters and returns the lyrics as a string.
 
+.PARAMETER artist
+The name of the artist of the song.
+
+.PARAMETER songTitle
+The title of the song.
+
+.PARAMETER Verbose
+Switch to enable verbose output.
+
+.EXAMPLE
+Get-GeniusLyrics -artist "Eminem" -songTitle "Lose Yourself"
+
+.NOTES
+Author: Zanzo
+Date: 2024-10-09
+#>
 function Get-GeniusLyrics([string]$artist, [string]$songTitle, [switch]$Verbose) {
     # Encode the artist and song title for the API request
     $query = [System.Web.HttpUtility]::UrlEncode("$($artist) - $($songTitle)")
@@ -106,6 +126,26 @@ function Get-GeniusLyrics([string]$artist, [string]$songTitle, [switch]$Verbose)
     return $lyrics
 }
 
+<#
+.SYNOPSIS
+Get lyrics for a song from Genius.com using the song URL.
+
+.DESCRIPTION
+This function retrieves the lyrics for a song from Genius.com using the song URL. It takes the URL of the song as input and returns the lyrics as a string.
+
+.PARAMETER url
+The URL of the song on Genius.com.
+
+.PARAMETER Verbose
+Switch to enable verbose output.
+
+.EXAMPLE
+Get-GeniusLyrics -url "https://genius.com/Eminem-lose-yourself-lyrics"
+
+.NOTES
+Author: Zanzo
+Date: 2024-10-09
+#>
 function Get-GeniusLyrics([string]$url, [switch]$Verbose) {
     # Extract the URL for the first result
     $songUrl = $url
