@@ -2,6 +2,11 @@
 #API Search query URL: https://genius.com/api/search/multi?q=
 #HTTPS Search query URL: https://genius.com/search?q=
 
+# Set your Genius API token here
+$apiToken = $env:GENIUS_ACCESS_TOKEN
+$LYRICS_CONTAINER_CLASS = "Lyrics__Container-sc-1ynbvzw-1 kUgSbL"
+.Lyrics__Container-sc-1ynbvzw-1
+
 function Search-GeniusLyrics {
     [CmdletBinding()]
     param (
@@ -58,4 +63,64 @@ function Search-GeniusLyrics {
         Write-Host "No results found for the search query: " -nonewline; Write-Host $SearchQuery -foregroundcolor Red
         return $null
     }
+}
+
+
+
+function Get-GeniusLyrics([string]$artist, [string]$songTitle, [switch]$Verbose) {
+    # Encode the artist and song title for the API request
+    $query = [System.Web.HttpUtility]::UrlEncode("$($artist) - $($songTitle)")
+    # Genius API URL for search
+    $searchUrl = "https://api.genius.com/search?q=$($query)"
+    $headers = @{ Authorization = "Bearer $($apiToken)" }
+
+    # Send request to Genius API to search for the song
+    try {
+        $response = Invoke-RestMethod -Uri $searchUrl -Headers $headers -Method Get
+    } catch {
+        Write-Error "Error fetching song data from Genius API. Make sure your token is correct."
+        return
+    }
+
+    
+    if ($response.response.hits.Count -eq 0) {
+        if($Verbose){ Write-Host "No results found for $($artist) - $($songTitle)"}
+        return
+    }
+    
+    # Extract the URL for the first result
+    $songUrl = $response.response.hits[0].result.url
+
+    if($Verbose){ Write-Host "Fetching lyrics from $($songUrl) "}
+
+    # Fetch the lyrics from the song's URL
+    try {
+        $html = Invoke-WebRequest -Uri $songUrl
+        $lyrics = ($html.ParsedHtml.getElementsByClassName("$($LYRICS_CONTAINER_CLASS)") | ForEach-Object { $_.innerText }) -join "`n"
+    } catch {
+        Write-Error "Error fetching or parsing lyrics from $($songUrl)"
+        return
+    }
+
+    if($Verbose){ Write-Host "`n--- Lyrics for '$($songTitle)' by '$($artist)' ---`n`n$($lyrics)" }
+    return $lyrics
+}
+
+function Get-GeniusLyrics([string]$url, [switch]$Verbose) {
+    # Extract the URL for the first result
+    $songUrl = $url
+
+    if($Verbose){ Write-Host "[Genius] Fetching lyrics from $($songUrl) "}
+
+    # Fetch the lyrics from the song's URL
+    try {
+        $html = Invoke-WebRequest -Uri $songUrl
+        $lyrics = ($html.ParsedHtml.getElementsByClassName("$($LYRICS_CONTAINER_CLASS)") | ForEach-Object { $_.innerText }) -join "`n"
+    } catch {
+        Write-Error "[Genius] Error fetching or parsing lyrics from $($songUrl)"
+        return
+    }
+
+    if($Verbose){ Write-Host "`n[Genius] --- Lyrics for '$($songTitle)' by '$($artist)' ---`n"; Write-Host "$($lyrics)" }
+    return $lyrics
 }
