@@ -139,7 +139,7 @@ Get-GeniusLyrics -artist "Eminem" -songTitle "Lose Yourself"
 Author: Zanzo
 Date: 2024-10-09
 #>
-function Get-GeniusLyrics([string]$artist, [string]$songTitle, [switch]$Verbose) {
+function Search-GeniusLyrics([string]$artist, [string]$songTitle, [switch]$Verbose) {
     # Encode the artist and song title for the API request
     $query = [System.Web.HttpUtility]::UrlEncode("$($artist) - $($songTitle)")
     # Genius API URL for search
