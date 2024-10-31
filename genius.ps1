@@ -164,7 +164,7 @@ function Search-GeniusLyrics([string]$artist, [string]$songTitle, [switch]$Verbo
     if($Verbose){ Write-Host "Fetching lyrics from $($songUrl) "}
     try {
         $html = Invoke-WebRequest -Uri $songUrl
-        $lyrics = ($html.ParsedHtml.getElementsByClassName("$($LYRICS_CONTAINER_CLASS)") | ForEach-Object { $_.innerText }) -join "`n`n`n`n"
+        $lyrics = ($html.ParsedHtml.getElementsByClassName("$($LYRICS_CONTAINER_CLASS)") | ForEach-Object { $_.innerText }) -join "`n"
     } catch {
         Write-Error "Error fetching or parsing lyrics from $($songUrl)"
         return
