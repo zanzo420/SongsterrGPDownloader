@@ -2,8 +2,8 @@
 #API Search query URL: https://genius.com/api/search/multi?q=
 #HTTPS Search query URL: https://genius.com/search?q=
 
-# Set your Genius API token here
-$apiToken = $env:GENIUS_ACCESS_TOKEN
+#### GLOBAL VARIABLES ####
+$GENIUS_ACCESS_TOKEN = $env:GENIUS_ACCESS_TOKEN
 $LYRICS_CONTAINER_CLASS = "Lyrics__Container-sc-1ynbvzw-1 kUgSbL"   # last updated 2024-10-29
 
 #region Misc Utility Functions
@@ -29,6 +29,30 @@ function Get-LyricsClassName($url){
     $divElements = $response.parsedHTML.getElementsByTagName("DIV")
     foreach($div in $divElements){
         if($div.className -match "Lyrics__Container.*"){ return $div.className }
+    }
+}
+
+<#
+.SYNOPSIS
+Updates the LYRICS_CONTAINER_CLASS global variable with the current class name of the lyrics container from a current Genius.com lyrics page.
+
+.DESCRIPTION
+This function updates the LYRICS_CONTAINER_CLASS global variable with the current class name of the lyrics container from a Genius.com song lyrics page URL.
+
+.EXAMPLE
+Update-LyricsClassName
+
+.NOTES
+Author: Zanzo
+Date: 2024-10-31
+#>
+function Update-LyricsClassName(){
+    $lyricsClassName = Get-LyricsClassName("https://genius.com/Bad-omens-nowhere-to-go-lyrics")
+    if($lyricsClassName){
+        $global:LYRICS_CONTAINER_CLASS = $lyricsClassName
+        Write-Host "Lyrics container class name updated to: $($global:LYRICS_CONTAINER_CLASS)"
+    }else{
+        Write-Error "Failed to update lyrics container class name. Make sure the URL is valid."
     }
 }
 #endregion
@@ -119,7 +143,7 @@ function Get-GeniusLyrics([string]$artist, [string]$songTitle, [switch]$Verbose)
     $query = [System.Web.HttpUtility]::UrlEncode("$($artist) - $($songTitle)")
     # Genius API URL for search
     $searchUrl = "https://api.genius.com/search?q=$($query)"
-    $headers = @{ Authorization = "Bearer $($apiToken)" }
+    $headers = @{ Authorization = "Bearer $($GENIUS_ACCESS_TOKEN)" }
 
     # Send request to Genius API to search for the song
     try { 
