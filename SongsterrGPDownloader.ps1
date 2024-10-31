@@ -556,6 +556,11 @@ function GetSongIdsFromURLs([string]$URLsList)
 #endregion
 
 
+#region Songsterr Tag Functions
+
+#endregion
+
+
 #region Songsterr MetaData Functions by SongID
 #######################################################
 # Get all download related metadata from a SongID...
@@ -764,17 +769,19 @@ GetSongsterrDownloadURLs "SongIds.txt"
 Author: Zanzo
 Date: 2022-03-01
 #>
-function Get-SongsterrDownloadURLs($SongIDs_List)
+function Get-SongsterrDownloadURLs([string]$SongIDs_List)
 {
     write-host "Getting Songsterr download URL's from SongId list file: " -NoNewLine; write-host $SongIDs_List -ForegroundColor Green -NoNewline; write-host "...`n"
 
+    $downloadURLs = @()
     $SongIDs = Get-Content $SongIDs_List
     foreach($sID in $SongIDs)
     {
         write-host "SongID: " -NoNewline; write-host $sID -ForegroundColor DarkGreen
         write-host "DownloadURL: " -NoNewline
-        $dlUrl = Get-SongsterrDownloadURL $sID | out-tee -FilePath .\DownloadURLs.txt -Append -Force
-        write-host "$($dlUrl)" -ForegroundColor Green
+        $dlUrl = Get-SongsterrDownloadURL $sID 
+        $downloadURLs += $dlUrl | out-tee -FilePath "$($temp_path)\DownloadURLs.txt" -Append -Force
+        write-host $dlUrl -ForegroundColor Green
     }
 }
 #endregion
@@ -807,7 +814,7 @@ Author: Zanzo
 Date: 2024-09-01
 Updated: 2024-10-25
 #>
-function New-SongsterrAITab([string]$Title, [string]$Artist, [string]$VideoId)
+function New-SongsterrAITab([string]$SongTitle, [string]$Artist, [string]$VideoId)
 {
   $session = New-Object Microsoft.PowerShell.Commands.WebRequestSession
   $session.Cookies.Add((New-Object System.Net.Cookie("lastSeenTrack", "/a/wsa/jason-aldean-rearview-town-drum-tab-s737929", "/", "www.songsterr.com")))
@@ -832,7 +839,7 @@ function New-SongsterrAITab([string]$Title, [string]$Artist, [string]$VideoId)
     "Priority" = "u=0"
   } `
   -ContentType "application/json" `
-  -Body "{`"title`":`"$($Title)`",`"artist`":`"$($Artist)`",`"videoId`":`"$($VideoId)`"}"
+  -Body "{`"title`":`"$($SongTitle)`",`"artist`":`"$($Artist)`",`"videoId`":`"$($VideoId)`"}"
 
   return $response.Content
 }

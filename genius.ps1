@@ -126,6 +126,23 @@ function Get-GeniusLyrics([string]$artist, [string]$songTitle, [switch]$Verbose)
     return $lyrics
 }
 
+function getLyricsClassName($url){
+    $res = Invoke-WebRequest -Uri $url
+    $pattern = '(?<LyricsClassName>Lyrics__Container-.*)`">'
+
+    $t = $res.parsedHTML.getElementsByTagName("DIV")
+    #$tmp = [regex]::Matches($res.Content, $pattern)
+    foreach($tt in $t){
+        if($tt.className -match "Lyrics__Container.*"){
+            return $tt.className
+        }
+    }
+    return $matches[0].value
+}
+
+$ss = getlyricsClassName("https://genius.com/Bad-omens-nowhere-to-go-lyrics")
+write-host $ss -ForegroundColor Green
+
 <#
 .SYNOPSIS
 Get lyrics for a song from Genius.com using the song URL.
