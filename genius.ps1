@@ -25,6 +25,7 @@ Author: Zanzo
 Date: 2024-10-30
 #>
 function Get-LyricsClassName($url){
+    #old_regex = "(?<LyricsClassName>LyricsHeader__Container-[a-zA-Z0-9-]* ([a-zA-Z0-9]+)?)"
     $response = Invoke-WebRequest -Uri $url
     $divElements = $response.parsedHTML.getElementsByTagName("DIV")
     foreach($div in $divElements){
