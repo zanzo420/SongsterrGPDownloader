@@ -6,6 +6,33 @@
 $apiToken = $env:GENIUS_ACCESS_TOKEN
 $LYRICS_CONTAINER_CLASS = "Lyrics__Container-sc-1ynbvzw-1 kUgSbL"   # last updated 2024-10-29
 
+#region Misc Utility Functions
+<#
+.SYNOPSIS
+Get the class name of the lyrics container from a Genius.com song lyrics page URL.
+
+.DESCRIPTION
+This function retrieves the class name of the lyrics container from a Genius.com song lyrics page URL. It takes the URL to a song lyrics page on Genius.com as input and returns the class name of the lyrics container.
+
+.PARAMETER url
+The URL of the song lyrics page on Genius.com.
+
+.EXAMPLE
+$LYRICS_CONTAINER_CLASS = GetlyricsClassName("https://genius.com/Bad-omens-nowhere-to-go-lyrics")
+
+.NOTES
+Author: Zanzo
+Date: 2024-10-30
+#>
+function Get-LyricsClassName($url){
+    $response = Invoke-WebRequest -Uri $url
+    $divElements = $response.parsedHTML.getElementsByTagName("DIV")
+    foreach($div in $divElements){
+        if($div.className -match "Lyrics__Container.*"){ return $div.className }
+    }
+}
+#endregion
+
 function Search-GeniusLyrics {
     [CmdletBinding()]
     param (
@@ -95,53 +122,33 @@ function Get-GeniusLyrics([string]$artist, [string]$songTitle, [switch]$Verbose)
     $headers = @{ Authorization = "Bearer $($apiToken)" }
 
     # Send request to Genius API to search for the song
-    try {
+    try { 
         $response = Invoke-RestMethod -Uri $searchUrl -Headers $headers -Method Get
-    } catch {
-        Write-Error "Error fetching song data from Genius API. Make sure your token is correct."
+    }catch{ 
+        Write-Error "Error fetching song data from Genius API. Make sure your 'GENIUS_ACCESS_TOKEN' is correct."
         return
     }
-
-    
+    # Check if the search returned any results, if no results found, return
     if ($response.response.hits.Count -eq 0) {
         if($Verbose){ Write-Host "No results found for $($artist) - $($songTitle)"}
         return
     }
-    
-    # Extract the URL for the first result
+    # Extract the URL from the first search result
     $songUrl = $response.response.hits[0].result.url
-
+    # Fetch the lyrics from the song's lyrics page URL
     if($Verbose){ Write-Host "Fetching lyrics from $($songUrl) "}
-
-    # Fetch the lyrics from the song's URL
     try {
         $html = Invoke-WebRequest -Uri $songUrl
-        $lyrics = ($html.ParsedHtml.getElementsByClassName("$($LYRICS_CONTAINER_CLASS)") | ForEach-Object { $_.innerText }) -join "`n"
+        $lyrics = ($html.ParsedHtml.getElementsByClassName("$($LYRICS_CONTAINER_CLASS)") | ForEach-Object { $_.innerText }) -join "`n`n`n`n"
     } catch {
         Write-Error "Error fetching or parsing lyrics from $($songUrl)"
         return
     }
-
+    # Display the lyrics if Verbose mode is enabled
     if($Verbose){ Write-Host "`n--- Lyrics for '$($songTitle)' by '$($artist)' ---`n`n$($lyrics)" }
+    # Return the lyrics as a string
     return $lyrics
 }
-
-function getLyricsClassName($url){
-    $res = Invoke-WebRequest -Uri $url
-    $pattern = '(?<LyricsClassName>Lyrics__Container-.*)`">'
-
-    $t = $res.parsedHTML.getElementsByTagName("DIV")
-    #$tmp = [regex]::Matches($res.Content, $pattern)
-    foreach($tt in $t){
-        if($tt.className -match "Lyrics__Container.*"){
-            return $tt.className
-        }
-    }
-    return $matches[0].value
-}
-
-$ss = getlyricsClassName("https://genius.com/Bad-omens-nowhere-to-go-lyrics")
-write-host $ss -ForegroundColor Green
 
 <#
 .SYNOPSIS
@@ -164,7 +171,13 @@ Author: Zanzo
 Date: 2024-10-09
 #>
 function Get-GeniusLyrics([string]$url, [switch]$Verbose) {
-    # Extract the URL for the first result
+    # Verify that the URL is a valid Genius lyrics page URL
+    if($url -like "https://genius.com/*-lyrics") {
+        $songUrl = $url
+    }else{
+        Write-Error "Invalid URL. Please provide a valid lyrics page URL.`n(note: a valid lyrics page URL should always end with '-lyrics')"
+        return
+    }
     $songUrl = $url
     if($Verbose){ Write-Host "[Genius] Fetching lyrics from $($songUrl) "}
     # Fetch the lyrics from the song's URL
